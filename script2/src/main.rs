@@ -25,3 +25,14 @@ fn inner_state_hello(state_holder: &mut u64) {
     *state_holder += 1;
     println!("Hello for the {}th time", state_holder)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_plus3() {
+        let result = plus3(2);
+        assert_eq!(result, 5);
+    }
+}
