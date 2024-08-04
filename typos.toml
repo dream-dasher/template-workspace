@@ -1,6 +1,6 @@
 # Settings for typos-cli tool
 # [Typos Configuraiton Reference](https://github.com/crate-ci/typos/blob/master/docs/reference.md)
-
+#
 # Syntax: .gitignore glob syntax
 #        `*`    : match any file in a single level
 #        `**`   : recursively match
