@@ -51,8 +51,8 @@ check:
     -cargo fmt
     -typos
     -committed
+    -cargo test --doc --quiet
     -cargo nextest run --status-level=leak
-    -cargo test --doc
 
 # Run a specific test with output visible. (Use '' for test_name to see all tests and set log_level)
 test-view test_name="" log_level="error":
