@@ -45,6 +45,7 @@ pub fn div(a: u64, b: u64) -> u64 {
 
         a / b
 }
+
 /// Repeats an immutable function multiple times
 ///
 /// Function does not directly take inputs.
