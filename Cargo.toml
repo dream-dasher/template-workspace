@@ -2,6 +2,7 @@
 members = ["libraire", "script1", "script2"]
 resolver = "2"
 
-# name = "xp-workspace"
-# version = "0.1.0"
-# edition = "2021"
+[workspace.lints.rust]
+unsafe_code = { level = "forbid", priority = -1 }
+unused = "allow"
+dead_code = "allow"                               # (early) ¡DEVELOPMENT-ONLY!
