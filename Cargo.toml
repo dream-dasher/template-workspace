@@ -1,8 +1,11 @@
+# Settings for Rust Workspace 
+# [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
+
 [workspace]
 members = ["libraire", "script1", "script2"]
 resolver = "2"
 
 [workspace.lints.rust]
-unsafe_code = { level = "forbid", priority = -1 }
-unused = "allow"
-dead_code = "allow"                               # (early) ¡DEVELOPMENT-ONLY!
+unsafe_code = "forbid"
+unused = { level = "allow", priority = -1 } # (early) ¡DEVELOPMENT-ONLY!
+dead_code = "allow"                         # (early) ¡DEVELOPMENT-ONLY!
