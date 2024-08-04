@@ -4,11 +4,11 @@ use libraire::add;
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+        use super::*;
 
-    #[test]
-    fn it_works_integration_version() {
-        let result = add(7, 9);
-        assert_eq!(result, 16);
-    }
+        #[test]
+        fn it_works_integration_version() {
+                let result = add(7, 9);
+                assert_eq!(result, 16);
+        }
 }

@@ -2,7 +2,7 @@
 
 /// Prints "Hi!" to screen.
 pub fn say_hi() {
-    println!("Hi!");
+        println!("Hi!");
 }
 
 /// First line is a short summary describing function.
@@ -16,7 +16,7 @@ pub fn say_hi() {
 /// assert_eq!(result, 5);
 /// ```
 pub fn add(a: u64, b: u64) -> u64 {
-    a + b
+        a + b
 }
 
 /// Usually doc comments may include sections "Examples", "Panics" and "Failures".
@@ -39,23 +39,21 @@ pub fn add(a: u64, b: u64) -> u64 {
 /// libraire::div(10, 0);
 /// ```
 pub fn div(a: u64, b: u64) -> u64 {
-    if b == 0 {
-        panic!("Divide-by-zero error");
-    }
+        if b == 0 {
+                panic!("Divide-by-zero error");
+        }
 
-    a / b
+        a / b
 }
 /// Repeats an immutable function multiple times
 ///
 /// Function does not directly take inputs.
 /// Currying?
 pub fn repeat_function<F>(f: F, times: u8)
-where
-    F: Fn(),
-{
-    for _ in 0..times {
-        f();
-    }
+        where F: Fn() {
+        for _ in 0..times {
+                f();
+        }
 }
 
 /// Repeats a potentially mutable function multiple times
@@ -63,21 +61,19 @@ where
 /// Function does not directly take inputs.
 /// Currying?
 pub fn repeat_function_mutable<F>(mut m: F, times: u8)
-where
-    F: FnMut(),
-{
-    for _ in 0..times {
-        m();
-    }
+        where F: FnMut() {
+        for _ in 0..times {
+                m();
+        }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+        use super::*;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+        #[test]
+        fn it_works() {
+                let result = add(2, 2);
+                assert_eq!(result, 4);
+        }
 }
