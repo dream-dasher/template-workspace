@@ -1,7 +1,5 @@
 //! Another Example Script using Example Library in Example Workspace
 
-use libraire;
-
 fn main() {
     println!("Script 2, running...");
 
