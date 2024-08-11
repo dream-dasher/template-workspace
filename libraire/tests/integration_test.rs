@@ -1,6 +1,6 @@
 //! Example Integration Test file for Example Library in an Example Workspace
 
-use libraire::add_ample_room;
+use libraire::arithmetic::add_ample_room;
 
 #[cfg(test)]
 mod tests {
