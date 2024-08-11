@@ -1,6 +1,6 @@
 //! Example Integration Test file for Example Library in an Example Workspace
 
-use libraire::add;
+use libraire::add_example;
 
 #[cfg(test)]
 mod tests {
@@ -8,7 +8,7 @@ mod tests {
 
         #[test]
         fn it_works_integration_version() {
-                let result = add(7, 9);
+                let result = add_example(7, 9);
                 assert_eq!(result, 16);
         }
 }

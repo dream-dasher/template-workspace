@@ -1,6 +1,9 @@
 //! Example Library in an Example Workspace
 
+use tracing;
+
 /// Prints "Hi!" to screen.
+#[tracing::instrument]
 pub fn say_hi() {
         println!("Hi!");
 }
@@ -12,11 +15,12 @@ pub fn say_hi() {
 /// and `extern crate <cratename>`. Assume we're testing `libraire` crate:
 ///
 /// ```
-/// let result = libraire::add(2, 3);
+/// let result = libraire::add_example(2, 3);
 /// assert_eq!(result, 5);
 /// ```
-pub fn add(a: u64, b: u64) -> u64 {
-        a + b
+#[tracing::instrument]
+pub fn add_example(a: u32, b: u32) -> u64 {
+        a as u64 + b as u64
 }
 
 /// Usually doc comments may include sections "Examples", "Panics" and "Failures".
@@ -38,6 +42,7 @@ pub fn add(a: u64, b: u64) -> u64 {
 /// // panics on division by zero
 /// libraire::div(10, 0);
 /// ```
+#[tracing::instrument]
 pub fn div(a: u64, b: u64) -> u64 {
         if b == 0 {
                 panic!("Divide-by-zero error");
@@ -50,6 +55,7 @@ pub fn div(a: u64, b: u64) -> u64 {
 ///
 /// Function does not directly take inputs.
 /// Currying?
+#[tracing::instrument(skip(f))]
 pub fn repeat_function<F>(f: F, times: u8)
         where F: Fn() {
         for _ in 0..times {
@@ -61,6 +67,7 @@ pub fn repeat_function<F>(f: F, times: u8)
 ///
 /// Function does not directly take inputs.
 /// Currying?
+#[tracing::instrument(skip(m))]
 pub fn repeat_function_mutable<F>(mut m: F, times: u8)
         where F: FnMut() {
         for _ in 0..times {
@@ -70,11 +77,21 @@ pub fn repeat_function_mutable<F>(mut m: F, times: u8)
 
 #[cfg(test)]
 mod tests {
+        use quickcheck::{self, TestResult};
+        use quickcheck_macros::quickcheck;
+        use test_log::test;
+
         use super::*;
 
         #[test]
         fn it_works() {
-                let result = add(2, 2);
+                let result = add_example(2, 2);
                 assert_eq!(result, 4);
+        }
+
+        /// Proptest example using discards to get subset of inputs.
+        #[quickcheck]
+        fn prop_plus_x(a: u32, b: u32) -> bool {
+                (a as u64 + b as u64) == add_example(a, b)
         }
 }
