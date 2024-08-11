@@ -91,7 +91,7 @@ pub fn mult(a: u32, b: u32) -> u64 {
 /// The function panics if the second argument is zero.
 ///
 /// ```rust,should_panic
-/// use libraire_lib_lib::arithmetic::div;
+/// use libraire_lib::arithmetic::div;
 ///
 /// // panics on division by zero
 /// div(10, 0);
