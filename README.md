@@ -23,12 +23,17 @@ The `dev-` element exists in sub-packages, but not workspace root.
 ### Common
 ```toml
 derive_more = "1"
+derive_builder = "0.20"
 itertools = "0.13"
 chrono = "0.4"
-regex = { version = "1", features = ["logging"] }
 csv = "1"
-include_dir = "0.7"
+regex = { version = "1", features = ["logging"] }
 walkdir = "2"
+include_dir = "0.7"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+dotenvy = "0.15"
+secrecy = "0.8"
 ```
 
 ### Logging
