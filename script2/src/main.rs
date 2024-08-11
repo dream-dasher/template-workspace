@@ -17,7 +17,7 @@ fn main() {
 /// Curying `add` for '3' (left, though symmetric)
 #[tracing::instrument]
 fn plus3(n: u32) -> u64 {
-        libraire::add_ample_room_example(3, n)
+        libraire::add_ample_room(3, n)
 }
 
 #[tracing::instrument]
