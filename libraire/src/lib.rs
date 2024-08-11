@@ -15,12 +15,45 @@ pub fn say_hi() {
 /// and `extern crate <cratename>`. Assume we're testing `libraire` crate:
 ///
 /// ```
-/// let result = libraire::add_example(2, 3);
-/// assert_eq!(result, 5);
+/// let result = libraire::add_ample_room_example(u32::MAX, u32::MAX);
+/// assert_eq!(result, 2*u32::MAX as u64);
 /// ```
 #[tracing::instrument]
-pub fn add_example(a: u32, b: u32) -> u64 {
+pub fn add_ample_room_example(a: u32, b: u32) -> u64 {
         a as u64 + b as u64
+}
+
+/// First line is a short summary describing function.
+///
+/// The next lines present detailed documentation. Code blocks start with
+/// triple backquotes and have implicit `fn main()` inside
+/// and `extern crate <cratename>`. Assume we're testing `libraire` crate:
+///
+/// ```
+/// let result = libraire::add_can_overflow_example(u32::MAX, 1);
+/// assert_eq!(result, 0);
+/// ```
+#[tracing::instrument]
+pub fn add_can_overflow_example(a: u32, b: u32) -> u32 {
+        a.wrapping_add(b)
+}
+
+/// First line is a short summary describing function.
+///
+/// The next lines present detailed documentation. Code blocks start with
+/// triple backquotes and have implicit `fn main()` inside
+/// and `extern crate <cratename>`. Assume we're testing `libraire` crate:
+///
+/// ```
+/// let result = libraire::mult_example(2, 3);
+/// assert_eq!(result, 6);
+///
+/// let result = libraire::mult_example(u32::MAX, u32::MAX);
+/// assert_eq!(result, (u64::MAX - 2u64.pow(33) + 1 + 1));
+/// ```
+#[tracing::instrument]
+pub fn mult_example(a: u32, b: u32) -> u64 {
+        (a as u64) * (b as u64)
 }
 
 /// Usually doc comments may include sections "Examples", "Panics" and "Failures".
@@ -84,14 +117,37 @@ mod tests {
         use super::*;
 
         #[test]
-        fn it_works() {
-                let result = add_example(2, 2);
+        fn spotcheck_add_example() {
+                let result = add_ample_room_example(2, 2);
                 assert_eq!(result, 4);
         }
 
-        /// Proptest example using discards to get subset of inputs.
         #[quickcheck]
-        fn prop_plus_x(a: u32, b: u32) -> bool {
-                (a as u64 + b as u64) == add_example(a, b)
+        fn prop_add_ample_room(a: u32, b: u32) -> bool {
+                (a as u64 + b as u64) == add_ample_room_example(a, b)
+        }
+
+        /// Proptest example; matches wrap on full range
+        #[quickcheck]
+        fn prop_add_can_overflow_full_wrapping_add(a: u32, b: u32) -> TestResult {
+                if a > u32::MAX / 2 || b > u32::MAX / 2 {
+                        return TestResult::discard();
+                }
+                TestResult::from_bool((b.wrapping_add(a)) == add_can_overflow_example(a, b))
+        }
+
+        /// Proptest example; matches regular add on restricted range
+        #[quickcheck]
+        fn prop_add_can_overflow_restricted_add(a: u32, b: u32) -> TestResult {
+                if a > u32::MAX / 2 || b > u32::MAX / 2 {
+                        return TestResult::discard();
+                }
+
+                TestResult::from_bool((a + b) == add_can_overflow_example(a, b))
+        }
+        ///
+        #[quickcheck]
+        fn prop_mult(a: u32, b: u32) -> bool {
+                (a as u64 * b as u64) == mult_example(a, b)
         }
 }

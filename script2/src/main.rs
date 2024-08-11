@@ -16,7 +16,7 @@ fn main() {
 
 /// Curying `add` for '3' (left, though symmetric)
 fn plus3(n: u32) -> u64 {
-        libraire::add_example(3, n)
+        libraire::add_ample_room_example(3, n)
 }
 
 fn inner_state_hello(state_holder: &mut u64) {
