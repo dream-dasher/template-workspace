@@ -585,8 +585,6 @@ dependencies = [
  "indicatif",
  "libraire",
  "owo-colors",
- "quickcheck",
- "quickcheck_macros",
  "test-log",
  "tracing",
  "tracing-subscriber",
@@ -597,6 +595,9 @@ name = "script2"
 version = "0.1.0"
 dependencies = [
  "libraire",
+ "test-log",
+ "tracing",
+ "tracing-subscriber",
 ]
 
 [[package]]

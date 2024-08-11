@@ -21,6 +21,3 @@ dialoguer = { workspace = true }
 [dev-dependencies]
 ## --Test Trace-Logging--
 test-log = { workspace = true }
-## --Property Sample Testing--
-quickcheck = { workspace = true }
-quickcheck_macros = { workspace = true }

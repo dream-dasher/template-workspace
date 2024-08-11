@@ -10,6 +10,8 @@ fn main() {
 #[cfg(test)]
 mod tests {
 
+        use test_log::test;
+
         #[test]
         fn trivially_true_in_practice() {
                 assert_eq!(2 + 3, 3 + 2);

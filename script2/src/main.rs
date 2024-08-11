@@ -15,10 +15,12 @@ fn main() {
 }
 
 /// Curying `add` for '3' (left, though symmetric)
+#[tracing::instrument]
 fn plus3(n: u32) -> u64 {
         libraire::add_ample_room_example(3, n)
 }
 
+#[tracing::instrument]
 fn inner_state_hello(state_holder: &mut u64) {
         *state_holder += 1;
         println!("Hello for the {}th time", state_holder)
@@ -26,6 +28,8 @@ fn inner_state_hello(state_holder: &mut u64) {
 
 #[cfg(test)]
 mod tests {
+        use test_log::test;
+
         use super::*;
 
         #[test]

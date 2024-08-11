@@ -4,4 +4,12 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+## --LOCAL--
 libraire = { path = "../libraire" }
+## --Trace-Logging--
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+[dev-dependencies]
+## --Test Trace-Logging--
+test-log = { workspace = true }
