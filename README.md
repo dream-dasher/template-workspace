@@ -22,7 +22,7 @@ The `dev-` element exists in sub-packages, but not workspace root.
 ## Common Dependencies
 ### Common
 ```toml
-derive_more = "0.99"
+derive_more = "1"
 itertools = "0.13"
 chrono = "0.4"
 regex = { version = "1", features = ["logging"] }

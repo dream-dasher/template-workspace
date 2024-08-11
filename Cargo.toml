@@ -13,7 +13,7 @@ dead_code = "allow"                         # (early) ¡DEVELOPMENT-ONLY!
 
 [workspace.dependencies]
 ## --General--
-derive_more = "0.99"
+derive_more = "1"
 ## --Trace-Logging--
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["chrono", "env-filter"] }
