@@ -4,4 +4,23 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+## --LOCAL--
 libraire = { path = "../libraire" }
+## --General--
+derive_more = { workspace = true }
+## --Trace-Logging--
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+## --CLI--
+clap = { workspace = true }
+owo-colors = { workspace = true }
+indicatif = { workspace = true }
+dialoguer = { workspace = true }
+
+
+[dev-dependencies]
+## --Test Trace-Logging--
+test-log = { workspace = true }
+## --Property Sample Testing--
+quickcheck = { workspace = true }
+quickcheck_macros = { workspace = true }

@@ -2,101 +2,29 @@
 # [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
 
 [workspace]
-# ######################################################### #
 members = ["libraire", "script1", "script2"]
 resolver = "2"
 
 [workspace.lints.rust]
-# ######################################################### #
 unsafe_code = "forbid"
 unused = { level = "allow", priority = -1 } # (early) ¡DEVELOPMENT-ONLY!
 dead_code = "allow"                         # (early) ¡DEVELOPMENT-ONLY!
 
 
 [workspace.dependencies]
-# ######################################################### #
-# common
+## --General--
 derive_more = "0.99"
-itertools = "0.13"
-
-## logging
+## --Trace-Logging--
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["chrono", "env-filter"] }
-# tracing-error = "0.2.0"
+## --CLI--
+clap = { version = "4.5", features = ["env", "derive", "string", "wrap_help"] }
+owo-colors = "4"
+indicatif = "0.17"
+dialoguer = "0.11"
 
-## testing
+## --Test Trace-Logging--
+test-log = { version = "0.2", features = ["trace"] }
+## --Property Sample Testing--
 quickcheck = "1"
 quickcheck_macros = "1"
-test-log = { version = "0.2", features = ["trace"] }
-# insta = { version = "1.34.0", features = [
-#         "csv",
-#         "json",
-#         "regex",
-#         "serde",
-#         "toml",
-#         "walkdir",
-#         "yaml",
-# ] }
-# tempfile = "3"
-# wiremock = "0.5.22"
-
-
-# semi-common, general
-chrono = "0.4"
-csv = "1.3"
-include_dir = "0.7.3"
-regex = { version = "1", features = ["logging"] }
-walkdir = "2"
-
-# async
-futures = "0.3"
-tokio = { version = "1.37", features = ["full", "tracing"] }
-sqlx = { version = "0.7", features = [
-    "mysql",
-    "runtime-tokio",
-    "tls-rustls",
-    "macros",
-    "chrono",
-] }
-
-# cli
-clap = { version = "4.5.4", features = [
-    "env",
-    "derive",
-    "string",
-    "wrap_help",
-] }
-dialoguer = "0.11.0"
-indicatif = "0.17"
-owo-colors = "4"
-
-# egui
-eframe = "0.27"
-egui = "0.27"
-egui_extras = "0.27"
-egui_inbox = "0.4"
-
-
-# [profile.dist]
-# # The profile that 'cargo dist' will build with
-# # ######################################################### #
-# inherits = "release"
-# lto = "thin"
-
-# [workspace.metadata.dist]
-# # Config for 'cargo dist'
-# # ######################################################### #
-# # The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
-# cargo-dist-version = "0.19.0"
-# # CI backends to support
-# ci = "github"
-# # The installers to generate for each app
-# installers = ["homebrew"]
-# # Target platforms to build apps for (Rust target-triple syntax)
-# targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
-# # Publish jobs to run in CI
-# pr-run-mode = "plan"
-# # A GitHub repo to push Homebrew formulas to
-# tap = "ethanmsl/homebrew-rename_files"
-# # Publish jobs to run in CI
-# publish-jobs = ["homebrew"]
