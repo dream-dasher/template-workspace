@@ -1,6 +1,6 @@
 //! An Example Script using Example Library in Example Workspace
 
-use libraire::{repeat_function, utility::say_hi};
+use libraire_lib::{repeat_function, utility::say_hi};
 
 fn main() {
         println!("Script 1, running...");

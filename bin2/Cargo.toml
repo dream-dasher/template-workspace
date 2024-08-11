@@ -1,11 +1,11 @@
 [package]
-name = "script2"
+name = "bin2"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 ## --LOCAL--
-libraire = { path = "../libraire" }
+libraire_lib = { path = "../libraire_lib" }
 ## --Trace-Logging--
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }

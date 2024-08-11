@@ -8,7 +8,7 @@ use derive_more::{Display, From};
 pub type Result<T> = core::result::Result<T, Error>;
 // pub type Error = Box<dyn std::error::Error>;
 
-// Nightly requires enabling this feature:
+// Nightly requires enabling this feature (at crate root):
 // #![feature(error_generic_member_access)]
 
 // std::error::Error requires std::fmt::Debug and std::fmt::Display,

@@ -2,7 +2,7 @@
 # [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
 
 [workspace]
-members = ["libraire", "script1", "script2"]
+members = ["libraire_lib", "cli_bin", "bin2"]
 resolver = "2"
 
 [workspace.lints.rust]
