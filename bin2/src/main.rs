@@ -1,3 +1,4 @@
+#![feature(error_generic_member_access)]
 //! Another Example Script using Example Library in Example Workspace
 
 fn main() {
