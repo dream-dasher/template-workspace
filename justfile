@@ -79,6 +79,11 @@ teardown:
 watch file_to_run:
     cargo watch --quiet --clear --exec 'run --quiet --example {{file_to_run}}'
 
+# Update to breaking versions is available.
+[confirm]
+hard-update:
+    cargo update --breaking -Z unstable-options
+    
 # List dependencies. (This command has dependencies.)
 deps-ext:
     @echo "{{CYN}}List of external dependencies for this command runner and repo:"
