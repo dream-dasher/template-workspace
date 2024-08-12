@@ -42,31 +42,33 @@ check:
     cargo test --doc --quiet
     cargo nextest run --status-level=leak
     
-# Clean, release build, deploy file to `/user/local/bin/`
-[confirm]
-deploy binary_name version: check
-    @ echo "TOML_VERSION: {{TOML_VERSION}}"
-    @ echo "input version: {{version}}"
-    echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
-    cargo clean
-    cargo build --release
-    cargo doc --release
-    sudo cp target/release/{{binary_name}} /usr/local/bin/{{binary_name}}
+# # # Needs updating to work with workspace.
+# # Clean, release build, deploy file to `/user/local/bin/`
+# [confirm]
+# deploy binary_name version: check
+#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
+#     @ echo "input version: {{version}}"
+#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
+#     cargo clean
+#     cargo build --release
+#     cargo doc --release
+#     sudo cp target/release/{{binary_name}} /usr/local/bin/{{binary_name}}
     
-# push version x.y.z; deploy if used with `dist`
-[confirm]
-deploy-remote version: check
-    @ echo "TOML_VERSION: {{TOML_VERSION}}"
-    @ echo "input version: {{version}}"
-    echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
-    cargo clean
-    cargo build --release
-    cargo doc --release
-    - git add .
-    - git commit -m "release: {{version}}"
-    git tag "v{{version}}"
-    - git push
-    git push --tags
+# # # Needs updating to work with workspace.
+# # Push version x.y.z; deploy if used with `dist`
+# [confirm]
+# deploy-remote version: check
+#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
+#     @ echo "input version: {{version}}"
+#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
+#     cargo clean
+#     cargo build --release
+#     cargo doc --release
+#     - git add .
+#     - git commit -m "release: {{version}}"
+#     git tag "v{{version}}"
+#     - git push
+#     git push --tags
     
 
 # Show (dev-oriented) docs.
