@@ -1,4 +1,4 @@
-//! Error Handling for libraire
+//! Error Handling for lib_blocking
 
 use std::backtrace::Backtrace;
 

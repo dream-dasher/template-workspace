@@ -12,13 +12,13 @@ fn main() {
         println!();
         let mut count = 0;
         let state_curried = || inner_state_hello(&mut count); // not mut declaration, because mutable taken in function
-        libraire_lib::repeat_function_mutable(state_curried, plus3(2) as u8); // input is taken as mutable, despite original declaration
+        lib_blocking::repeat_function_mutable(state_curried, plus3(2) as u8); // input is taken as mutable, despite original declaration
 }
 
 /// Curying `add` for '3' (left, though symmetric)
 #[tracing::instrument]
 fn plus3(n: u32) -> u64 {
-        libraire_lib::arithmetic::add_ample_room(3, n)
+        lib_blocking::arithmetic::add_ample_room(3, n)
 }
 
 #[tracing::instrument]

@@ -1,6 +1,6 @@
 //! Example Integration Test file for Example Library in an Example Workspace
 
-use libraire_lib::arithmetic::add_ample_room;
+use lib_blocking::arithmetic::add_ample_room;
 
 #[cfg(test)]
 mod tests {

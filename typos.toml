@@ -7,7 +7,7 @@
 #        `**/*` : specifies any _files_ at any level (subtly & potentially different)
 
 [default.extend-words]
-libraire = "libraire"
+lib_blocking = "lib_blocking"
 
 [files]
 extend-exclude = ["**/data/**"]

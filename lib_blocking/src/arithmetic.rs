@@ -6,10 +6,10 @@ use crate::error::{Error, Result};
 ///
 /// The next lines present detailed documentation. Code blocks start with
 /// triple backquotes and have implicit `fn main()` inside
-/// and `extern crate <cratename>`. Assume we're testing `libraire_lib` crate:
+/// and `extern crate <cratename>`. Assume we're testing `lib_blocking` crate:
 ///
 /// ```
-/// use libraire_lib::arithmetic::add_ample_room;
+/// use lib_blocking::arithmetic::add_ample_room;
 ///
 /// let result = add_ample_room(u32::MAX, u32::MAX);
 /// assert_eq!(result, 2*u32::MAX as u64);
@@ -23,10 +23,10 @@ pub fn add_ample_room(a: u32, b: u32) -> u64 {
 ///
 /// The next lines present detailed documentation. Code blocks start with
 /// triple backquotes and have implicit `fn main()` inside
-/// and `extern crate <cratename>`. Assume we're testing `libraire_lib` crate:
+/// and `extern crate <cratename>`. Assume we're testing `lib_blocking` crate:
 ///
 /// ```
-/// use libraire_lib::arithmetic::add_can_overflow;
+/// use lib_blocking::arithmetic::add_can_overflow;
 ///
 /// let result = add_can_overflow(u32::MAX, 1);
 /// assert_eq!(result, 0);
@@ -40,10 +40,10 @@ pub fn add_can_overflow(a: u32, b: u32) -> u32 {
 ///
 /// The next lines present detailed documentation. Code blocks start with
 /// triple backquotes and have implicit `fn main()` inside
-/// and `extern crate <cratename>`. Assume we're testing `libraire_lib` crate:
+/// and `extern crate <cratename>`. Assume we're testing `lib_blocking` crate:
 ///
 /// ```
-/// use libraire_lib::arithmetic::add_can_err;
+/// use lib_blocking::arithmetic::add_can_err;
 ///
 /// let result = add_can_err(u32::MAX, 1);
 /// assert!(result.is_err());
@@ -57,10 +57,10 @@ pub fn add_can_err(a: u32, b: u32) -> Result<u32> {
 ///
 /// The next lines present detailed documentation. Code blocks start with
 /// triple backquotes and have implicit `fn main()` inside
-/// and `extern crate <cratename>`. Assume we're testing `libraire_lib` crate:
+/// and `extern crate <cratename>`. Assume we're testing `lib_blocking` crate:
 ///
 /// ```
-/// use libraire_lib::arithmetic::mult;
+/// use lib_blocking::arithmetic::mult;
 ///
 /// let result = mult(2, 3);
 /// assert_eq!(result, 6);
@@ -80,7 +80,7 @@ pub fn mult(a: u32, b: u32) -> u64 {
 /// # Examples
 ///
 /// ```
-/// use libraire_lib::arithmetic::div;
+/// use lib_blocking::arithmetic::div;
 ///
 /// let result =div(10, 2);
 /// assert_eq!(result, 5);
@@ -91,7 +91,7 @@ pub fn mult(a: u32, b: u32) -> u64 {
 /// The function panics if the second argument is zero.
 ///
 /// ```rust,should_panic
-/// use libraire_lib::arithmetic::div;
+/// use lib_blocking::arithmetic::div;
 ///
 /// // panics on division by zero
 /// div(10, 0);

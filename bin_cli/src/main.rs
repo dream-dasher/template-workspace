@@ -7,7 +7,7 @@ mod support_tracing;
 
 use clap::Parser;
 use error::Result;
-use libraire_lib::{repeat_function, utility::say_hi};
+use lib_blocking::{repeat_function, utility::say_hi};
 // use rename_files::{app, error::Result, logging, Args};
 
 fn main() -> Result<()> {
