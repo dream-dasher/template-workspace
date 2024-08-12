@@ -1,20 +1,29 @@
 
+
+## Adjusting this repo
+`(-)-p(review)` is on by default, but this will allow renaming a package and references to it.
+```bash
+cargo clean
+rename_files -preview --recurse '^bin_tbd' --rep bin_to_be_dee
+sd -preview 'bin_tbd' bintobedet $(find . --type f)
+```
+
+## Workspace Notes
 [Cargo Workspace - Ch 12](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html)
 
-
-## Start a Workspace
+### Start a Workspace
 1. Create dir.
 2. Manually add `Cargo.toml` with just a `[workspace]` section & `resolver = 2`.
 3. Use `cargo new #### --bin/lib` to add packages (~'sub-repos', technically superset of 'crate's).
 
-## Crate Inter-Operation
+### Crate Inter-Operation
 - Add local crate dependency by path: e.g. `other_crate = { path = "../other_crate" }`
 
-## Testing
+### Testing
 - Tests will all run together by default.
 - `cargo (nex)test (run) --package/-p <package>` will run just that package
 
-## Gotchas
+### Gotchas
 There is **NO** `[workspace.dev-dependencies]`. *Just* `[workspace.dependencies]`.
 The `dev-` element exists in sub-packages, but not workspace root.
 (The errors for this are not helpful.)
