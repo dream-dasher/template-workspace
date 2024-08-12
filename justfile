@@ -7,10 +7,12 @@ LOCAL_VAR_EXAMPLE:='yes, I am!'
 RUST_LOG:= 'debug'
 RUST_BACKTRACE:= '1'
 RUSTFLAGS:='--cfg tokio_unstable'
-home_dir := env_var('HOME')
-local_root := justfile_directory()
-invocd_from := invocation_directory()
-invoc_is_root := if invocd_from == local_root { "true" } else { "false" }
+TOML_VERSION:=`rg '^version = ".*"' Cargo.toml | sd '.*"(.*)".*' '$1'`
+
+HOME_DIR := env_var('HOME')
+LOCAL_ROOT := justfile_directory()
+INVOCD_FROM := invocation_directory()
+INVOC_IS_ROOT := if INVOCD_FROM == LOCAL_ROOT { "true" } else { "false" }
 FROZE_SHA_REGEX := 'FROZE_[a-fA-F0-9]{64}_FROZE-'
 
 # ANSI Color Codes for use with echo command
@@ -31,28 +33,47 @@ init: && deps-ext
     cargo build    
     cargo doc
 
+# Linting, formatting, typo checking, etc.
+check:
+    cargo clippy
+    cargo fmt
+    typos
+    committed
+    cargo test --doc --quiet
+    cargo nextest run --status-level=leak
+    
 # Clean, release build, deploy file to `/user/local/bin/`
 [confirm]
-deploy binary_name:
+deploy binary_name version: check
+    @ echo "TOML_VERSION: {{TOML_VERSION}}"
+    @ echo "input version: {{version}}"
+    echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
     cargo clean
     cargo build --release
     cargo doc --release
     sudo cp target/release/{{binary_name}} /usr/local/bin/{{binary_name}}
+    
+# push version x.y.z; deploy if used with `dist`
+[confirm]
+deploy-remote version: check
+    @ echo "TOML_VERSION: {{TOML_VERSION}}"
+    @ echo "input version: {{version}}"
+    echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
+    cargo clean
+    cargo build --release
+    cargo doc --release
+    - git add .
+    - git commit -m "release: {{version}}"
+    git tag "v{{version}}"
+    - git push
+    git push --tags
+    
 
 # Show (dev-oriented) docs.
 docs:
     rustup doc
     rustup doc --std
     cargo doc --all-features --document-private-items --open
-    
-# Linting, formatting, typo checking, etc.
-check:
-    -cargo clippy
-    -cargo fmt
-    -typos
-    -committed
-    -cargo test --doc --quiet
-    -cargo nextest run --status-level=leak
 
 # Run a specific test with output visible. (Use '' for test_name to see all tests and set log_level)
 test-view test_name="" log_level="error":
