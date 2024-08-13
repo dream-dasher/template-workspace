@@ -115,7 +115,6 @@ deps-ext:
 # Generate .env file from template, if .env file not present.
 gen-env:
     if [ -f '.env' ]; then echo '`.env` exists, exiting...' && exit 1; fi
-    cp template.env .env
     cp -n template.env .env
     @ echo "{{BLU}}.env{{NC}} created from template. {{GRN}}Please fill in the necessary values.{{NC}}"
     @ echo "e.g. 'nvim .env'"
