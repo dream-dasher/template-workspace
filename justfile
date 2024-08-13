@@ -42,6 +42,10 @@ check:
     cargo test --doc --quiet
     cargo nextest run --status-level=leak
     
+# Print reminder: how to set env vars that propagate to child shells.
+remind_set_env:
+    @ echo '{{GRN}}set -a{{NC}}; {{GRN}}source {{BLU}}.env{{NC}}; {{GRN}}set +a{{NC}}'
+    
 # # # Needs updating to work with workspace.
 # # Clean, release build, deploy file to `/user/local/bin/`
 # [confirm]
