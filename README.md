@@ -28,6 +28,12 @@ There is **NO** `[workspace.dev-dependencies]`. *Just* `[workspace.dependencies]
 The `dev-` element exists in sub-packages, but not workspace root.
 (The errors for this are not helpful.)
 
+## External Tools to Add docs and funcs for
+- [Cargo-Machete](https://github.com/bnjbvr/cargo-machete)
+- [Git-Cliff](https://github.com/orhun/git-cliff)
+- [Cargo-PGO](https://github.com/Kobzol/cargo-pgo)
+- [Cargo-dist](https://opensource.axo.dev/cargo-dist/book/installers/homebrew.html)
+
 ## Common Dependencies
 ### Common
 ```toml
