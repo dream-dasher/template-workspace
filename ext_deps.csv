@@ -1,0 +1,12 @@
+PROGRAM_NAME,ALIAS,PROGRAM_VERSION,PROGRAM_INSTALL,COMMENT
+___,___,___,"___","___"
+committed,___,___,"cargo install committed","git commit-check"
+dist,___,___,"cargo install cargo-dist --locked","rust distribution"
+fd,___,___,"cargo install fd-find","cli file-search"
+just,justfile,___,"cargo install just","runner"
+nextest,cargo-nextest,___,"cargo install cargo-nextest --locked","rust tester"
+rg,ripgrep,___,"cargo install ripgrep","cli regex-text-search"
+sd,___,___,"cargo install sd","cli regex-replace"
+typos,typos-cli,___,"cargo install typos-cli","ci/cd spell-check"
+xh,xhs,___,"cargo install xh --locked","cli http-call"
+xsv,___,___,"cargo install xsv","csv reader"
