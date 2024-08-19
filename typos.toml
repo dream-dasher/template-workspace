@@ -10,4 +10,4 @@
 lib_blocking = "lib_blocking"
 
 [files]
-extend-exclude = ["**/data/**"]
+extend-exclude = ["**/data/**", "*.log", "*.csv"]
