@@ -14,9 +14,11 @@ dead_code = "allow"                         # (early) ¡DEVELOPMENT-ONLY!
 [workspace.dependencies]
 ## --General--
 derive_more = { version = "1", features = ["full"] }
+
 ## --Trace-Logging--
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["chrono", "env-filter"] }
+
 ## --CLI--
 clap = { version = "4", features = ["env", "derive", "string", "wrap_help"] }
 owo-colors = "4"
@@ -25,6 +27,7 @@ dialoguer = "0.11"
 
 ## --Test Trace-Logging--
 test-log = { version = "0.2", features = ["trace"] }
+
 ## --Property Sample Testing--
 quickcheck = "1"
 quickcheck_macros = "1"
