@@ -3,17 +3,17 @@ name = "bin_cli"
 version = "0.1.0"
 edition = "2021"
 
-[lints]
-workspace = true
-
 [dependencies]
 ## --LOCAL--
 lib_blocking = { path = "../lib_blocking" }
+
 ## --General--
 derive_more = { workspace = true }
+
 ## --Trace-Logging--
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
+
 ## --CLI--
 clap = { workspace = true }
 owo-colors = { workspace = true }
@@ -24,3 +24,6 @@ dialoguer = { workspace = true }
 [dev-dependencies]
 ## --Test Trace-Logging--
 test-log = { workspace = true }
+
+[lints]
+workspace = true
