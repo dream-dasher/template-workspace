@@ -2,7 +2,7 @@
 # [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
 
 [workspace]
-members = ["lib_blocking", "bin_cli", "bin_tbd", "xp-drop"]
+members = ["lib_blocking", "bin_cli", "bin_tbd", "xp-drop", "xp-serde"]
 resolver = "2"
 
 [workspace.lints.rust]
@@ -14,6 +14,8 @@ dead_code = "allow"                         # (early) ¡DEVELOPMENT-ONLY!
 [workspace.dependencies]
 ## --General--
 derive_more = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 
 ## --Trace-Logging--
 tracing = "0.1"

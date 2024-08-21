@@ -1,0 +1,19 @@
+[package]
+name = "xp-serde"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+## --LOCAL--
+xp-drop = { path = "../xp-drop" }
+
+## --General--
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+
+## --Logging--
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true, features = ["env-filter"] }
+
+[lints]
+workspace = true
