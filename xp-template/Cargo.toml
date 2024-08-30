@@ -1,0 +1,26 @@
+[package]
+name = "xp-template"
+version = "0.1.0"
+edition = "2021"
+
+[lints]
+workspace = true
+
+[dependencies]
+## --Diagnostics--
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["chrono", "env-filter"] }
+# tracing-appender = "0.2"
+
+## --Explore--
+minijinja = { version = "2", default-features = false, features = ["debug"] }
+liquid = { version = "0.26.9", features = ["liquid-lib"] }
+
+## --Async--
+## --CLI--
+clap = { workspace = true }
+
+
+## --Env & Files--
+csv = "1"
+dotenvy = "0.15"
