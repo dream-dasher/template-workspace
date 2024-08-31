@@ -31,7 +31,7 @@ enum TemplateSystem {
         /// no templating system
         None,
         /// minijinja
-        MiniJinja,
+        Minijinja,
         /// LiquidRust
         LiquidRust,
         /// Handlebars
@@ -49,8 +49,48 @@ fn main() -> Result<()> {
         }
         tracing::event!(Level::DEBUG, "Script 1, starting...");
         info!(?args);
+        use minijinja::{context, Environment};
+
+        match &args.templater {
+                TemplateSystem::None => {
+                        event!(Level::INFO, "No templating system selected.");
+                        println!("No templating system selected.");
+                }
+                TemplateSystem::Minijinja => {
+                        event!(Level::INFO, "Using MiniJinja templating system.");
+                        println!("Using MiniJinja templating system.");
+                        mini_jinja_example()?;
+                }
+                TemplateSystem::LiquidRust => {
+                        event!(Level::INFO, "Using LiquidRust templating system.");
+                        println!("Using LiquidRust templating system.");
+                        liquid_rust_example()?;
+                }
+                TemplateSystem::Handlebars => {
+                        event!(Level::INFO, "Using Handlebars templating system.");
+                        println!("Using Handlebars templating system.");
+                        handlebars_example()?;
+                }
+        }
 
         Ok(())
+}
+
+fn mini_jinja_example() -> Result<()> {
+        use minijinja::{context, Environment};
+        let mut env = Environment::new();
+        env.add_template("hello", "Hello {{ name }}!").unwrap();
+        let tmpl = env.get_template("hello").unwrap();
+        println!("{}", tmpl.render(context!(name => "John")).unwrap());
+        Ok(())
+}
+
+fn liquid_rust_example() -> Result<()> {
+        todo!()
+}
+
+fn handlebars_example() -> Result<()> {
+        todo!()
 }
 
 // /////////////////////////////////////////////////////////////////////////////////////// //
@@ -65,6 +105,8 @@ mod support_tracing {
         use tracing_subscriber::EnvFilter;
 
         /// Basic boilerplate logging initialization.
+        ///
+        /// TODO/NOTE: `EnvFilter` provides builtins to do what we're already doing here / :shrug:
         pub fn tracing_subscribe_boilerplate(env_min: impl Into<String>) {
                 let filter = EnvFilter::try_new(
                         std::env::var("RUST_LOG").unwrap_or_else(|_| env_min.into()),
