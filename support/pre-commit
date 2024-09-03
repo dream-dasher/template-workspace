@@ -36,7 +36,7 @@ NC='\033[0m' # No Color
 ##====================================================================================##
 
 ##====================================================================================##
-package_name="rreeppoo_nnaammee" # MANUALLY add package name here
+package_name="CRATE_NAME" # MANUALLY add package name here
 test_coverage_min=50           # below this result the `coverage` test will fail
 ##====================================================================================##
 
@@ -48,6 +48,18 @@ echo -e "${DARK_GRAY}===========================================================
 echo -e "${YELLOW} formatting... ${NC}"
 cargo fmt
 echo -e "${GREEN} Format successful. ${NC}"
+echo -e "${DARK_GRAY}================================================================${NC}"
+
+echo -e "${DARK_GRAY}================================================================${NC}"
+echo -e "${YELLOW} checking for errors... ${NC}"
+cargo check
+echo -e "${GREEN} Error check successful. ${NC}"
+echo -e "${DARK_GRAY}================================================================${NC}"
+
+echo -e "${DARK_GRAY}================================================================${NC}"
+echo -e "${YELLOW} checking cargo manifest errors... ${NC}"
+cargo verify-project
+echo -e "${GREEN} Manifest check successful. ${NC}"
 echo -e "${DARK_GRAY}================================================================${NC}"
 
 echo -e "${DARK_GRAY}================================================================${NC}"

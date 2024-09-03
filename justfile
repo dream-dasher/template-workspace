@@ -45,37 +45,9 @@ test:
     cargo test --doc --quiet
     cargo nextest run --status-level=leak
 
+# Run git hook. (pre-commit)
 hook hook='pre-commit':
-    git hook run {{hook}}
-    
-# # # Needs updating to work with workspace.
-# # Clean, release build, deploy file to `/user/local/bin/`
-# [confirm]
-# deploy binary_name version: check
-#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
-#     @ echo "input version: {{version}}"
-#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
-#     cargo clean
-#     cargo build --release
-#     cargo doc --release
-#     sudo cp target/release/{{binary_name}} /usr/local/bin/{{binary_name}}
-    
-# # # Needs updating to work with workspace.
-# # Push version x.y.z; deploy if used with `dist`
-# [confirm]
-# deploy-remote version: check
-#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
-#     @ echo "input version: {{version}}"
-#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
-#     cargo clean
-#     cargo build --release
-#     cargo doc --release
-#     - git add .
-#     - git commit -m "release: {{version}}"
-#     git tag "v{{version}}"
-#     - git push
-#     git push --tags
-    
+    git hook run {{hook}} 
 
 # Show (dev-oriented) docs.
 docs:
@@ -117,6 +89,8 @@ hard-update:
 deps-ext:
     @echo "{{CYN}}List of external dependencies for this command runner and repo:"
     xsv table ext_deps.csv
+    
+# ######################################################################## #
 
 # Print reminder: how to set env vars that propagate to child shells.
 _remind_setenv:
@@ -170,13 +144,6 @@ _example_file_exists_test file:
 
 # ######################################################################## #
 
-# add `gen-env` to `init`
-# # Generate a `.env` file from `template.env`.
-# gen-env:
-#     @echo "{{CYN}}The {{GRN}}.env DATABASE_URL value{{CYN}}will populate your database path when needed.  Please edit the file to manually specify."
-#     @echo {{ if path_exists(".env") == "true" { `echo "\(.env file already exists\)"` } else { `cp 'template.env' '.env'; echo "\(.env file created\)"`} }}
-
-
 # # Ad hoc hyperfine tests for the release version of the cli app.
 # bench-hyperf regex='ho' :
 #     @echo "{{GRN}}Release{{NC}}, search-only:"
@@ -185,3 +152,33 @@ _example_file_exists_test file:
 #     hyperfine --warmup 3 "target/release/rename_files '{{regex}}' --rep 'ohhoho' --recurse --test-run"
 #     @echo "{{PRP}}Comparison{{NC}}: fd --unrestricted, search-only:"
 #     hyperfine --warmup 3 "fd --unrestricted '{{regex}}'"
+
+# ######################################################################## #
+
+# # # Needs updating to work with workspace.
+# # Clean, release build, deploy file to `/user/local/bin/`
+# [confirm]
+# deploy binary_name version: check
+#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
+#     @ echo "input version: {{version}}"
+#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
+#     cargo clean
+#     cargo build --release
+#     cargo doc --release
+#     sudo cp target/release/{{binary_name}} /usr/local/bin/{{binary_name}}
+    
+# # # Needs updating to work with workspace.
+# # Push version x.y.z; deploy if used with `dist`
+# [confirm]
+# deploy-remote version: check
+#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
+#     @ echo "input version: {{version}}"
+#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
+#     cargo clean
+#     cargo build --release
+#     cargo doc --release
+#     - git add .
+#     - git commit -m "release: {{version}}"
+#     git tag "v{{version}}"
+#     - git push
+#     git push --tags
