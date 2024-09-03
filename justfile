@@ -28,7 +28,7 @@ _default:
         @just --list --unsorted
 
 # Initialize repository.
-init: && deps-ext gen-env
+init: && deps-ext _gen-env _gen_git_hooks
     cargo clean
     cargo build    
     cargo doc
@@ -39,41 +39,15 @@ check:
     cargo fmt
     typos
     committed
+    
+# Tests, docs and general.
+test:
     cargo test --doc --quiet
     cargo nextest run --status-level=leak
-    
-# Print reminder: how to set env vars that propagate to child shells.
-remind_set_env:
-    @ echo '{{GRN}}set -a{{NC}}; {{GRN}}source {{BLU}}.env{{NC}}; {{GRN}}set +a{{NC}}'
-    
-# # # Needs updating to work with workspace.
-# # Clean, release build, deploy file to `/user/local/bin/`
-# [confirm]
-# deploy binary_name version: check
-#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
-#     @ echo "input version: {{version}}"
-#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
-#     cargo clean
-#     cargo build --release
-#     cargo doc --release
-#     sudo cp target/release/{{binary_name}} /usr/local/bin/{{binary_name}}
-    
-# # # Needs updating to work with workspace.
-# # Push version x.y.z; deploy if used with `dist`
-# [confirm]
-# deploy-remote version: check
-#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
-#     @ echo "input version: {{version}}"
-#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
-#     cargo clean
-#     cargo build --release
-#     cargo doc --release
-#     - git add .
-#     - git commit -m "release: {{version}}"
-#     git tag "v{{version}}"
-#     - git push
-#     git push --tags
-    
+
+# Run git hook. (pre-commit)
+hook hook='pre-commit':
+    git hook run {{hook}} 
 
 # Show (dev-oriented) docs.
 docs:
@@ -114,16 +88,30 @@ hard-update:
 # List dependencies. (This command has dependencies.)
 deps-ext:
     @echo "{{CYN}}List of external dependencies for this command runner and repo:"
-    xsv table ext_dependencies.csv
-
-# Generate .env file from template, if .env file not present.
-gen-env:
-    if [ -f '.env' ]; then echo '`.env` exists, exiting...' && exit 1; fi
-    cp -n template.env .env
-    @ echo "{{BLU}}.env{{NC}} created from template. {{GRN}}Please fill in the necessary values.{{NC}}"
-    @ echo "e.g. via 'nvim .env'"
+    xsv table ext_deps.csv
     
 # ######################################################################## #
+
+# Print reminder: how to set env vars that propagate to child shells.
+_remind_setenv:
+    @ echo '{{GRN}}set -a{{NC}}; {{GRN}}source {{BLU}}.env{{NC}}; {{GRN}}set +a{{NC}}'
+    
+# ######################################################################## #
+    
+# Generate .env file from template, if .env file not present.
+_gen-env:
+    @ if [ -f '.env' ]; then echo '`{{BRN}}.env{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n support/template.env .env; echo "{{BLU}}.env{{NC}} created from template. {{GRN}}Please fill in the necessary values.{{NC}}"; echo "e.g. via 'nvim .env'"; fi
+    
+# Attempt to add all git-hooks. (no overwrite)
+_gen_git_hooks: _gen-precommit-hook _gen-commitmsg-hook
+
+# Attempt to add `pre-commit` git-hook. (no overwrite)
+_gen-precommit-hook:
+    @ if [ -f '.git/hooks/pre-commit' ]; then echo '`.git/hooks/{{BRN}}pre-commit{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n support/pre-commit .git/hooks/pre-commit; chmod u+x .git/hooks/pre-commit; echo live "{{BLU}}pre-commit{{NC}} hook added to {{GRN}}.git/hooks{{NC}} and set as executable"; fi
+    
+# Attempt to add `commit-msg` git-hook. (no overwrite)
+_gen-commitmsg-hook:
+    @ if [ -f '.git/hooks/commit-msg' ]; then echo '`.git/hooks/{{BRN}}commit-msg{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n support/commit-msg .git/hooks/commit-msg; chmod u+x .git/hooks/commit-msg; echo live "{{BLU}}commit-msg{{NC}} hook added to {{GRN}}.git/hooks{{NC}} and set as executable"; fi
 
 # ######################################################################## #
 
@@ -156,13 +144,6 @@ _example_file_exists_test file:
 
 # ######################################################################## #
 
-# add `gen-env` to `init`
-# # Generate a `.env` file from `template.env`.
-# gen-env:
-#     @echo "{{CYN}}The {{GRN}}.env DATABASE_URL value{{CYN}}will populate your database path when needed.  Please edit the file to manually specify."
-#     @echo {{ if path_exists(".env") == "true" { `echo "\(.env file already exists\)"` } else { `cp 'template.env' '.env'; echo "\(.env file created\)"`} }}
-
-
 # # Ad hoc hyperfine tests for the release version of the cli app.
 # bench-hyperf regex='ho' :
 #     @echo "{{GRN}}Release{{NC}}, search-only:"
@@ -171,3 +152,33 @@ _example_file_exists_test file:
 #     hyperfine --warmup 3 "target/release/rename_files '{{regex}}' --rep 'ohhoho' --recurse --test-run"
 #     @echo "{{PRP}}Comparison{{NC}}: fd --unrestricted, search-only:"
 #     hyperfine --warmup 3 "fd --unrestricted '{{regex}}'"
+
+# ######################################################################## #
+
+# # # Needs updating to work with workspace.
+# # Clean, release build, deploy file to `/user/local/bin/`
+# [confirm]
+# deploy binary_name version: check
+#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
+#     @ echo "input version: {{version}}"
+#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
+#     cargo clean
+#     cargo build --release
+#     cargo doc --release
+#     sudo cp target/release/{{binary_name}} /usr/local/bin/{{binary_name}}
+    
+# # # Needs updating to work with workspace.
+# # Push version x.y.z; deploy if used with `dist`
+# [confirm]
+# deploy-remote version: check
+#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
+#     @ echo "input version: {{version}}"
+#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
+#     cargo clean
+#     cargo build --release
+#     cargo doc --release
+#     - git add .
+#     - git commit -m "release: {{version}}"
+#     git tag "v{{version}}"
+#     - git push
+#     git push --tags
