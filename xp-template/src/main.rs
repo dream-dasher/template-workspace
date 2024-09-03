@@ -1,7 +1,18 @@
+//! main - cli entry point to various example templating code
+
+mod error;
+mod handlebars_ex;
+mod liquid_ex;
+mod minijinja_ex;
+mod support;
+
 use std::path::PathBuf;
 
 use clap::{Parser, Subcommand, ValueEnum};
 use error::Result;
+use handlebars_ex::handlebars_example;
+use liquid_ex::liquid_rust_example;
+use minijinja_ex::mini_jinja_example;
 use tracing::{event, info, Level};
 
 /// CLI Args
@@ -41,11 +52,11 @@ enum TemplateSystem {
 fn main() -> Result<()> {
         let args = Args::parse();
         match &args.verbose {
-                0 => support_tracing::tracing_subscribe_boilerplate("error"),
-                1 => support_tracing::tracing_subscribe_boilerplate("warn"),
-                2 => support_tracing::tracing_subscribe_boilerplate("info"),
-                3 => support_tracing::tracing_subscribe_boilerplate("debug"),
-                _ => support_tracing::tracing_subscribe_boilerplate("trace"),
+                0 => support::tracing_subscribe_boilerplate("error"),
+                1 => support::tracing_subscribe_boilerplate("warn"),
+                2 => support::tracing_subscribe_boilerplate("info"),
+                3 => support::tracing_subscribe_boilerplate("debug"),
+                _ => support::tracing_subscribe_boilerplate("trace"),
         }
         tracing::event!(Level::DEBUG, "Script 1, starting...");
         info!(?args);
@@ -76,49 +87,4 @@ fn main() -> Result<()> {
         Ok(())
 }
 
-fn mini_jinja_example() -> Result<()> {
-        use minijinja::{context, Environment};
-        let mut env = Environment::new();
-        env.add_template("hello", "Hello {{ name }}!").unwrap();
-        let tmpl = env.get_template("hello").unwrap();
-        println!("{}", tmpl.render(context!(name => "John")).unwrap());
-        Ok(())
-}
-
-fn liquid_rust_example() -> Result<()> {
-        todo!()
-}
-
-fn handlebars_example() -> Result<()> {
-        todo!()
-}
-
 // /////////////////////////////////////////////////////////////////////////////////////// //
-/// EARLY_DEV: non-specific error & result types for use while exploring new code.
-mod error {
-        pub type Result<T> = core::result::Result<T, Error>;
-        pub type Error = Box<dyn std::error::Error>;
-}
-
-/// Logging (tracing) related code.
-mod support_tracing {
-        use tracing_subscriber::EnvFilter;
-
-        /// Basic boilerplate logging initialization.
-        ///
-        /// TODO/NOTE: `EnvFilter` provides builtins to do what we're already doing here / :shrug:
-        pub fn tracing_subscribe_boilerplate(env_min: impl Into<String>) {
-                let filter = EnvFilter::try_new(
-                        std::env::var("RUST_LOG").unwrap_or_else(|_| env_min.into()),
-                        )
-                        .expect("Valid filter input provided.");
-
-                tracing_subscriber::fmt().pretty()
-                                         .with_env_filter(filter)
-                                         .with_file(true)
-                                         .with_line_number(true)
-                                         .with_thread_ids(true)
-                                         .with_target(true)
-                                         .init();
-        }
-}
