@@ -28,7 +28,7 @@ _default:
         @just --list --unsorted
 
 # Initialize repository.
-init: && deps-ext gen-env
+init: && deps-ext _gen-env _gen_git_hooks
     cargo clean
     cargo build    
     cargo doc
@@ -39,12 +39,14 @@ check:
     cargo fmt
     typos
     committed
+    
+# Tests, docs and general.
+test:
     cargo test --doc --quiet
     cargo nextest run --status-level=leak
-    
-# Print reminder: how to set env vars that propagate to child shells.
-remind_set_env:
-    @ echo '{{GRN}}set -a{{NC}}; {{GRN}}source {{BLU}}.env{{NC}}; {{GRN}}set +a{{NC}}'
+
+hook hook='pre-commit':
+    git hook run {{hook}}
     
 # # # Needs updating to work with workspace.
 # # Clean, release build, deploy file to `/user/local/bin/`
@@ -114,16 +116,28 @@ hard-update:
 # List dependencies. (This command has dependencies.)
 deps-ext:
     @echo "{{CYN}}List of external dependencies for this command runner and repo:"
-    xsv table ext_dependencies.csv
+    xsv table ext_deps.csv
 
-# Generate .env file from template, if .env file not present.
-gen-env:
-    if [ -f '.env' ]; then echo '`.env` exists, exiting...' && exit 1; fi
-    cp -n template.env .env
-    @ echo "{{BLU}}.env{{NC}} created from template. {{GRN}}Please fill in the necessary values.{{NC}}"
-    @ echo "e.g. via 'nvim .env'"
+# Print reminder: how to set env vars that propagate to child shells.
+_remind_setenv:
+    @ echo '{{GRN}}set -a{{NC}}; {{GRN}}source {{BLU}}.env{{NC}}; {{GRN}}set +a{{NC}}'
     
 # ######################################################################## #
+    
+# Generate .env file from template, if .env file not present.
+_gen-env:
+    @ if [ -f '.env' ]; then echo '`{{BRN}}.env{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n support/template.env .env; echo "{{BLU}}.env{{NC}} created from template. {{GRN}}Please fill in the necessary values.{{NC}}"; echo "e.g. via 'nvim .env'"; fi
+    
+# Attempt to add all git-hooks. (no overwrite)
+_gen_git_hooks: _gen-precommit-hook _gen-commitmsg-hook
+
+# Attempt to add `pre-commit` git-hook. (no overwrite)
+_gen-precommit-hook:
+    @ if [ -f '.git/hooks/pre-commit' ]; then echo '`.git/hooks/{{BRN}}pre-commit{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n support/pre-commit .git/hooks/pre-commit; chmod u+x .git/hooks/pre-commit; echo live "{{BLU}}pre-commit{{NC}} hook added to {{GRN}}.git/hooks{{NC}} and set as executable"; fi
+    
+# Attempt to add `commit-msg` git-hook. (no overwrite)
+_gen-commitmsg-hook:
+    @ if [ -f '.git/hooks/commit-msg' ]; then echo '`.git/hooks/{{BRN}}commit-msg{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n support/commit-msg .git/hooks/commit-msg; chmod u+x .git/hooks/commit-msg; echo live "{{BLU}}commit-msg{{NC}} hook added to {{GRN}}.git/hooks{{NC}} and set as executable"; fi
 
 # ######################################################################## #
 
