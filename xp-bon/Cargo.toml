@@ -1,0 +1,9 @@
+[package]
+name = "xp-bon"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bon = { workspace = true }
+
+[lints]
