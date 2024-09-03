@@ -35,46 +35,67 @@ The `dev-` element exists in sub-packages, but not workspace root.
 - [Cargo-dist](https://opensource.axo.dev/cargo-dist/book/installers/homebrew.html)
 
 ## Common Dependencies
-### Common
-```toml
-derive_more = "1"
-derive_builder = "0.20"
-itertools = "0.13"
-chrono = "0.4"
-csv = "1"
-regex = { version = "1", features = ["logging"] }
-walkdir = "2"
-include_dir = "0.7"
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-dotenvy = "0.15"
-secrecy = "0.8"
-```
-
-### Logging
-```toml
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["chrono", "env-filter"] }
-# tracing-error = "0.2.0"
-```
-
-### Async
+### --Async--
 ```toml
 futures = "0.3"
 tokio = { version = "1", features = ["full", "tracing"] }
-sqlx = ...
-reqwest = ...
 ```
 
-### CLI
+### --CLI--
 ```toml
-clap = { version = "4.5", features = ["env", "derive", "string", "wrap_help"] }
+clap = { version = "4", features = ["env", "derive", "string", "unicode", "wrap_help"] }
 owo-colors = "4"
 indicatif = "0.17"
 dialoguer = "0.11"
 ```
 
-### (E)egui
+### --Diagnostics--
+```toml
+tracing = "0.1"
+# tracing-appender = "0.2"
+# tracing-error = "0.2"
+tracing-subscriber = { version = "0.3", features = ["chrono", "env-filter"] }
+```
+
+### --Env & Files--
+```toml
+csv = "1"
+dotenvy = "0.15"
+# include_dir = "0.7"
+secrecy = "0.8"
+walkdir = "2"
+```
+
+### --General--
+```toml
+bon = "2""
+chrono = "0.4"
+derive_more = { version = "1", features = [
+    "full",
+    "constructor",
+    "error",
+    "deref",
+    "from",
+] }
+itertools = "0.13"
+regex = { version = "1", features = ["logging"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+```
+
+### --Networking--
+```toml
+reqwest = { version = "0.12", features = ["blocking", "json"] }
+sqlx = { version = "0.8", features = [
+    "chrono",
+    "mysql","postgres","sqlite",
+    "macros",
+    "runtime-tokio",
+    "tls-rustls",
+] }
+```
+
+### --egui--
 ```toml
 eframe = "0.27"
 egui = "0.27"
@@ -82,7 +103,7 @@ egui_extras = "0.27"
 egui_inbox = "0.4"
 ```
 
-### Testing
+### --Testing--
 ```toml
 quickcheck = "1"
 quickcheck_macros = "1"
@@ -95,7 +116,10 @@ insta = { version = "1", features = [
         "walkdir",
         "yaml",
 ] 
+### --Test Trace-Logging--
 test-log = { version = "0.2", features = ["trace"] }
+
+### --Mocking--
 # tempfile = "3"
 # wiremock = "0.5"
 ```
