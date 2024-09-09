@@ -2,11 +2,19 @@
 # [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
 
 [workspace]
-members = ["lib_blocking", "bin_cli", "bin_tbd", "xp-drop", "xp-serde", "xp-template"]
+members = [
+    "lib_blocking",
+    "bin_cli",
+    "bin_tbd",
+    "xp-drop",
+    "xp-serde",
+    "xp-template",
+]
 resolver = "2"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
+allow_attributes = "warn"
 unused = { level = "allow", priority = -1 } # (early) ¡DEVELOPMENT-ONLY!
 dead_code = "allow"                         # (early) ¡DEVELOPMENT-ONLY!
 
