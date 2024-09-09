@@ -14,6 +14,7 @@ resolver = "2"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
+allow_attributes = "warn"
 unused = { level = "allow", priority = -1 } # (early) ¡DEVELOPMENT-ONLY!
 dead_code = "allow"                         # (early) ¡DEVELOPMENT-ONLY!
 
