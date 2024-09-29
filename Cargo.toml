@@ -9,7 +9,6 @@ members = [
     "xp-drop",
     "xp-serde",
     "xp-template",
-    "bintest",
 ]
 resolver = "2"
 
