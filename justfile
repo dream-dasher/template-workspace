@@ -27,6 +27,12 @@ NC := '\033[0m'     # No Color
 _default:
         @just --list --unsorted
 
+# add a package to workspace
+packadd name:
+    cargo new --bin {{name}}
+    rm -rf {{name}}
+    cargo generate --path ./.support/templates/template__cli_bin --name {{name}}
+
 # Initialize repository.
 init: && deps-ext _gen-env _gen_git_hooks
     cargo clean

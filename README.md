@@ -7,6 +7,18 @@ cargo clean
 rename_files -preview --recurse '^bin_tbd' --rep bin_to_be_dee
 sd -preview 'bin_tbd' bintobedet $(find . --type f)
 ```
+## Cargo Generate Notes
+[Cargo Generate Documentation](https://cargo-generate.github.io/cargo-generate/templates/builtin_placeholders.html)
+### Builtins
+- `authors`
+- `project_name`/`crate_name`: kebab-case/snake_case
+- `crate_type`: bin/lib
+- `os-arch`
+- `username`
+- `within_cargo_project`
+- `is_init`
+### Syntax
+`{{ crate_name }}`, `{{project-name | upper_camel_case}}`
 
 ## Workspace Notes
 [Cargo Workspace - Ch 12](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html)

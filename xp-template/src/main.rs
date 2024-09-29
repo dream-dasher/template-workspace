@@ -13,7 +13,7 @@ use error::Result;
 use handlebars_ex::handlebars_example;
 use liquid_ex::liquid_rust_example;
 use minijinja_ex::mini_jinja_example;
-use tracing::{event, info, Level};
+use tracing::{Level, event, info};
 
 /// CLI Args
 ///
@@ -60,7 +60,7 @@ fn main() -> Result<()> {
         }
         tracing::event!(Level::DEBUG, "Script 1, starting...");
         info!(?args);
-        use minijinja::{context, Environment};
+        use minijinja::{Environment, context};
 
         match &args.templater {
                 TemplateSystem::None => {

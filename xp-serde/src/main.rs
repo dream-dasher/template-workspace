@@ -26,7 +26,7 @@
 //! let z = E::Z;                // Represented as `"Z"`
 
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Result, Value};
+use serde_json::{Result, Value, json};
 use tracing::Level;
 
 struct ImmA(String);
