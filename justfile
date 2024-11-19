@@ -1,46 +1,40 @@
 # Justfile (Convenience Command Runner)
 
-# local vars
-LOCAL_VAR_EXAMPLE:='yes, I am!'
-
 # rust vars
 RUST_LOG:= 'debug'
 RUST_BACKTRACE:= '1'
 RUSTFLAGS:='--cfg tokio_unstable'
 TOML_VERSION:=`rg '^version = ".*"' Cargo.toml | sd '.*"(.*)".*' '$1'`
-
+# just path vars
 HOME_DIR := env_var('HOME')
 LOCAL_ROOT := justfile_directory()
 INVOCD_FROM := invocation_directory()
 INVOC_IS_ROOT := if INVOCD_FROM == LOCAL_ROOT { "true" } else { "false" }
+# custom vars
 FROZE_SHA_REGEX := 'FROZE_[a-fA-F0-9]{64}_FROZE-'
-
 # ANSI Color Codes for use with echo command
-GRN := '\033[0;32m' # Green
+NC := '\033[0m'     # No Color
+CYN := '\033[0;36m' # Cyan
 BLU := '\033[0;34m' # Blue
+GRN := '\033[0;32m' # Green
 PRP := '\033[0;35m' # Purple
 BRN := '\033[0;33m' # Brown
-CYN := '\033[0;36m' # Cyan
-NC := '\033[0m'     # No Color
 
 # Default, lists commands.
 _default:
         @just --list --unsorted
 
-update_breaking:
-    cargo update --breaking -Z unstable-options
-
-# add a package to workspace // update-comment: the heck am I doing adding, removing, then using cargo-generate?
-packadd name:
-    cargo new --bin {{name}}
-    rm -rf {{name}}
-    cargo generate --path ./.support/templates/template__cli_bin --name {{name}}
-
 # Initialize repository.
+[confirm]
 init: && deps-ext _gen-env _gen_git_hooks
     cargo clean
     cargo build    
     cargo doc
+    
+# Clean up cargo build artifacts.
+[confirm]
+teardown:
+    cargo clean
 
 # Linting, formatting, typo checking, etc.
 check:
@@ -49,20 +43,35 @@ check:
     typos
     committed
     
-# Tests, docs and general.
-test:
-    cargo test --doc --quiet
-    cargo nextest run --status-level=leak
+# Auto-fix some errors picked up by check. (Manual exclusion of data folder as additional safeguard.)
+[confirm]
+fix:
+     typos --exclude '*/data/*' --write-changes
 
-# Run git hook. (pre-commit)
-hook hook='pre-commit':
-    git hook run {{hook}} 
-
-# Show (dev-oriented) docs.
+# Show docs.
 docs:
     rustup doc
     rustup doc --std
     cargo doc --all-features --document-private-items --open
+
+# Update Rust-crates even through breaking changes
+update_breaking:
+    cargo update --breaking -Z unstable-options
+    
+# Add a package to workspace // update-comment: the heck am I doing adding, removing, then using cargo-generate?
+packadd name:
+    cargo new --bin {{name}}
+    rm -rf {{name}}
+    cargo generate --path ./.support/templates/template__cli_bin --name {{name}}
+
+# Run git hook.
+git_hook hook='pre-commit':
+    git hook run {{hook}} 
+
+# Tests, docs and general.
+test:
+    cargo test --doc --quiet
+    cargo nextest run --status-level=leak
 
 # Run a specific test with output visible. (Use '' for test_name to see all tests and set log_level)
 test-view test_name="" log_level="error":
@@ -74,26 +83,10 @@ testnx-view test_name="" log_level="error":
     @echo "'Fun' Fact; the '--test' flag only allows integration test selection and will just fail on unit tests."
     RUST_LOG={{log_level}} cargo nextest run {{test_name}} --no-capture 
 
-    
-# Auto-fix some errors picked up by check. (Manual exclusion of data folder as additional safeguard.)
-[confirm]
-fix:
-     typos --exclude '*/data/*' --write-changes
-
-# Clean up cargo build artifacts.
-[confirm]
-teardown:
-    cargo clean
-
 # Watch a file: compile & run on changes.
 watch file_to_run:
     cargo watch --quiet --clear --exec 'run --quiet --example {{file_to_run}}'
 
-# Update to breaking versions is available.
-[confirm]
-hard-update:
-    cargo update --breaking -Z unstable-options
-    
 # List dependencies. (This command has dependencies.)
 deps-ext:
     @echo "{{CYN}}List of external dependencies for this command runner and repo:"
