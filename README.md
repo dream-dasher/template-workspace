@@ -4,8 +4,8 @@
 `(-)-p(review)` is on by default, but this will allow renaming a package and references to it.
 ```bash
 cargo clean
-rename_files -preview --recurse '^bin_tbd' --rep bin_to_be_dee
-sd -preview 'bin_tbd' bintobedet $(find . --type f)
+rename_files --preview --recurse '^bin_tbd' --rep bin_to_be_dee
+sd --preview 'bin_tbd' bintobedet $(find . --type f)
 ```
 ## Cargo Generate Notes
 [Cargo Generate Documentation](https://cargo-generate.github.io/cargo-generate/templates/builtin_placeholders.html)

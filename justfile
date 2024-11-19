@@ -27,7 +27,10 @@ NC := '\033[0m'     # No Color
 _default:
         @just --list --unsorted
 
-# add a package to workspace
+update_breaking:
+    cargo update --breaking -Z unstable-options
+
+# add a package to workspace // update-comment: the heck am I doing adding, removing, then using cargo-generate?
 packadd name:
     cargo new --bin {{name}}
     rm -rf {{name}}
