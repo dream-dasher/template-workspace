@@ -37,7 +37,7 @@ NC='\033[0m' # No Color
 
 echo -e "${DARK_GRAY}==============${YELLOW}Beginning of Commit-Msg Hook Script${DARK_GRAY}===============${NC}"
 
-# run committed on temp file holding most recent commit message
+# print most recent commit message
 echo -e "${DARK_GRAY}================================================================${NC}"
 echo -e "${YELLOW}printing commit message for reference${NC}"
 echo
