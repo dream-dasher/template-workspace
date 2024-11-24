@@ -25,7 +25,7 @@ sd --preview 'bin_tbd' bintobedet $(find . --type f)
 
 ### Start a Workspace
 1. Create dir.
-2. Manually add `Cargo.toml` with just a `[workspace]` section & `resolver = 2`.
+2. Manually add `Cargo.toml` with just a `[workspace]` section & `workspace.resolver = 3`.
 3. Use `cargo new #### --bin/lib` to add packages (~'sub-repos', technically superset of 'crate's).
 
 ### Crate Inter-Operation
