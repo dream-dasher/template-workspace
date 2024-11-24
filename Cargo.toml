@@ -11,7 +11,6 @@ members = [
     "xp-serde",
     "xp-template",
 ]
-resolver = "2"
 
 [workspace.package]
 edition = "2024"
@@ -84,7 +83,7 @@ serde_json = "1"
 ## --Networking--
 reqwest = { version = "0.12", features = ["blocking", "json"] }
 
-# Dev_Dependencies
+# Dev-Dependencies
 ## --Property Sample Testing--
 quickcheck = "1"
 quickcheck_macros = "1"
