@@ -1,3 +1,4 @@
+# cargo-features = ["edition2024"]
 # Settings for Rust Workspace 
 # [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
 
@@ -11,6 +12,18 @@ members = [
     "xp-template",
 ]
 resolver = "2"
+
+[workspace.package]
+edition = "2024"
+authors = ["Ethan Skowronski-Lutz"]
+description = "template workspace; explorative"
+homepage = "https://github.com/ethanmsl/template-workspace"
+documentation = "https://github.com/ethanmsl/template-workspace"
+repository = "https://github.com/ethanmsl/template-workspace"
+keywords = ["template", "workspace", "explorative"]
+# publish = []
+# license = ""
+# license-file = ""
 
 [workspace.lints.rust]
 unsafe_code = "forbid"

@@ -1,8 +1,19 @@
+cargo-features = ["edition2024"]
+
 [package]
 name = "xp-drop"
 version = "0.1.0"
-edition = "2021"
+edition.workspace = true
+authors.workspace = true
 description = "`drop` implementation"
+# description.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+keywords.workspace = true
+repository.workspace = true
+# publish.workspace = true
+# license.workspace = true
+# license-file.workspace = true
 
 [dependencies]
 ## --Logging--
