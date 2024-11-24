@@ -47,7 +47,9 @@ struct Request {
 }
 
 fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
-        std::env::set_var("RUST_LOG", "trace");
+        // unsafe {
+        //         std::env::set_var("RUST_LOG", "trace");
+        // }
         tracing_subscriber::fmt::init();
         println!();
         println!("----------------------------------------");

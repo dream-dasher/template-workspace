@@ -3,7 +3,9 @@
 use xp_drop::*;
 
 fn main() {
-        std::env::set_var("RUST_LOG", "trace");
+        // unsafe {
+        //         std::env::set_var("RUST_LOG", "trace");
+        // }
         tracing_subscriber::fmt::init();
         tracing::info!("Starting...");
 
