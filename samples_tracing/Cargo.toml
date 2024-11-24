@@ -28,3 +28,5 @@ tracing-subscriber.workspace = true
 ## --CLI--
 clap.workspace = true
 owo-colors.workspace = true
+tracing-timing.workspace = true
+tracing-error.workspace = true
