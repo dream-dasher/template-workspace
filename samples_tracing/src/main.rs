@@ -7,10 +7,11 @@ use std::{io::Read, thread};
 use tracing::{Level, debug, error, info, info_span, span, trace, warn};
 fn main() {
         tracing_subscriber::fmt::init();
+        let mut handles = vec![];
         let span = span!(Level::INFO, "main");
         let _guard = span.enter();
         for file in std::env::args().skip(1) {
-                thread::spawn(move || {
+                let handle = thread::spawn(move || {
                         let span = info_span!("file", fname = %file);
                         let _guard = span.enter();
                         info!("opening the file");
@@ -22,6 +23,15 @@ fn main() {
                         // ..
                         info!("done with file");
                 });
+                handles.push(handle);
         }
-        thread::sleep(std::time::Duration::from_secs(1));
+        let span = span!(Level::INFO, "joining");
+        let _guard = span.enter();
+        for handle in handles {
+                let span = span!(Level::INFO, "indiv_join");
+                let _guard = span.enter();
+                debug!("joining thread");
+                handle.join().expect("thread join error");
+                debug!("thread joined");
+        }
 }
