@@ -1,8 +1,14 @@
+//! Tracing - with Jon Gj.
+//!
+//! clear; RUST_LOG=trace carrbn samples_tracing  bb ccc dddd
+
 use std::io::Read;
 
 use tracing::{Level, debug, error, info, span, trace, warn};
 fn main() {
         tracing_subscriber::fmt::init();
+        let span = span!(Level::INFO, "main");
+        let _guard = span.enter();
         for file in std::env::args().skip(1) {
                 let span = span!(Level::INFO, "file", fname = %file);
                 let _guard = span.enter();
