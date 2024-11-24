@@ -1,14 +1,22 @@
 //! Tracing - with Jon Gj.
 //!
-//! clear; RUST_LOG=trace carrbn samples_tracing  bb ccc dddd
+//! ?var : use Debug implementation
+//! %var : use Display implementation
+//! clear; RUST_LOG=trace carrbn samples_tracing  a bb ccc dddd
 
 use std::{io::Read, thread};
+
+#[derive(Debug)]
+struct Foo {
+        a: bool,
+        b: u32,
+}
 
 use tracing::{Level, debug, error, info, info_span, span, trace, warn};
 fn main() {
         tracing_subscriber::fmt::init();
         let mut handles = vec![];
-        let span = span!(Level::INFO, "main");
+        let span = span!(Level::INFO, "main",);
         let _guard = span.enter();
         for file in std::env::args().skip(1) {
                 let handle = thread::spawn(move || {
@@ -21,7 +29,8 @@ fn main() {
                         // file.read_exact(&mut bytes).unwrap();
                         info!(bytes = 0, "parsing");
                         // ..
-                        info!("done with file");
+                        let foo: Foo = Foo { a: false, b: 12 };
+                        info!(parsed = ?foo, "done with file");
                 });
                 handles.push(handle);
         }
