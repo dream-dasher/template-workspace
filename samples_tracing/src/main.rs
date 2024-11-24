@@ -1,5 +1,8 @@
 //! Tracing - with Jon Gj.
 //!
+//! (<fields>, <message>)
+//! Level: TRACE, DEBUG, INFO, WARN, ERROR
+//! field_name = var||val : set field
 //! ?var : use Debug implementation
 //! %var : use Display implementation
 //! clear; RUST_LOG=trace carrbn samples_tracing  a bb ccc dddd
@@ -18,6 +21,7 @@ fn main() {
         let mut handles = vec![];
         let span = span!(Level::INFO, "main",);
         let _guard = span.enter();
+        info!(args = ?std::env::args(), "about to start file loop");
         for file in std::env::args().skip(1) {
                 let handle = thread::spawn(move || {
                         let span = info_span!("file", fname = %file);
