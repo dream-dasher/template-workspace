@@ -42,6 +42,7 @@ fn main() {
                         // file.read_exact(&mut bytes).unwrap();
                         info!(bytes = 0, "parsing");
                         // ..
+                        #[expect(clippy::disallowed_names)]
                         let foo: Foo = Foo { a: false, b: 12 };
                         info!(parsed = ?foo, "done with file");
                 });

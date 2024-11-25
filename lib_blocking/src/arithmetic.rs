@@ -139,7 +139,7 @@ mod tests {
 
                 TestResult::from_bool((a + b) == add_can_overflow(a, b))
         }
-        ///
+        /// Proptest example; compares explicit multiplication to custom function
         #[quickcheck]
         fn prop_mult(a: u32, b: u32) -> bool {
                 (a as u64 * b as u64) == mult(a, b)
