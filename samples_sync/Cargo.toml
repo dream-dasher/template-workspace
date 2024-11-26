@@ -14,7 +14,9 @@ keywords.workspace = true
 # license.workspace = true
 # license-file.workspace = true
 
-[dependencies]
-
 [lints]
 workspace = true
+
+[dependencies]
+tracing-subscriber.workspace = true
+tracing.workspace = true
