@@ -17,27 +17,33 @@ pub type Result<T> = core::result::Result<T, Error>;
 
 // derive_more::From fits nicely into this pattern as well
 #[derive(Debug, Display, derive_more::Error, From)]
-pub enum Error {
+pub enum Error
+{
         Simple,
-        WithSource {
+        WithSource
+        {
                 source: Simple,
         },
         #[from(ignore)]
-        WithBacktraceFromSource {
+        WithBacktraceFromSource
+        {
                 #[error(backtrace)]
                 source: Simple,
         },
         #[display("{source}")]
-        WithDifferentBacktrace {
+        WithDifferentBacktrace
+        {
                 source:    Simple,
                 backtrace: Backtrace,
         },
-        WithExplicitSource {
+        WithExplicitSource
+        {
                 #[error(source)]
                 explicit_source: WithSource,
         },
         #[from(ignore)]
-        WithBacktraceFromExplicitSource {
+        WithBacktraceFromExplicitSource
+        {
                 #[error(backtrace, source)]
                 explicit_source: WithSource,
         },
@@ -49,11 +55,13 @@ pub enum Error {
 pub struct Simple;
 
 #[derive(Default, Debug, Display, derive_more::Error)]
-pub struct WithSource {
+pub struct WithSource
+{
         source: Simple,
 }
 #[derive(Default, Debug, Display, derive_more::Error)]
-pub struct WithExplicitSource {
+pub struct WithExplicitSource
+{
         #[error(source)]
         explicit_source: Simple,
 }
@@ -66,7 +74,8 @@ pub struct WithoutSource(#[error(not(source))] i32);
 
 #[derive(Debug, Display, derive_more::Error)]
 #[display("An error with a backtrace")]
-pub struct WithSourceAndBacktrace {
+pub struct WithSourceAndBacktrace
+{
         source:    Simple,
         backtrace: Backtrace,
 }

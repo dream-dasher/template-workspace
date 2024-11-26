@@ -2,7 +2,8 @@
 
 use xp_drop::*;
 
-fn main() {
+fn main()
+{
         // unsafe {
         //         std::env::set_var("RUST_LOG", "trace");
         // }

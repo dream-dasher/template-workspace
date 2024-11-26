@@ -1,7 +1,8 @@
 //! minijinja examples
 
 use crate::error::Result;
-pub fn mini_jinja_example() -> Result<()> {
+pub fn mini_jinja_example() -> Result<()>
+{
         use minijinja::{Environment, context};
         let mut env = Environment::new();
         env.add_template("hello_template", "Hello {{ name }}!").unwrap();

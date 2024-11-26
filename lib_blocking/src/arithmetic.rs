@@ -15,7 +15,8 @@ use crate::error::{Error, Result};
 /// assert_eq!(result, 2*u32::MAX as u64);
 /// ```
 #[tracing::instrument]
-pub fn add_ample_room(a: u32, b: u32) -> u64 {
+pub fn add_ample_room(a: u32, b: u32) -> u64
+{
         a as u64 + b as u64
 }
 
@@ -32,7 +33,8 @@ pub fn add_ample_room(a: u32, b: u32) -> u64 {
 /// assert_eq!(result, 0);
 /// ```
 #[tracing::instrument]
-pub fn add_can_overflow(a: u32, b: u32) -> u32 {
+pub fn add_can_overflow(a: u32, b: u32) -> u32
+{
         a.wrapping_add(b)
 }
 
@@ -49,7 +51,8 @@ pub fn add_can_overflow(a: u32, b: u32) -> u32 {
 /// assert!(result.is_err());
 /// ```
 #[tracing::instrument]
-pub fn add_can_err(a: u32, b: u32) -> Result<u32> {
+pub fn add_can_err(a: u32, b: u32) -> Result<u32>
+{
         a.checked_add(b).ok_or(Error::Simple)
 }
 
@@ -69,7 +72,8 @@ pub fn add_can_err(a: u32, b: u32) -> Result<u32> {
 /// assert_eq!(result, (u64::MAX - 2u64.pow(33) + 1 + 1));
 /// ```
 #[tracing::instrument]
-pub fn mult(a: u32, b: u32) -> u64 {
+pub fn mult(a: u32, b: u32) -> u64
+{
         (a as u64) * (b as u64)
 }
 
@@ -97,7 +101,8 @@ pub fn mult(a: u32, b: u32) -> u64 {
 /// div(10, 0);
 /// ```
 #[tracing::instrument]
-pub fn div(a: u64, b: u64) -> u64 {
+pub fn div(a: u64, b: u64) -> u64
+{
         if b == 0 {
                 panic!("Divide-by-zero error");
         }
@@ -106,7 +111,8 @@ pub fn div(a: u64, b: u64) -> u64 {
 }
 
 #[cfg(test)]
-mod tests {
+mod tests
+{
         use quickcheck::{self, TestResult};
         use quickcheck_macros::quickcheck;
         use test_log::test;
@@ -114,25 +120,29 @@ mod tests {
         use super::*;
 
         #[test]
-        fn spotcheck_add_example() {
+        fn spotcheck_add_example()
+        {
                 let result = add_ample_room(2, 2);
                 assert_eq!(result, 4);
         }
 
         #[quickcheck]
-        fn prop_add_ample_room(a: u32, b: u32) -> bool {
+        fn prop_add_ample_room(a: u32, b: u32) -> bool
+        {
                 (a as u64 + b as u64) == add_ample_room(a, b)
         }
 
         /// Proptest example; matches wrap on full range
         #[quickcheck]
-        fn prop_add_can_overflow_full_wrapping_add(a: u32, b: u32) -> TestResult {
+        fn prop_add_can_overflow_full_wrapping_add(a: u32, b: u32) -> TestResult
+        {
                 TestResult::from_bool((b.wrapping_add(a)) == add_can_overflow(a, b))
         }
 
         /// Proptest example; matches regular add on restricted range
         #[quickcheck]
-        fn prop_add_can_overflow_restricted_add(a: u32, b: u32) -> TestResult {
+        fn prop_add_can_overflow_restricted_add(a: u32, b: u32) -> TestResult
+        {
                 if a > u32::MAX / 2 || b > u32::MAX / 2 {
                         return TestResult::discard();
                 }
@@ -141,7 +151,8 @@ mod tests {
         }
         /// Proptest example; compares explicit multiplication to custom function
         #[quickcheck]
-        fn prop_mult(a: u32, b: u32) -> bool {
+        fn prop_mult(a: u32, b: u32) -> bool
+        {
                 (a as u64 * b as u64) == mult(a, b)
         }
 }

@@ -20,7 +20,8 @@ use tracing::{Level, event, info};
 /// More words and lorems and so forth.
 #[derive(Parser, Debug)]
 #[command(version, about, long_about)] // Read from `Cargo.toml`
-struct Args {
+struct Args
+{
         /// Some kinda mode
         #[arg(value_enum)]
         templater: TemplateSystem,
@@ -38,7 +39,8 @@ struct Args {
 }
 /// Templating Crate to use
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum, Debug)]
-enum TemplateSystem {
+enum TemplateSystem
+{
         /// no templating system
         None,
         /// minijinja
@@ -49,7 +51,8 @@ enum TemplateSystem {
         Handlebars,
 }
 
-fn main() -> Result<()> {
+fn main() -> Result<()>
+{
         let args = Args::parse();
         match &args.verbose {
                 0 => support::tracing_subscribe_boilerplate("error"),

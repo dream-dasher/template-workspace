@@ -31,7 +31,8 @@ use tracing::Level;
 
 struct ImmA(String);
 #[derive(Serialize, Deserialize, Debug)]
-struct Person {
+struct Person
+{
         destro: const_drop::TypeWithDestructor,
         name:   String,
         age:    u8,
@@ -41,12 +42,14 @@ struct Person {
 /// !!! `tag`!!! allows you to add a free type to your struct
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(tag = "type")]
-struct Request {
+struct Request
+{
         method: String,
         params: Value,
 }
 
-fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
+fn main() -> std::result::Result<(), Box<dyn std::error::Error>>
+{
         // unsafe {
         //         std::env::set_var("RUST_LOG", "trace");
         // }
@@ -89,7 +92,8 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         Ok(())
 }
 
-fn untyped_example() -> Result<()> {
+fn untyped_example() -> Result<()>
+{
         // Some JSON input data as a &str. Maybe this comes from the user.
         let data = r#"
         {
@@ -112,7 +116,8 @@ fn untyped_example() -> Result<()> {
 
 /// Re-implementing a module from workspaces `xp-drop` in order to add serde traits.
 /// Though seeing how Serde deals with newtype and multiple wrappers will be useful too.
-mod const_drop {
+mod const_drop
+{
         use serde::{Deserialize, Serialize};
         use tracing::Level;
 
@@ -120,8 +125,10 @@ mod const_drop {
 
         #[derive(Debug, Serialize, Deserialize)]
         pub struct TypeWithDestructor(i32);
-        impl Drop for TypeWithDestructor {
-                fn drop(&mut self) {
+        impl Drop for TypeWithDestructor
+        {
+                fn drop(&mut self)
+                {
                         tracing::event!(Level::TRACE, destro_num = self.0);
                 }
         }
