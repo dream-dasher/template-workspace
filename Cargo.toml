@@ -10,7 +10,7 @@ members = [
     "xp-drop",
     "xp-serde",
     "xp-template",
-    "samples_tracing",
+    "samples_tracing", "samples_sync",
 ]
 resolver = "3"
 

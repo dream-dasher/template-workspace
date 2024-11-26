@@ -1,0 +1,20 @@
+cargo-features = ["edition2024"]
+
+[package]
+name = "samples_sync"
+version = "0.1.0"
+edition.workspace = true
+authors.workspace = true
+description.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+repository.workspace = true
+keywords.workspace = true
+# publish.workspace = true
+# license.workspace = true
+# license-file.workspace = true
+
+[dependencies]
+
+[lints]
+workspace = true
