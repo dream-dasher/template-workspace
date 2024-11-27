@@ -1,4 +1,4 @@
-# cargo-features = ["edition2024"]
+
 # Settings for Rust Workspace 
 # [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
 
