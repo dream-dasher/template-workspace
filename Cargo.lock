@@ -1067,6 +1067,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "samples_ptr"
+version = "0.1.0"
+dependencies = [
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "samples_sync"
 version = "0.1.0"
 dependencies = [

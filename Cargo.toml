@@ -12,6 +12,7 @@ members = [
     "xp-template",
     "samples_tracing",
     "samples_sync",
+    "samples_ptr",
     "samples_mutability",
 ]
 resolver = "3"
