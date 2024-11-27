@@ -1,28 +1,40 @@
-//! Playing with sync and relateed objects
+//! Playing mutability
 
-use tracing::{Level, event, instrument};
+use tracing::{Level, event, instrument, span};
 
 fn main()
 {
         tracing_subscriber::fmt::init();
+        let vectorio = vec![1, 2, 3, 4, 5];
+        let vectorio_reference_1 = &vectorio;
+        let vectorio_reference_2 = &vectorio;
+        event!(Level::INFO, ?vectorio);
+        event!(Level::INFO, ?vectorio_reference_1);
+        event!(Level::INFO, ?vectorio_reference_2);
 
-        // barrier_example(10, 20);
-        refcell_example();
+        let mut vectart = vec![5, 4, 3, 2, 1];
+        let mut vectart_mut_reference_1 = &mut vectart;
+        // let vectart_mut_reference_2 = &mut vectart;
+        // event!(Level::INFO, ?vectart);
+        event!(Level::INFO, ?vectart_mut_reference_1);
+        // event!(Level::INFO, ?vectart_mut_reference_2);
+        let vectart_mut_reference_1_mutref = &mut vectart_mut_reference_1;
+        event!(Level::INFO, ?vectart_mut_reference_1_mutref);
+        event!(Level::INFO, ?vectart_mut_reference_1);
+        // event!(Level::INFO, ?vectart_mut_reference_1_mutref);
+        event!(Level::INFO, ?vectart);
 
-        let mut option = Some(5);
-        let option_reference = &mut option;
-        let mut backup = 0;
-        let reference = match option_reference {
-                &mut Some(ref mut n) => n,
-                _ => &mut backup,
-        };
-        /* if the next line was allowed, what would be the semantics of the line after that? */
-        // *option_reference = None;
-        *reference = 10;
+        let mut vectaline = vec![2, 1, 5, 1, 2];
+        let vectaline_taker_1 = vectaline;
+        // let vectaline_taker_2 = vectaline;
+        // event!(Level::INFO, ?vectaline);
+        event!(Level::INFO, ?vectaline_taker_1);
+        // event!(Level::INFO, ?vectaline_taker_2);
+        // let vectaline_taker_2 = vectaline;
 }
 
 #[instrument]
-fn refcell_example()
+fn _refcell_example()
 {
         use std::{cell::{RefCell, RefMut},
                   collections::HashMap,
@@ -65,36 +77,4 @@ fn refcell_example()
         let total: i32 = shared_map.borrow().values().sum();
         event!(Level::INFO, "total: {total}");
         event!(Level::INFO, "map: {:?}", shared_map.borrow());
-}
-
-/// Example use of barrier.
-/// Given a value, barrier will block thread progression until it has received that number of wait calls.
-///
-/// ## Note
-/// if `to_generate` % `to_wait_for` != 0 then the function will not terminate.
-#[instrument]
-fn barrier_example(to_wait_for: usize, to_generate: usize)
-{
-        use std::{sync::{Arc, Barrier},
-                  thread};
-
-        let n = to_generate;
-        let mut handles = Vec::with_capacity(n);
-        let barrier = Arc::new(Barrier::new(to_wait_for));
-        println!("To wait for: {} -- To generate: {}\n", to_wait_for, to_generate);
-        for i in 0..n {
-                let c = Arc::clone(&barrier);
-                // The same messages will be printed together.
-                // You will NOT see any interleaving.
-                handles.push(thread::spawn(move || {
-                               println!("{}: before wait", i);
-                               c.wait();
-                               println!("{}: after wait", i);
-                       }));
-        }
-        // Wait for other threads to finish.
-        for handle in handles {
-                handle.join().unwrap();
-        }
-        println!("\nTo wait for: {} -- To generate: {}", to_wait_for, to_generate);
 }
