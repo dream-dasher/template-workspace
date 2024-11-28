@@ -54,9 +54,14 @@ docs:
     rustup doc --std
     cargo doc --all-features --document-private-items --open
 
-# Update Rust-crates even through breaking changes
-update_breaking:
-    cargo update --breaking -Z unstable-options
+# Update Rust-crates, non-breaking updates only.
+update_soft:
+    cargo update --verbose
+    
+# Update Rust-crates, first minor, then breaking changes.
+[confirm]
+update_hard: update_soft
+    cargo update --verbose --breaking -Z unstable-options
     
 # Add a package to workspace // update-comment: the heck am I doing adding, removing, then using cargo-generate?
 packadd name:
