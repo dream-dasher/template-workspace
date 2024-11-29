@@ -50,7 +50,7 @@ fn main()
 
 #[tracing::instrument]
 fn on_thread<PATH>(file: PATH)
-        where PATH: Into<PathBuf>+std::fmt::Display+fmt::Debug
+where PATH: Into<PathBuf>+std::fmt::Display+fmt::Debug
 {
         let span = info_span!("file", fname = %file);
         let _guard = span.enter();

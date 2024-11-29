@@ -87,10 +87,10 @@ fn barrier_example(to_wait_for: usize, to_generate: usize)
                 // The same messages will be printed together.
                 // You will NOT see any interleaving.
                 handles.push(thread::spawn(move || {
-                               println!("{}: before wait", i);
-                               c.wait();
-                               println!("{}: after wait", i);
-                       }));
+                        println!("{}: before wait", i);
+                        c.wait();
+                        println!("{}: after wait", i);
+                }));
         }
         // Wait for other threads to finish.
         for handle in handles {

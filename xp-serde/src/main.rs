@@ -62,10 +62,12 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>>
 
         println!();
         println!("----------------------------------------");
-        let jim = Person { destro: const_drop::ZERO_WITH_DESTRUCTOR,
-                           name:   "Jim".to_string(),
-                           age:    42,
-                           phones: vec!["+44 1234567".to_string(), "+44 2345678".to_string()], };
+        let jim = Person {
+                destro: const_drop::ZERO_WITH_DESTRUCTOR,
+                name:   "Jim".to_string(),
+                age:    42,
+                phones: vec!["+44 1234567".to_string(), "+44 2345678".to_string()],
+        };
         tracing::event!(Level::INFO, ?jim, "Jim");
         println!("Jim: {}", serde_json::to_string_pretty(&jim)?);
 
