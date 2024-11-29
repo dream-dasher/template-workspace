@@ -11,11 +11,11 @@ use tracing_tree::time::Uptime;
 fn main()
 {
         tracing_subscriber::Registry::default()
-                .with(
-                        tracing_tree::HierarchicalLayer::new(2), // .with_timer(Uptime::default())
-                                                                 // .with_span_modes(true),
-                                                                 // .with_indent_lines(true)
-                )
+                .with(tracing_tree::HierarchicalLayer::new(2))
+                // .with(tracing_tree::HierarchicalLayer::new(2)
+                //         .with_timer(Uptime::default())
+                //         .with_span_modes(true)
+                //         .with_indent_lines(true))
                 .with(EnvFilter::builder().with_default_directive(LevelFilter::ERROR.into()).from_env_lossy())
                 .init();
 
