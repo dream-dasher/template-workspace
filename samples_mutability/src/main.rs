@@ -16,9 +16,7 @@ fn main()
                                                                  // .with_span_modes(true),
                                                                  // .with_indent_lines(true)
                 )
-                .with(EnvFilter::builder()
-                        .with_default_directive(LevelFilter::ERROR.into())
-                        .from_env_lossy())
+                .with(EnvFilter::builder().with_default_directive(LevelFilter::ERROR.into()).from_env_lossy())
                 .init();
 
         let span = span!(Level::INFO, "View-Only Multi-Borrow");
@@ -109,10 +107,7 @@ fn _refcell_example()
         // Note that if we had not let the previous borrow of the cache fall out
         // of scope then the subsequent borrow would cause a dynamic thread panic.
         // This is the major hazard of using `RefCell`.
-        let total: i32 = shared_map
-                .borrow()
-                .values()
-                .sum();
+        let total: i32 = shared_map.borrow().values().sum();
         debug!("total: {total}");
         debug!("map: {:?}", shared_map.borrow());
 
@@ -131,10 +126,7 @@ fn _refcell_example()
         // This is the major hazard of using `RefCell`.
         debug!("old total: {total}");
         debug!("old map: {:?}", shared_map.borrow());
-        let total: i32 = shared_map
-                .borrow()
-                .values()
-                .sum();
+        let total: i32 = shared_map.borrow().values().sum();
         debug!("total: {total}");
         debug!("map: {:?}", shared_map.borrow());
 }
