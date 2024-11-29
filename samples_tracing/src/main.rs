@@ -29,7 +29,8 @@ struct Foo
 
 use tracing::{Level, debug, error, info, info_span, span, trace, warn};
 use tracing_error::{ErrorLayer, InstrumentError, InstrumentResult, SpanTrace, TracedError};
-use tracing_subscriber::{EnvFilter, layer::SubscriberExt};
+use tracing_subscriber::{EnvFilter, prelude::*};
+// use tracing_subscriber::{EnvFilter, layer::SubscriberExt};
 fn main() -> Result<(), TracedError<io::Error>>
 {
         // tracing_subscriber::fmt::init();
@@ -50,7 +51,7 @@ fn main() -> Result<(), TracedError<io::Error>>
                 error!(?read, "read");
                 eprintln!("read_span: {}", read_span);
                 error!(?read_span, "read");
-                let st: SpanTrace = read_span.into();
+                // let st: SpanTrace = read_span.into();
         }
 
         let span = span!(Level::INFO, "main",);
