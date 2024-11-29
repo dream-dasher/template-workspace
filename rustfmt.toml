@@ -19,7 +19,7 @@ control_brace_style = "AlwaysSameLine"
 
 ## sub element alignment with parent open delimiter
 imports_indent = "Visual"
-indent_style = "Visual"
+# indent_style = "Visual"
 
 ## import organization
 imports_granularity = "Crate"      # group all imports for a crate together
