@@ -15,7 +15,10 @@
 //! clear; RUST_LOG=trace carrbn samples_tracing  a bb ccc dddd
 
 use core::fmt;
-use std::{io::Read, path::PathBuf, thread};
+use std::{error::Error,
+          io::{self, Read},
+          path::PathBuf,
+          thread};
 
 #[derive(Debug)]
 struct Foo
@@ -25,9 +28,30 @@ struct Foo
 }
 
 use tracing::{Level, debug, error, info, info_span, span, trace, warn};
-fn main()
+use tracing_error::{ErrorLayer, InstrumentError, InstrumentResult, SpanTrace, TracedError};
+use tracing_subscriber::{EnvFilter, layer::SubscriberExt};
+fn main() -> Result<(), TracedError<io::Error>>
 {
-        tracing_subscriber::fmt::init();
+        // tracing_subscriber::fmt::init();
+        let subscriber =
+                tracing_subscriber::Registry::default().with(tracing_subscriber::fmt::layer().with_target(true))
+                                                       .with(EnvFilter::from_default_env())
+                                                       .with(ErrorLayer::default());
+        tracing::subscriber::set_global_default(subscriber);
+
+        {
+                let span = span!(Level::INFO, "main",);
+                let _guard = span.enter();
+
+                // let read = InstrumentResult::in_current_span(std::fs::read_to_string("foo.txt"));
+                // let read = std::fs::read_to_string("foo.txt")?;
+                let read = std::fs::read_to_string("foo.txt").expect_err("");
+                let read_span = std::fs::read_to_string("foo.txt").in_current_span().expect_err("");
+                error!(?read, "read");
+                eprintln!("read_span: {}", read_span);
+                error!(?read_span, "read");
+                let st: SpanTrace = read_span.into();
+        }
 
         let span = span!(Level::INFO, "main",);
         let _guard = span.enter();
@@ -46,6 +70,7 @@ fn main()
                 handle.join().expect("thread join error");
                 debug!("thread joined");
         }
+        Ok(())
 }
 
 #[tracing::instrument]
