@@ -8,7 +8,10 @@
 //! ?var : use Debug implementation
 //! %var : use Display implementation
 //!
-//! span entrance is **Thread LOCAL**
+//! ## Gotchas
+//! - span entrance is **Thread LOCAL**
+//! - order of fields in span! and event! macros is different (can be remarkably frustrating)
+//!
 //!
 //! compile time filters: max_level_x && release_max_level_x
 //!
@@ -40,8 +43,12 @@ fn main() -> Result<(), TracedError<io::Error>>
                                                        .with(ErrorLayer::default());
         tracing::subscriber::set_global_default(subscriber);
 
+        let x = 42;
+        let y = 13;
+        let span = span!(Level::INFO, "main", ?x, ?y);
+        let _guard = span.enter();
         {
-                let span = span!(Level::INFO, "main",);
+                let span = span!(Level::INFO, "instrumenting stuff!", ?x, ?y);
                 let _guard = span.enter();
 
                 // let read = InstrumentResult::in_current_span(std::fs::read_to_string("foo.txt"));
@@ -50,6 +57,8 @@ fn main() -> Result<(), TracedError<io::Error>>
                 let read_span = std::fs::read_to_string("foo.txt").in_current_span().expect_err("");
                 error!(?read, "read");
                 eprintln!("read_span: {}", read_span);
+                // NOTE: TracedError doesn't implement anything for Debug or Display.
+                //       it just takes inner then error -- pulling out the standard error; no span-trace
                 error!(?read_span, "read");
                 // let st: SpanTrace = read_span.into();
         }
