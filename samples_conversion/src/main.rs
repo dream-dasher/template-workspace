@@ -28,8 +28,7 @@ use std::{convert::{TryFrom, TryInto},
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn square(num: i32) -> i32
-{
+pub fn square(num: i32) -> i32 {
         num * num
 }
 
@@ -39,8 +38,7 @@ pub fn square(num: i32) -> i32
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_same(i1: i32, i2: i32) -> i32
-{
+pub fn mult_same(i1: i32, i2: i32) -> i32 {
         i1 * i2
 }
 
@@ -50,8 +48,7 @@ pub fn mult_same(i1: i32, i2: i32) -> i32
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_as(i1: i32, u: u32) -> i32
-{
+pub fn mult_as(i1: i32, u: u32) -> i32 {
         let i2 = u as i32;
         i1 * i2
 }
@@ -63,8 +60,7 @@ pub fn mult_as(i1: i32, u: u32) -> i32
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_into_easy(i1: i32, ismall: i16) -> i32
-{
+pub fn mult_into_easy(i1: i32, ismall: i16) -> i32 {
         let i2: i32 = ismall.into();
         i1 * i2
 }
@@ -76,8 +72,7 @@ pub fn mult_into_easy(i1: i32, ismall: i16) -> i32
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_from_easy(i1: i32, ismall: i16) -> i32
-{
+pub fn mult_from_easy(i1: i32, ismall: i16) -> i32 {
         let i2 = i32::from(ismall);
         i1 * i2
 }
@@ -91,8 +86,7 @@ pub fn mult_from_easy(i1: i32, ismall: i16) -> i32
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_into_panic(i1: i32, u: u32) -> i32
-{
+pub fn mult_into_panic(i1: i32, u: u32) -> i32 {
         let i2: i32 = u.try_into().unwrap();
         i1 * i2
 }
@@ -106,8 +100,7 @@ pub fn mult_into_panic(i1: i32, u: u32) -> i32
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_from_panic(i1: i32, u: u32) -> i32
-{
+pub fn mult_from_panic(i1: i32, u: u32) -> i32 {
         let i2 = i32::try_from(u).unwrap();
         i1 * i2
 }
@@ -120,8 +113,7 @@ pub fn mult_from_panic(i1: i32, u: u32) -> i32
 ///        ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_into_res_direct(i1: i32, u: u32) -> core::result::Result<i32, TryFromIntError>
-{
+pub fn mult_into_res_direct(i1: i32, u: u32) -> core::result::Result<i32, TryFromIntError> {
         let i2: i32 = u.try_into()?;
         Ok(i1 * i2)
 }
@@ -134,8 +126,7 @@ pub fn mult_into_res_direct(i1: i32, u: u32) -> core::result::Result<i32, TryFro
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_from_res_direct(i1: i32, u: u32) -> core::result::Result<i32, TryFromIntError>
-{
+pub fn mult_from_res_direct(i1: i32, u: u32) -> core::result::Result<i32, TryFromIntError> {
         let i2 = i32::try_from(u)?;
         Ok(i1 * i2)
 }
@@ -151,8 +142,7 @@ pub fn mult_from_res_direct(i1: i32, u: u32) -> core::result::Result<i32, TryFro
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_into_res_convert(i1: i32, u: u32) -> core::result::Result<i32, Box<dyn core::error::Error>>
-{
+pub fn mult_into_res_convert(i1: i32, u: u32) -> core::result::Result<i32, Box<dyn core::error::Error>> {
         let i2: i32 = u.try_into()?;
         Ok(i1 * i2)
 }
@@ -168,13 +158,11 @@ pub fn mult_into_res_convert(i1: i32, u: u32) -> core::result::Result<i32, Box<d
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_from_res_convert(i1: i32, u: u32) -> core::result::Result<i32, Box<dyn core::error::Error>>
-{
+pub fn mult_from_res_convert(i1: i32, u: u32) -> core::result::Result<i32, Box<dyn core::error::Error>> {
         let i2 = i32::try_from(u)?;
         Ok(i1 * i2)
 }
 
-fn main()
-{
+fn main() {
         tracing_subscriber::fmt::init();
 }

@@ -2,8 +2,7 @@
 
 use xp_drop::*;
 
-fn main()
-{
+fn main() {
         // unsafe {
         //         std::env::set_var("RUST_LOG", "trace");
         // }
@@ -27,7 +26,10 @@ fn main()
         {
                 println!();
                 tracing::debug!("Creating struct with const field...");
-                let some_struct = HasConstField { constantine: ZERO_WITH_DESTRUCTOR, field: 42 };
+                let some_struct = HasConstField {
+                        constantine: ZERO_WITH_DESTRUCTOR,
+                        field:       42,
+                };
                 tracing::warn!(?some_struct, "Assigned const from create_and_drop fn");
                 tracing::debug!("^________________________^");
         }

@@ -2,8 +2,7 @@
 
 use tracing::{Level, debug, error, event, info, instrument, trace, warn};
 
-fn main()
-{
+fn main() {
         tracing_subscriber::fmt::init();
 
         let smallest = Matroschka::new(Color::Red);
@@ -21,30 +20,33 @@ fn main()
 }
 
 #[derive(Debug)]
-struct Matroschka
-{
+struct Matroschka {
         color:      Color,
         size:       usize,
         smaller_me: Option<Box<Matroschka>>,
 }
 
-impl Matroschka
-{
-        fn new(color: Color) -> Self
-        {
-                Self { color, size: 0, smaller_me: None }
+impl Matroschka {
+        fn new(color: Color) -> Self {
+                Self {
+                        color,
+                        size: 0,
+                        smaller_me: None,
+                }
         }
 
-        fn add_shell(self, color: Color) -> Self
-        {
+        fn add_shell(self, color: Color) -> Self {
                 let size = self.size + 1;
-                Self { color, size, smaller_me: Some(Box::new(self)) }
+                Self {
+                        color,
+                        size,
+                        smaller_me: Some(Box::new(self)),
+                }
         }
 }
 
 #[derive(Debug)]
-enum Color
-{
+enum Color {
         Red,
         Green,
         Blue,

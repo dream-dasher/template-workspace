@@ -18,15 +18,13 @@ use core::fmt;
 use std::{io::Read, path::PathBuf, thread};
 
 #[derive(Debug)]
-struct Foo
-{
+struct Foo {
         a: bool,
         b: u32,
 }
 
 use tracing::{Level, debug, error, info, info_span, span, trace, warn};
-fn main()
-{
+fn main() {
         tracing_subscriber::fmt::init();
 
         let span = span!(Level::INFO, "main",);
@@ -50,7 +48,8 @@ fn main()
 
 #[tracing::instrument]
 fn on_thread<PATH>(file: PATH)
-where PATH: Into<PathBuf>+std::fmt::Display+fmt::Debug
+where
+        PATH: Into<PathBuf> + std::fmt::Display + fmt::Debug,
 {
         let span = info_span!("file", fname = %file);
         let _guard = span.enter();

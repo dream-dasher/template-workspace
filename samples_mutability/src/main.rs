@@ -8,15 +8,16 @@ use tracing::{Level, debug, error, event, info, instrument, level_filters::Level
 use tracing_subscriber::{EnvFilter, prelude::*};
 use tracing_tree::time::Uptime;
 
-fn main()
-{
+fn main() {
         tracing_subscriber::Registry::default()
                 .with(tracing_tree::HierarchicalLayer::new(2))
                 // .with(tracing_tree::HierarchicalLayer::new(2)
                 //         .with_timer(Uptime::default())
                 //         .with_span_modes(true)
                 //         .with_indent_lines(true))
-                .with(EnvFilter::builder().with_default_directive(LevelFilter::ERROR.into()).from_env_lossy())
+                .with(EnvFilter::builder()
+                        .with_default_directive(LevelFilter::ERROR.into())
+                        .from_env_lossy())
                 .init();
 
         let span = span!(Level::INFO, "View-Only Multi-Borrow");
@@ -86,8 +87,7 @@ fn main()
 }
 
 #[instrument]
-fn _refcell_example()
-{
+fn _refcell_example() {
         use std::{cell::{RefCell, RefMut},
                   collections::HashMap,
                   rc::Rc};

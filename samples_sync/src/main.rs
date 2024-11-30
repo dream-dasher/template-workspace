@@ -2,8 +2,7 @@
 
 use tracing::{Level, event, instrument};
 
-fn main()
-{
+fn main() {
         tracing_subscriber::fmt::init();
 
         // barrier_example(10, 20);
@@ -22,8 +21,7 @@ fn main()
 }
 
 #[instrument]
-fn refcell_example()
-{
+fn refcell_example() {
         use std::{cell::{RefCell, RefMut},
                   collections::HashMap,
                   rc::Rc};
@@ -73,8 +71,7 @@ fn refcell_example()
 /// ## Note
 /// if `to_generate` % `to_wait_for` != 0 then the function will not terminate.
 #[instrument]
-fn barrier_example(to_wait_for: usize, to_generate: usize)
-{
+fn barrier_example(to_wait_for: usize, to_generate: usize) {
         use std::{sync::{Arc, Barrier},
                   thread};
 

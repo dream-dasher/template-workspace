@@ -6,7 +6,8 @@
 /// Currying?
 #[tracing::instrument(skip(f))]
 pub fn repeat_function<F>(f: F, times: u8)
-where F: Fn()
+where
+        F: Fn(),
 {
         for _ in 0..times {
                 f();
@@ -19,7 +20,8 @@ where F: Fn()
 /// Currying?
 #[tracing::instrument(skip(m))]
 pub fn repeat_function_mutable<F>(mut m: F, times: u8)
-where F: FnMut()
+where
+        F: FnMut(),
 {
         for _ in 0..times {
                 m();
@@ -27,5 +29,4 @@ where F: FnMut()
 }
 
 #[cfg(test)]
-mod tests
-{}
+mod tests {}
