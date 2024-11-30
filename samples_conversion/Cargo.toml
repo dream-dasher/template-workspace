@@ -1,0 +1,33 @@
+
+
+[package]
+name = "samples_conversion"
+version = "0.1.0"
+edition.workspace = true
+authors.workspace = true
+description.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+keywords.workspace = true
+repository.workspace = true
+# publish.workspace = true
+# license.workspace = true
+# license-file.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+## --General--
+derive_more.workspace = true
+
+## --Trace-Logging--
+tracing.workspace = true
+tracing-subscriber.workspace = true
+tracing-timing.workspace = true
+tracing-error.workspace = true
+tracing-tree.workspace = true
+
+## --CLI--
+clap.workspace = true
+owo-colors.workspace = true

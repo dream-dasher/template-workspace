@@ -1077,11 +1077,30 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f3cb5ba0dc43242ce17de99c180e96db90b235b8a9fdc9543c96d2209116bd9f"
 
 [[package]]
+name = "samples_conversion"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "derive_more",
+ "owo-colors",
+ "tracing",
+ "tracing-error",
+ "tracing-subscriber",
+ "tracing-timing",
+ "tracing-tree",
+]
+
+[[package]]
 name = "samples_mutability"
 version = "0.1.0"
 dependencies = [
+ "clap",
+ "derive_more",
+ "owo-colors",
  "tracing",
+ "tracing-error",
  "tracing-subscriber",
+ "tracing-timing",
  "tracing-tree",
 ]
 
@@ -1112,6 +1131,7 @@ dependencies = [
  "tracing-error",
  "tracing-subscriber",
  "tracing-timing",
+ "tracing-tree",
 ]
 
 [[package]]
