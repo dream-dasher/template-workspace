@@ -97,6 +97,12 @@ deps-ext:
     @echo "{{CYN}}List of external dependencies for this command runner and repo:"
     xsv table ext_deps.csv
     
+# Info about Rust-Compiler, Rust-Analyzer, Cargo-Clippy, and Rust-Updater.
+rust-meta-info:
+    rustc --version
+    rust-analyzer --version
+    cargo-clippy --version
+    rustup --version
 # ######################################################################## #
 
 # Print reminder: how to set env vars that propagate to child shells.
