@@ -1,9 +1,29 @@
 //! Playing with sync and relateed objects
 
-use tracing::{Level, event, instrument};
+use tracing::{Level, event, instrument, trace_span};
 
 fn main() {
         tracing_subscriber::fmt::init();
+
+        trace_span!("dfdf");
+        {
+                struct Num {
+                        pub val: i32,
+                }
+                /// there's a method `.unsigned_abs()` which takes care of the MIN value we're manually accounting for.
+                fn eat(n: Num) -> u64 {
+                        let val = n.val;
+                        if val == i32::MIN {
+                                return Into::<i64>::into(val).abs() as u64;
+                        }
+                        val.abs() as u64
+                }
+                let i = Num { val: -1200 };
+                println!("{}", i.val);
+                let u = eat(i);
+                println!("{}", u);
+                // println!("{}", i.val); // Great -- checking that rust analyzer is working again.
+        }
 
         // barrier_example(10, 20);
         refcell_example();
