@@ -32,8 +32,8 @@ keywords = ["template", "workspace", "explorative"]
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
-unused = { level = "allow", priority = -1 } # (early) ¡DEVELOPMENT-ONLY!
-dead_code = "allow"                         # (early) ¡DEVELOPMENT-ONLY!
+# unused = { level = "allow", priority = -1 } # (early) ¡DEVELOPMENT-ONLY!
+# dead_code = "allow"                         # (early) ¡DEVELOPMENT-ONLY!
 
 [workspace.lints.clippy]
 allow_attributes = "warn"
