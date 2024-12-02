@@ -26,15 +26,10 @@ _default:
 
 # Initialize repository.
 [confirm]
-init: && deps-ext _gen-env _gen_git_hooks
+init: && list_external_deps _gen-env _gen_git_hooks
     cargo clean
     cargo build    
     cargo doc
-    
-# Clean up cargo build artifacts.
-[confirm]
-teardown:
-    cargo clean
 
 # Linting, formatting, typo checking, etc.
 check:
@@ -42,11 +37,6 @@ check:
     cargo fmt
     typos
     committed
-    
-# Auto-fix some errors picked up by check. (Manual exclusion of data folder as additional safeguard.)
-[confirm]
-fix:
-     typos --exclude '*/data/*' --write-changes
 
 # Show docs.
 docs:
@@ -69,10 +59,6 @@ packadd name:
     rm -rf {{name}}
     cargo generate --path ./.support_data/cargo_generate_templates/template__cli_bin --name {{name}}
 
-# Run git hook.
-git_hook hook='pre-commit':
-    git hook run {{hook}} 
-
 # Tests, docs and general.
 test:
     cargo test --doc --quiet
@@ -87,13 +73,9 @@ test-view test_name="" log_level="error":
 testnx-view test_name="" log_level="error":
     @echo "'Fun' Fact; the '--test' flag only allows integration test selection and will just fail on unit tests."
     RUST_LOG={{log_level}} cargo nextest run {{test_name}} --no-capture 
-
-# Watch a file: compile & run on changes.
-watch file_to_run:
-    cargo watch --quiet --clear --exec 'run --quiet --example {{file_to_run}}'
-
+    
 # List dependencies. (This command has dependencies.)
-deps-ext:
+list_external_deps:
     @echo "{{CYN}}List of external dependencies for this command runner and repo:"
     xsv table ext_deps.csv
     
@@ -157,41 +139,21 @@ _example_file_exists_test file:
 
 # ######################################################################## #
 
-# # Ad hoc hyperfine tests for the release version of the cli app.
-# bench-hyperf regex='ho' :
-#     @echo "{{GRN}}Release{{NC}}, search-only:"
-#     hyperfine --warmup 3 "target/release/rename_files '{{regex}}' --recurse"
-#     @echo "{{GRN}}Release{{NC}}, search & replace, no file write:"
-#     hyperfine --warmup 3 "target/release/rename_files '{{regex}}' --rep 'ohhoho' --recurse --test-run"
-#     @echo "{{PRP}}Comparison{{NC}}: fd --unrestricted, search-only:"
-#     hyperfine --warmup 3 "fd --unrestricted '{{regex}}'"
 
-# ######################################################################## #
+# # Clean up cargo build artifacts.
+# [confirm]
+# teardown:
+#     cargo clean
 
-# # # Needs updating to work with workspace.
-# # Clean, release build, deploy file to `/user/local/bin/`
+# # Auto-fix some errors picked up by check. (Manual exclusion of data folder as additional safeguard.)
 # [confirm]
-# deploy binary_name version: check
-#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
-#     @ echo "input version: {{version}}"
-#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
-#     cargo clean
-#     cargo build --release
-#     cargo doc --release
-#     sudo cp target/release/{{binary_name}} /usr/local/bin/{{binary_name}}
-    
-# # # Needs updating to work with workspace.
-# # Push version x.y.z; deploy if used with `dist`
-# [confirm]
-# deploy-remote version: check
-#     @ echo "TOML_VERSION: {{TOML_VERSION}}"
-#     @ echo "input version: {{version}}"
-#     echo {{ if TOML_VERSION == version  {"TOML version declaration matches input version."} else  {`error("version_mismatch")`} }}
-#     cargo clean
-#     cargo build --release
-#     cargo doc --release
-#     - git add .
-#     - git commit -m "release: {{version}}"
-#     git tag "v{{version}}"
-#     - git push
-#     git push --tags
+# fix:
+#      typos --exclude '*/data/*' --write-changes
+
+# # Run git hook.
+# git_hook hook='pre-commit':
+#     git hook run {{hook}}
+
+# # Watch a file: compile & run on changes.
+# watch file_to_run:
+#     cargo watch --quiet --clear --exec 'run --quiet --example {{file_to_run}}'
