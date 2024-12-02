@@ -1094,10 +1094,8 @@ dependencies = [
 name = "samples_itertools"
 version = "0.1.0"
 dependencies = [
- "clap",
  "derive_more",
  "itertools",
- "owo-colors",
  "tracing",
  "tracing-error",
  "tracing-subscriber",

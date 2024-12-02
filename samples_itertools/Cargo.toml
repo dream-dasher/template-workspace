@@ -28,7 +28,3 @@ tracing-subscriber.workspace = true
 tracing-timing.workspace = true
 tracing-error.workspace = true
 tracing-tree.workspace = true
-
-## --CLI--
-clap.workspace = true
-owo-colors.workspace = true
