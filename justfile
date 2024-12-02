@@ -67,7 +67,7 @@ update_hard: update_soft
 packadd name:
     cargo new --bin {{name}}
     rm -rf {{name}}
-    cargo generate --path ./.support_data/templates/template__cli_bin --name {{name}}
+    cargo generate --path ./.support_data/cargo_generate_templates/template__cli_bin --name {{name}}
 
 # Run git hook.
 git_hook hook='pre-commit':
@@ -120,11 +120,11 @@ _gen_git_hooks: _gen-precommit-hook _gen-commitmsg-hook
 
 # Attempt to add `pre-commit` git-hook. (no overwrite)
 _gen-precommit-hook:
-    @ if [ -f '.git/hooks/pre-commit' ]; then echo '`.git/hooks/{{BRN}}pre-commit{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n .support_data/pre-commit .git/hooks/pre-commit; chmod u+x .git/hooks/pre-commit; echo live "{{BLU}}pre-commit{{NC}} hook added to {{GRN}}.git/hooks{{NC}} and set as executable"; fi
+    @ if [ -f '.git/hooks/pre-commit' ]; then echo '`.git/hooks/{{BRN}}pre-commit{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n .support_data/git_hooks/pre-commit .git/hooks/pre-commit; chmod u+x .git/hooks/pre-commit; echo live "{{BLU}}pre-commit{{NC}} hook added to {{GRN}}.git/hooks{{NC}} and set as executable"; fi
     
 # Attempt to add `commit-msg` git-hook. (no overwrite)
 _gen-commitmsg-hook:
-    @ if [ -f '.git/hooks/commit-msg' ]; then echo '`.git/hooks/{{BRN}}commit-msg{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n .support_data/commit-msg .git/hooks/commit-msg; chmod u+x .git/hooks/commit-msg; echo live "{{BLU}}commit-msg{{NC}} hook added to {{GRN}}.git/hooks{{NC}} and set as executable"; fi
+    @ if [ -f '.git/hooks/commit-msg' ]; then echo '`.git/hooks/{{BRN}}commit-msg{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; else cp -n .support_data/git_hooks/commit-msg .git/hooks/commit-msg; chmod u+x .git/hooks/commit-msg; echo live "{{BLU}}commit-msg{{NC}} hook added to {{GRN}}.git/hooks{{NC}} and set as executable"; fi
 
 # ######################################################################## #
 
