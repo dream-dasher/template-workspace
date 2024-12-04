@@ -16,6 +16,7 @@ members = [
     "samples_mutability",
     "samples_itertools",
     "samples_conversion",
+    "samples_errors",
 ]
 resolver = "3"
 
