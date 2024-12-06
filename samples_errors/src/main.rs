@@ -6,45 +6,41 @@
 //! [trait Itertools::Itertools](https://docs.rs/itertools/latest/itertools/trait.Itertools.html#method.tuple_windows)
 //!
 //!
-//! clear; RUST_LOG=samples_itertools=trace carrbn samples_itertools
+//! clear; RUST_LOG=samples_errors=trace carrbn samples_errors
 
-use std::{backtrace, num};
+use std::{backtrace,
+          env::{self, VarError},
+          fs, io,
+          num::{self, ParseIntError}};
 
-use derive_more::{Display, Error, derive::From};
-// use thiserror::Error;
-
-// #[derive(Debug, Error)]
-// #[error("spanner error: {source}")]
-// struct Spanner {
-//         #[from]
-//         source: MyError,
-//         // spantrace: tracing_error::SpanTrace,
-// }
-// // use thiserror::Error;
-// #[derive(Debug, Error)]
-// pub enum MyError {
-//         #[error("parse error: {source}")]
-//         ParseError {
-//                 #[from]
-//                 #[backtrace]
-//                 source: std::num::ParseIntError,
-//                 // spantrace: tracing_error::SpanTrace,
-//                 // backtrace: std::backtrace::Backtrace,
-//         },
-// }
+use derive_more::{Display, Error, derive::From}; // !
+use itertools::{Itertools, iproduct};
+use tracing::{self as tea, Level, level_filters::LevelFilter};
+use tracing_error::ErrorLayer;
+use tracing_subscriber::{EnvFilter, prelude::*};
 
 // use derive_more::{Display, Error, derive::From};
 #[derive(Debug, Display, Error, From)]
-pub enum MyError {
+pub enum MyErrorSource {
         #[display("parse error: {}", source)]
-        // #[from(forward)]
-        #[from]
-        ParseError {
-                source: num::ParseIntError,
-                // spantrace: tracing_error::SpanTrace,
-                // #[from(ignore)]
-                // backtrace: backtrace::Backtrace,
+        ParseError { source: num::ParseIntError },
+        #[display("env variable error: {}", source)]
+        EnvError { source: env::VarError },
+        #[display("io error: {}", source)]
+        IoError { source: io::Error },
+        #[display("Uncategorized error: {}", source)]
+        #[from(ignore)]
+        OtherError {
+                source: Box<dyn std::error::Error + Send + Sync>,
         },
+}
+impl MyErrorSource {
+        pub fn make_other_error<E>(error: E) -> Self
+        where
+                E: Into<Box<dyn std::error::Error + Send + Sync>>,
+        {
+                Self::OtherError { source: error.into() }
+        }
 }
 #[derive(Debug, Display, Error, From)]
 #[display(
@@ -55,13 +51,13 @@ pub enum MyError {
         backtrace
 )]
 pub struct MyErrorWrapper {
-        source:    MyError,
+        source:    MyErrorSource,
         spantrace: tracing_error::SpanTrace,
         backtrace: backtrace::Backtrace,
 }
 impl<T> From<T> for MyErrorWrapper
 where
-        T: Into<MyError>,
+        T: Into<MyErrorSource>,
 {
         fn from(error: T) -> Self {
                 Self {
@@ -72,19 +68,40 @@ where
         }
 }
 
-use itertools::{Itertools, iproduct};
-use tracing::{Level, debug, error, info, info_span, level_filters::LevelFilter, span, trace, warn};
-use tracing_error::ErrorLayer;
-use tracing_subscriber::{EnvFilter, prelude::*};
+trait ToOther {
+        fn to_other(self) -> MyErrorWrapper;
+}
 
+impl<E> ToOther for E
+where
+        E: Into<Box<dyn std::error::Error + Send + Sync>>,
+{
+        fn to_other(self) -> MyErrorWrapper {
+                MyErrorSource::OtherError { source: self.into() }.into()
+        }
+}
 #[tracing::instrument]
-fn make_error(say: &str) -> Result<(), MyErrorWrapper> {
-        println!("say: {}", say);
-        let x: u32 = "12".parse()?;
-        let y: u32 = "-12".parse()?;
-        let y: u32 = "zzz".parse()?;
+fn make_error(ch: char) -> Result<(), MyErrorWrapper> {
+        match ch {
+                // ParseIntError
+                'p' => {
+                        let y = "-12".parse::<u32>();
+                        y?;
+                }
+                // io::Error
+                'f' => {
+                        let f = fs::read_to_string("non-present-file.txt");
+                        f?;
+                }
+                // unstructured that can be converted to a dyn error object
+                _ => {
+                        let x = "just a random string".to_other();
+                        Err(x)?;
+                }
+        };
         Ok(())
 }
+
 fn main() -> Result<(), MyErrorWrapper> {
         tracing_subscriber::Registry::default()
                 .with(tracing_tree::HierarchicalLayer::new(2)
@@ -98,20 +115,22 @@ fn main() -> Result<(), MyErrorWrapper> {
                 // .with(tracing_subscriber::fmt::Layer::default())
                 .init();
 
-        let _enter = span!(Level::INFO, "main").entered();
-        let _enter = span!(Level::INFO, "main2").entered();
-        match make_error("hi") {
-                Ok(_) => info!("no error"),
-                Err(e) => error!("error: {:#}", e),
-                // Ok(_) => println!("no error"),
-                // Err(e) => println!("error: {:#}", e),
+        // const A_CHAR: char = 'p';
+        // const A_CHAR: char = 'f';
+        const A_CHAR: char = 'x';
+
+        let _enter = tea::span!(Level::INFO, "main").entered();
+        let _enter = tea::span!(Level::INFO, "main2").entered();
+        match make_error(A_CHAR) {
+                Ok(_) => tea::info!("no error"),
+                Err(e) => tea::error!("error: {:#}", e),
         }
         {
-                let _enter = span!(Level::INFO, "---special scope---").entered();
-                let y: u32 = "-12".parse()?;
-                let _enter = span!(Level::INFO, "---special scope222222---").entered();
+                let _enter = tea::span!(Level::INFO, "---special scope---").entered();
+                make_error(A_CHAR)?;
+                let _enter = tea::span!(Level::INFO, "---special scope222222---").entered();
         }
-        let _enter = span!(Level::INFO, "end!!! (shouldn't see?)").entered();
+        let _enter = tea::span!(Level::INFO, "end!!! (shouldn't see?)").entered();
 
         Ok(())
 }
