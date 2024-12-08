@@ -27,7 +27,7 @@ path/to/bar:90:Something, Something, Something, Dark Side
 path/to/baz:3:It's a Trap!
 ");
 const REGEX_DATE_SPLIT_TOO_RESTRICTIVE: &str = r"^(?<year>\d{4})-(?<month>)\d{2}-(?<day>\d{2})$";
-const REGEX_DATE_SPLIT: &str = r"(?<year>\d{4})-(?<month>)\d{2}-(?<day>\d{2})";
+const REGEX_DATE_SPLIT: &str = r"(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})";
 const HAY_DATES: &str = indoc!("
 What do 1865-04-14, 1881-07-02, 1901-09-06 and 1963-11-22 have in common?
 1973-01-05, 1975-08-25 and 1980-10-18
@@ -44,7 +44,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .with_thread_names(true)
                         .with_target(true)
                         .with_line_number(true)
-                        .with_span_events(FmtSpan::FULL)
+                        .with_span_events(FmtSpan::ENTER)
                         // .with_file(true)
                         // .with_span_events(FmtSpan::ENTER)
                         .without_time())
@@ -72,22 +72,32 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let _enter = tea::debug_span!("CapNumFixed").entered();
                 let re = Regex::new(REGEX_DATE_SPLIT).expect("string should be valid regex");
                 tea::info!(?re, "Regex runtime construction completed.");
-
                 {
                         {
                                 let _enter = tea::debug_span!("Parsing").entered();
                                 for (i, line) in HAY_DATES.lines().enumerate() {
-                                        let (raw, [year, month, day]) = re.captures(line).unwrap().extract();
-                                        tea::info!(?raw, ?year, ?month, ?day, i);
+                                        let _enter = tea::warn_span!("Line", i).entered();
+                                        for (i2, cap) in re.captures_iter(line).enumerate() {
+                                                let (raw, [year, month, day]) = cap.extract();
+                                                tea::info!(?raw, ?year, ?month, ?day, idx = ?(i, i2));
+                                        }
                                 }
                         }
-                        {
+                        let vec_per_line: Vec<_> = {
                                 let _enter = tea::debug_span!("Parsing").entered();
-                                HAY_DATES.lines().enumerate().for_each(|(i, line)| {
-                                        let (raw, [year, month, day]) = re.captures(line).unwrap().extract();
-                                        tea::info!(?raw, ?year, ?month, ?day, i);
-                                });
-                        }
+                                HAY_DATES
+                                        .lines()
+                                        .enumerate()
+                                        .flat_map(|(i, line)| {
+                                                re.captures_iter(line).enumerate().map(|(i2, cap)| {
+                                                        let (raw, [year, month, day]) = cap.extract();
+                                                        tea::info!(?raw, ?year, ?month, ?day, i2);
+                                                        (year, month, day)
+                                                })
+                                        })
+                                        .collect()
+                        };
+                        tea::info!(?vec_per_line);
                 }
         }
         Ok(())
