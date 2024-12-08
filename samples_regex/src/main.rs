@@ -11,81 +11,84 @@
 //! ## Special Notes
 //!
 //!
-//! clear; RUST_LOG=samples_itertools=trace carrbn samples_itertools
+//! clear; RUST_LOG=samples_regex=trace carrbn samples_regex
+//! if you want to see Regex output:
+//! clear; RUST_LOG=trace carrbn samples_regex
 
-use itertools::{Itertools, iproduct};
-use tracing::{Level, debug, error, info, info_span, level_filters::LevelFilter, span, trace, warn};
-use tracing_subscriber::{EnvFilter, prelude::*};
+use indoc::indoc;
+use regex::{self, Regex};
+use tracing::{self as tea, Level, instrument::WithSubscriber, level_filters::LevelFilter};
+use tracing_subscriber::{EnvFilter, fmt::format::FmtSpan, prelude::*};
 
-fn main() {
+const REGEX_PATH_SPLIT: &str = r"^(?m)^(?<path>[^:]+):(?<line_number>[0-9]+):(?<title>.+)$";
+const HAY_PATHS: &str = indoc!("
+path/to/foo:54:Blue Harvest
+path/to/bar:90:Something, Something, Something, Dark Side
+path/to/baz:3:It's a Trap!
+");
+const REGEX_DATE_SPLIT_TOO_RESTRICTIVE: &str = r"^(?<year>\d{4})-(?<month>)\d{2}-(?<day>\d{2})$";
+const REGEX_DATE_SPLIT: &str = r"(?<year>\d{4})-(?<month>)\d{2}-(?<day>\d{2})";
+const HAY_DATES: &str = indoc!("
+What do 1865-04-14, 1881-07-02, 1901-09-06 and 1963-11-22 have in common?
+1973-01-05, 1975-08-25 and 1980-10-18
+What do 18653-04-14, 1891-07-033, 1901-09-06 and 1963-11-22 have in common?
+What do 1865-04-14, 1214-91-13, 1214-22-12, 1881-07-02, 1901-09-06 and 1963-11-22 have in common?
+");
+fn main() -> Result<(), Box<dyn std::error::Error>> {
         tracing_subscriber::Registry::default()
-                .with(tracing_tree::HierarchicalLayer::new(2)
-                        .with_timer(tracing_tree::time::Uptime::default())
-                        .with_span_modes(true)
-                        .with_indent_lines(true))
+                // .with(tracing_tree::HierarchicalLayer::new(2)
+                //         .with_span_retrace(true)
+                //         .with_targets(true)
+                //         .with_bracketed_fields(true))
+                .with(tracing_subscriber::fmt::Layer::default()
+                        .with_thread_names(true)
+                        .with_target(true)
+                        .with_line_number(true)
+                        .with_span_events(FmtSpan::FULL)
+                        // .with_file(true)
+                        // .with_span_events(FmtSpan::ENTER)
+                        .without_time())
                 .with(EnvFilter::builder()
                         .with_default_directive(LevelFilter::ERROR.into())
                         .from_env_lossy())
                 // .with(tracing_subscriber::fmt::Layer::default())
                 .init();
 
-        // Window: type annotations, get tuple
         {
-                let _enter = info_span!("Rolling Window over data").entered();
-                let seq = 0..;
-                let mut rolling_win = seq.clone().tuple_windows::<(_, _, _, _, _)>();
-                for tuple in rolling_win.take(5) {
-                        debug!(?tuple);
+                let _enter = tea::debug_span!("CapNumFixed").entered();
+                let re = Regex::new(REGEX_PATH_SPLIT).expect("string should be valid regex");
+                tea::info!(?re, "Regex runtime construction completed.");
+
+                {
+                        let _enter = tea::debug_span!("Parsing").entered();
+                        for (i, line) in HAY_PATHS.lines().enumerate() {
+                                let (raw, [path, lineno, title]) = re.captures(line).unwrap().extract();
+                                tea::info!(path, lineno, title, raw, i);
+                        }
                 }
         }
 
-        // Chunk: makes iterator of iterators; all of which require `into_iter()`
         {
-                let _enter = info_span!("Fixed Chunking of data").entered();
-                let seq = 0..;
-                let mut fixed_chunks = seq.clone().chunks(5);
-                for chunk in fixed_chunks.into_iter().take(5) {
-                        let vec: Vec<_> = chunk.into_iter().collect();
-                        debug!(?vec);
+                let _enter = tea::debug_span!("CapNumFixed").entered();
+                let re = Regex::new(REGEX_DATE_SPLIT).expect("string should be valid regex");
+                tea::info!(?re, "Regex runtime construction completed.");
+
+                {
+                        {
+                                let _enter = tea::debug_span!("Parsing").entered();
+                                for (i, line) in HAY_DATES.lines().enumerate() {
+                                        let (raw, [year, month, day]) = re.captures(line).unwrap().extract();
+                                        tea::info!(?raw, ?year, ?month, ?day, i);
+                                }
+                        }
+                        {
+                                let _enter = tea::debug_span!("Parsing").entered();
+                                HAY_DATES.lines().enumerate().for_each(|(i, line)| {
+                                        let (raw, [year, month, day]) = re.captures(line).unwrap().extract();
+                                        tea::info!(?raw, ?year, ?month, ?day, i);
+                                });
+                        }
                 }
         }
-
-        // Chunk_By: whatever yields same-ity
-        {
-                let _enter = info_span!("Custom Chunking").entered();
-                let names = &["Bob", "Brandy", "Bobby", "Brenda", "Cal", "Connie", "Doyle", "Brendan"];
-                let mut custom_chunks = names.iter().chunk_by(|name| name.chars().next());
-                for (comparison_key, chunk) in custom_chunks.into_iter().take(5) {
-                        let vec: Vec<_> = chunk.into_iter().collect();
-                        debug!(?comparison_key, ?vec);
-                }
-        }
-
-        // iProduct!: Cartesian_Product
-        {
-                let _enter = info_span!("Cartesian Product").entered();
-                let teams = &["Eagles", "Owls", "Vultures"];
-                for (left, right) in iproduct!(teams.iter(), teams.iter()) {
-                        debug!(?left, ?right);
-                }
-        }
-
-        // Multi_Cartesian_Product!: turns iterator of iterators into product
-        {
-                let _enter = info_span!("Multi Cartesian Product: iterator of iterators into product").entered();
-                let groupables = &["A_0", "B_0 ", "B_11", "C_0  ", "C_11 ", "C_222"];
-                // chunks are kinda complicated and need some teasing
-                let mut custom_chunks: Vec<Vec<&&str>> = groupables
-                        .iter()
-                        .chunk_by(|name| name.chars().next())
-                        .into_iter()
-                        .map(|(_, iter)| iter.collect())
-                        .collect();
-                // takes an iterators of iterators
-                let mcp_vec: Vec<_> = custom_chunks.iter().multi_cartesian_product().collect();
-
-                for combo in mcp_vec.iter() {
-                        debug!(?combo);
-                }
-        }
+        Ok(())
 }
