@@ -60,7 +60,7 @@ console = "0.15.8"
 dialoguer = "0.11.0"
 indicatif = "0.17.9"
 owo-colors = "4.1.0"
-ratatui = "0.23.0"
+ratatui = "0.29.0"
 
 ## --Diagnostics--
 tracing = "0.1.41"
