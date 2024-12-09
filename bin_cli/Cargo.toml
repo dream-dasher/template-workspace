@@ -14,27 +14,65 @@ repository.workspace = true
 # license.workspace = true
 # license-file.workspace = true
 
+[lints]
+workspace = true
+
 [dependencies]
 ## --LOCAL--
 lib_blocking = { path = "../lib_blocking" }
 
-## --General--
-derive_more = { workspace = true }
-
-## --Trace-Logging--
-tracing = { workspace = true }
-tracing-subscriber = { workspace = true }
-
+# ## --Async--
+# futures.workspace = true
+# tokio.workspace = true
 ## --CLI--
-clap = { workspace = true }
-owo-colors = { workspace = true }
-indicatif = { workspace = true }
-dialoguer = { workspace = true }
-
+clap.workspace = true
+clap-verbosity-flag.workspace = true
+console.workspace = true
+dialoguer.workspace = true
+indicatif.workspace = true
+owo-colors.workspace = true
+ratatui.workspace = true
+## --Diagnostics--
+tracing.workspace = true
+tracing-subscriber.workspace = true
+tracing-appender.workspace = true
+tracing-error.workspace = true
+tracing-flame.workspace = true
+tracing-timing.workspace = true
+tracing-tree.workspace = true
+## --Env & Files--
+csv.workspace = true
+dotenvy.workspace = true
+include_dir.workspace = true
+secrecy.workspace = true
+walkdir.workspace = true
+# ## --Explore--
+# backon.workspace = true
+# minijinja.workspace = true
+# strum.workspace = true
+## --General--
+bon.workspace = true
+derive_more.workspace = true
+indoc.workspace = true
+itertools.workspace = true
+# ## --Math--
+# chrono.workspace = true
+# rand.workspace = true
+# --Networking--
+reqwest.workspace = true
+# ## --Parsing--
+# regex.workspace = true
+# serde.workspace = true
+# serde_json.workspace = true
+# ## --Performance--
+# regex-automata.workspace = true
+# rayon.workspace = true
 
 [dev-dependencies]
+## --Property Sample Testing--
+quickcheck.workspace = true
+quickcheck_macros.workspace = true
 ## --Test Trace-Logging--
-test-log = { workspace = true }
-
-[lints]
-workspace = true
+test-log.workspace = true
+## --Snapshot Testing--## --Snapshot Testing--
+insta.workspace = true

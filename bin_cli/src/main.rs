@@ -1,19 +1,16 @@
 #![feature(error_generic_member_access)]
 //! An Example Binary (CLI app) using Example Library in Example Workspace
 //!
+
+mod support;
+
 use std::{io::Write, thread::sleep, time::Duration};
 
-// There are ANSI escape codes that can be used to clear the screen!
-const ANSI_CLEAR_SCREEN: &str = "\x1B[2J\x1B[H";
-
-mod error;
-mod support_tracing;
-
 use clap::{Parser, Subcommand};
-use error::Result;
 use lib_blocking::{repeat_function, utility::say_hi};
+use support::{Result, generate_tracing_subscriber, tracing_subscribe_boilerplate};
 use tracing::{self as tea, instrument};
-// use rename_files::{app, error::Result, logging, Args};
+
 /// CLI Args
 #[derive(Parser, Debug)]
 #[command(version, about, long_about)]
@@ -37,7 +34,7 @@ enum SubCommandEnum {
 
 fn main() -> Result<()> {
         // sleep(Duration::from_millis(500)); // Pause for a moment
-        support_tracing::tracing_subscribe_boilerplate("warn");
+        tracing_subscribe_boilerplate("warn");
         tea::info!("----Tracing Active----");
         let args = Args::parse();
         match args.subcmnd {
@@ -53,6 +50,9 @@ fn main() -> Result<()> {
         Ok(())
 }
 
+/// Raw Animation.
+/// Using ANSI-escape code to clear screen.
+/// And manual idexing to place wide utf8 chars in a [u8] array.
 fn dance(seconds: u8) {
         const DA_LEN: usize = 100;
         const FRAME_RATE: u8 = 30;
@@ -81,7 +81,7 @@ fn dance(seconds: u8) {
                 dance_array[idx] = b'_';
                 idx = idx_next;
 
-                clear_screen();
+                clear_screen_ansi();
                 tea::info!(?idx, ?idx_next, ?dance_array);
                 println!("Dancing for more {} seconds...", countdown);
                 println!("{:?}", &dance_array);
@@ -93,12 +93,12 @@ fn dance(seconds: u8) {
                         countdown -= 1;
                 }
                 if current_time.duration_since(start_time).as_secs() > seconds as u64 {
-                        clear_screen();
+                        clear_screen_ansi();
                         println!("Dance is Done!");
                         println!("Dance is Done!");
                         println!("Dance is Done!");
                         std::thread::sleep(Duration::from_secs(1));
-                        clear_screen();
+                        clear_screen_ansi();
                         break;
                 }
                 std::thread::sleep(Duration::from_millis(MS_TO_WAIT));
@@ -106,8 +106,12 @@ fn dance(seconds: u8) {
 }
 
 /// Clear terminal screen using ANSI escape code.
+///
+/// Not the most robust, but decent in a pinch.
 #[instrument]
-fn clear_screen() {
+fn clear_screen_ansi() {
+        // There are ANSI escape codes that can be used to clear the screen!
+        const ANSI_CLEAR_SCREEN: &str = "\x1B[2J\x1B[H";
         print!("{}", ANSI_CLEAR_SCREEN);
         std::io::stdout().flush().unwrap();
 }
