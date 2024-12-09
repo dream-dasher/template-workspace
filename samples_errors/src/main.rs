@@ -1,10 +1,4 @@
 #![feature(error_generic_member_access)]
-//! Itertools
-//!
-//! ## Docs
-//! you likely want to start at:
-//! [trait Itertools::Itertools](https://docs.rs/itertools/latest/itertools/trait.Itertools.html#method.tuple_windows)
-//!
 //!
 //! clear; RUST_LOG=samples_errors=trace carrbn samples_errors
 
