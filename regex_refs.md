@@ -5,6 +5,10 @@
 **NOTE**: *newline* may be grabbed when copying.
 
 # tracing
+**code clouding tracing doo-dads**
+```regex
+(tea::|_tea|tea_span)
+```
 
 ## tracing events & spans
 **events**
@@ -25,7 +29,8 @@
 
 **un-entered spans**
 ```regex
-_enter .*[^d][^(]\);
+_(enter|entered|tea) .*[^(]\);
+_entered .*[^d][^(]\);
 ```
 (e.g. `let _enter = span!(...);` and `let _enter = span!(...).enter();` are both **ERRORS**.  The should be postfixed with `.entered()` (**ed**) or assigned to something besides `_enter`.)
 
