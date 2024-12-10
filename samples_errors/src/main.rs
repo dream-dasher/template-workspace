@@ -72,6 +72,7 @@ where
 }
 #[tracing::instrument]
 fn make_error(ch: char) -> Result<(), MyErrorWrapper> {
+        tea::debug!("making error...");
         match ch {
                 // ParseIntError
                 'p' => {
@@ -93,6 +94,7 @@ fn make_error(ch: char) -> Result<(), MyErrorWrapper> {
 }
 
 fn main() -> Result<(), MyErrorWrapper> {
+        let (non_blocking_writer, _guard) = tracing_appender::non_blocking(std::io::stderr());
         tracing_subscriber::Registry::default()
                 .with(tracing_tree::HierarchicalLayer::new(2)
                         .with_timer(tracing_tree::time::Uptime::default())
@@ -102,25 +104,32 @@ fn main() -> Result<(), MyErrorWrapper> {
                         .with_default_directive(LevelFilter::DEBUG.into())
                         .from_env_lossy())
                 .with(ErrorLayer::default())
-                // .with(tracing_subscriber::fmt::Layer::default())
+                .with(tracing_subscriber::fmt::Layer::default())
+                .with(tracing_subscriber::fmt::Layer::default()
+                        .with_writer(non_blocking_writer)
+                        .compact())
                 .init();
 
         // const A_CHAR: char = 'p';
         // const A_CHAR: char = 'f';
         const A_CHAR: char = 'x';
 
-        let _enter = tea::span!(Level::INFO, "main").entered();
-        let _enter = tea::span!(Level::INFO, "main2").entered();
+        let _tea = tea::span!(Level::INFO, "main").entered();
+        let _tea = tea::span!(Level::INFO, "main2").entered();
+        tea::info!("about to force an error, but **Handle It**...");
         match make_error(A_CHAR) {
                 Ok(_) => tea::info!("no error"),
                 Err(e) => tea::error!("error: {:#}", e),
         }
         {
-                let _enter = tea::span!(Level::INFO, "---special scope---").entered();
+                let _tea = tea::span!(Level::INFO, "---special scope---").entered();
+                tea::info!("about to force an error and **Bubble Up**, terminating main()...");
+                println!("\n\n\n");
                 make_error(A_CHAR)?;
-                let _enter = tea::span!(Level::INFO, "---special scope222222---").entered();
+                let _tea = tea::span!(Level::INFO, "---special scope222222---").entered();
         }
-        let _enter = tea::span!(Level::INFO, "end!!! (shouldn't see?)").entered();
+        let _tea = tea::span!(Level::INFO, "end!!! (shouldn't see?)").entered();
+        tea::info!("ending no see...");
 
         Ok(())
 }

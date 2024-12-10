@@ -2184,6 +2184,7 @@ dependencies = [
  "itertools",
  "thiserror 2.0.6",
  "tracing",
+ "tracing-appender",
  "tracing-error",
  "tracing-flame",
  "tracing-subscriber",
