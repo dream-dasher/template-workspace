@@ -1,3 +1,5 @@
+//! # Serde
+//!
 //! Serde & Serde_JSON
 //! struct W {
 //!     a: i32,
@@ -27,7 +29,8 @@
 
 use serde::{Deserialize, Serialize};
 use serde_json::{Result, Value, json};
-use tracing::Level;
+use tracing::{self as tea, Level};
+use tracing_subscriber::{EnvFilter, fmt::format::FmtSpan};
 
 #[expect(dead_code)]
 struct ImmA(String);
@@ -48,13 +51,15 @@ struct Request {
 }
 
 fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
-        // unsafe {
-        //         std::env::set_var("RUST_LOG", "trace");
-        // }
-        tracing_subscriber::fmt::init();
+        tracing_subscriber::fmt()
+                .with_env_filter(EnvFilter::from_default_env().add_directive(Level::DEBUG.into()))
+                .with_span_events(FmtSpan::NONE)
+                .init();
+        tea::trace!("Starting...");
+
         println!();
         println!("----------------------------------------");
-        tracing::info!("Using a tag.");
+        tea::info!("Using a tag.");
         let my_request = Request {
                 method: "say_hello".to_string(),
                 params: json!({"name": "John Doe"}),
@@ -69,7 +74,7 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
                 age:    42,
                 phones: vec!["+44 1234567".to_string(), "+44 2345678".to_string()],
         };
-        tracing::event!(Level::INFO, ?jim, "Jim");
+        tea::event!(Level::INFO, ?jim, "Jim");
         println!("Jim: {}", serde_json::to_string_pretty(&jim)?);
 
         println!();
@@ -85,9 +90,9 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
                     "+44 2345678"
                 ]
             }"#;
-        tracing::event!(Level::INFO, data_string, "data");
+        tea::event!(Level::INFO, data_string, "data");
         let data_man: Person = serde_json::from_str(data_string)?;
-        tracing::event!(Level::INFO, ?data_man, "struct from string");
+        tea::event!(Level::INFO, ?data_man, "struct from string");
 
         println!();
         println!("----------------------------------------");
@@ -121,7 +126,7 @@ fn untyped_example() -> Result<()> {
 /// Though seeing how Serde deals with newtype and multiple wrappers will be useful too.
 mod const_drop {
         use serde::{Deserialize, Serialize};
-        use tracing::Level;
+        use tracing::{self as tea, Level};
 
         pub const ZERO_WITH_DESTRUCTOR: TypeWithDestructor = TypeWithDestructor(0);
 
@@ -129,7 +134,7 @@ mod const_drop {
         pub struct TypeWithDestructor(i32);
         impl Drop for TypeWithDestructor {
                 fn drop(&mut self) {
-                        tracing::event!(Level::TRACE, destro_num = self.0);
+                        tea::event!(Level::TRACE, destro_num = self.0);
                 }
         }
 }
