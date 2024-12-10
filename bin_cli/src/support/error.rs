@@ -37,7 +37,14 @@ pub enum CliErrorKind {
         },
 }
 impl CliErrorKind {
-        pub fn make_other_error<E>(error: E) -> Self
+        /// Redundant with `ToOther(trait)::make_other_dyn_error`
+        // #[expect(
+        //         clippy::allow_attributes,
+        //         reason = "On or Off expect throws a warning. Lint warning or unfulfilled lint expectation warning."
+        // )]
+        // #[allow(dead_code, reason = "Boiler plate available for use.")]
+        #[expect(dead_code, reason = "Boiler plate available for use.")]
+        pub fn make_other_dyn_error<E>(error: E) -> Self
         where
                 E: Into<Box<dyn std::error::Error + Send + Sync>>,
         {
@@ -58,6 +65,8 @@ where
         }
 }
 
+#[expect(unused, reason = "Boiler plate available for use.")]
+/// Redundant with `CliErrorKind(error Enum)::make_other_dyn_error`
 pub trait ToOther {
         fn to_other(self) -> CliErrorWrapper;
 }

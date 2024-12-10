@@ -11,7 +11,8 @@ type SpecificLayered =
         Layered<EnvFilter, Layered<HierarchicalLayer<fn() -> Stderr, tracing_tree::time::Uptime>, Registry>>;
 
 /// Generates a tracing_subcsriber.  (Convenience function.)
-pub fn generate_tracing_subscriber() -> SpecificLayered {
+#[expect(dead_code, reason = "Boiler plate available for use.")]
+pub fn generate_tracing_tree_subscriber() -> SpecificLayered {
         let tree_layer = tracing_tree::HierarchicalLayer::new(3)
                 .with_timer(tracing_tree::time::Uptime::default())
                 // .with_span_modes(true)
@@ -23,7 +24,8 @@ pub fn generate_tracing_subscriber() -> SpecificLayered {
 }
 
 /// Basic boilerplate logging initialization.
-pub fn tracing_subscribe_boilerplate(env_min: impl Into<String>) {
+// #[expect(dead_code, reason = "Boiler plate available for use.")]
+pub fn generate_tracing_fmt_subscriber(env_min: impl Into<String>) {
         let filter = EnvFilter::try_new(std::env::var("RUST_LOG").unwrap_or_else(|_| env_min.into()))
                 .expect("Valid filter input provided.");
 

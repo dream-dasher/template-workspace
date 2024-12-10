@@ -34,7 +34,7 @@ enum SubCommandEnum {
 
 fn main() -> Result<()> {
         // sleep(Duration::from_millis(500)); // Pause for a moment
-        tracing_subscribe_boilerplate("warn");
+        subscriber::generate_tracing_fmt_subscriber("warn");
         tea::info!("----Tracing Active----");
         let args = Args::parse();
         match args.subcmnd {
