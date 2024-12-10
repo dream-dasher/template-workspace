@@ -5,6 +5,7 @@
 //! use std::backtrace;
 
 use derive_more::{Display, Error, From};
+use tracing::subscriber::SetGlobalDefaultError;
 
 #[derive(Debug, Display, Error, From)]
 #[display(
@@ -30,6 +31,8 @@ pub enum CliErrorKind {
         // TracingSubscriber { source: SetGlobalDefaultError },
         // #[display("io error: {}", source)]
         // Io { source: io::Error },
+        #[display("Error setting tracing subscriber default: {}", source)]
+        TracingSubscriber { source: SetGlobalDefaultError },
         #[from(ignore)]
         #[display("Unlabelled error (dyn error object): {}", source)]
         OtherDynError {

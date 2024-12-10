@@ -3,7 +3,10 @@
 use std::io::Stderr;
 
 use tracing::level_filters::LevelFilter;
-use tracing_subscriber::{EnvFilter, Registry, layer::Layered, prelude::*};
+use tracing_subscriber::{EnvFilter, Registry,
+                         fmt::{SubscriberBuilder, format::Pretty},
+                         layer::Layered,
+                         prelude::*};
 use tracing_tree::HierarchicalLayer;
 
 // workaround to hairy return type
@@ -25,16 +28,17 @@ pub fn generate_tracing_tree_subscriber() -> SpecificLayered {
 
 /// Basic boilerplate logging initialization.
 // #[expect(dead_code, reason = "Boiler plate available for use.")]
-pub fn generate_tracing_fmt_subscriber(env_min: impl Into<String>) {
-        let filter = EnvFilter::try_new(std::env::var("RUST_LOG").unwrap_or_else(|_| env_min.into()))
+pub fn generate_tracing_fmt_subscriber(
+        env_min: impl Into<String>,
+) -> SubscriberBuilder<Pretty, tracing_subscriber::fmt::format::Format<Pretty>, EnvFilter> {
+        let env_filter = EnvFilter::try_new(std::env::var("RUST_LOG").unwrap_or_else(|_| env_min.into()))
                 .expect("Valid filter input provided.");
 
         tracing_subscriber::fmt()
                 .pretty()
-                .with_env_filter(filter)
+                .with_env_filter(env_filter)
                 .with_file(true)
                 .with_line_number(true)
                 .with_thread_ids(true)
                 .with_target(true)
-                .init();
 }

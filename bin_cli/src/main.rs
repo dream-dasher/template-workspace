@@ -6,10 +6,10 @@ mod support;
 use std::{io::Write, time::Duration};
 
 use clap::{Parser, Subcommand};
-use lib_blocking::{repeat_function, utility::say_hi};
+use lib_blocking::{repeat_function, utility::say_hi}; // workspace
 use tracing::{self as tea, instrument};
 
-use crate::support::*;
+use crate::support::Result;
 
 /// CLI Args
 #[derive(Parser, Debug)]
@@ -33,8 +33,8 @@ enum SubCommandEnum {
 }
 
 fn main() -> Result<()> {
-        // sleep(Duration::from_millis(500)); // Pause for a moment
-        subscriber::generate_tracing_fmt_subscriber("warn");
+        tracing::subscriber::set_global_default(support::generate_tracing_fmt_subscriber("warn").finish())?;
+
         tea::info!("----Tracing Active----");
         let args = Args::parse();
         match args.subcmnd {
