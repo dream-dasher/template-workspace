@@ -1,8 +1,22 @@
-//! drops (and consts)
+//! # Drop w/ Const & Static
 //!
-//! **Note**: we can also reference static instead of cloning.  That will not trigger the `drop()`
-//! Custom `drop()` is run even when a `const` leaves scope.
+//! ## Notes
+//!  - **Clone**
+//!   - vibe:
+//!     - immutable (immutable ref like)
+//!     - config & reference values w/ only compile-time-info
+//!   - inline
+//!   - creates "temporary values", which *do* run `drop()`
+//!
+//!  - **Static**
+//!    - vibe:
+//!      - mutable-ish (often used with `interior-mutability` pattern; also mutable via `unsafe`)
+//!      - shared values w/ runtime info
+//!    - not inlined; typically referenced
+//!    - cloning creates a **non**-static opy
+//!
 /*!
+## Utility Lines:
 clear; RUST_LOG=xp_drop=trace cargo run --quiet --bin xp-drop
 !*/
 
