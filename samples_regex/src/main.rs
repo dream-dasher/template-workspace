@@ -17,7 +17,7 @@
 
 use indoc::indoc;
 use regex::{self, Regex};
-use tracing::{self as tea, Level, instrument::WithSubscriber, level_filters::LevelFilter};
+use tracing::{self as tea, level_filters::LevelFilter};
 use tracing_subscriber::{EnvFilter, fmt::format::FmtSpan, prelude::*};
 
 const REGEX_PATH_SPLIT: &str = r"^(?m)^(?<path>[^:]+):(?<line_number>[0-9]+):(?<title>.+)$";
@@ -26,7 +26,7 @@ path/to/foo:54:Blue Harvest
 path/to/bar:90:Something, Something, Something, Dark Side
 path/to/baz:3:It's a Trap!
 ");
-const REGEX_DATE_SPLIT_TOO_RESTRICTIVE: &str = r"^(?<year>\d{4})-(?<month>)\d{2}-(?<day>\d{2})$";
+// const REGEX_DATE_SPLIT_TOO_RESTRICTIVE: &str = r"^(?<year>\d{4})-(?<month>)\d{2}-(?<day>\d{2})$";
 const REGEX_DATE_SPLIT: &str = r"(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})";
 const HAY_DATES: &str = indoc!("
 What do 1865-04-14, 1881-07-02, 1901-09-06 and 1963-11-22 have in common?
@@ -87,8 +87,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 let _enter = tea::debug_span!("Parsing").entered();
                                 HAY_DATES
                                         .lines()
-                                        .enumerate()
-                                        .flat_map(|(i, line)| {
+                                        .flat_map(|line| {
                                                 re.captures_iter(line).enumerate().map(|(i2, cap)| {
                                                         let (raw, [year, month, day]) = cap.extract();
                                                         tea::info!(?raw, ?year, ?month, ?day, i2);

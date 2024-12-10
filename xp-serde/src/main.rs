@@ -29,6 +29,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Result, Value, json};
 use tracing::Level;
 
+#[expect(dead_code)]
 struct ImmA(String);
 #[derive(Serialize, Deserialize, Debug)]
 struct Person {
@@ -94,6 +95,7 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         Ok(())
 }
 
+#[expect(dead_code)]
 fn untyped_example() -> Result<()> {
         // Some JSON input data as a &str. Maybe this comes from the user.
         let data = r#"

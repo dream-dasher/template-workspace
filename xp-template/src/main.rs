@@ -8,12 +8,12 @@ mod support;
 
 use std::path::PathBuf;
 
-use clap::{Parser, Subcommand, ValueEnum};
+use clap::{Parser, ValueEnum};
 use error::Result;
 use handlebars_ex::handlebars_example;
 use liquid_ex::liquid_rust_example;
 use minijinja_ex::mini_jinja_example;
-use tracing::{Level, event, info};
+use tracing::{self as tea, Level};
 
 /// CLI Args
 ///
@@ -59,26 +59,25 @@ fn main() -> Result<()> {
                 _ => support::tracing_subscribe_boilerplate("trace"),
         }
         tracing::event!(Level::DEBUG, "Script 1, starting...");
-        info!(?args);
-        use minijinja::{Environment, context};
+        tea::info!(?args);
 
         match &args.templater {
                 TemplateSystem::None => {
-                        event!(Level::INFO, "No templating system selected.");
+                        tea::event!(Level::INFO, "No templating system selected.");
                         println!("No templating system selected.");
                 }
                 TemplateSystem::Minijinja => {
-                        event!(Level::INFO, "Using MiniJinja templating system.");
+                        tea::event!(Level::INFO, "Using MiniJinja templating system.");
                         println!("Using MiniJinja templating system.");
                         mini_jinja_example()?;
                 }
                 TemplateSystem::LiquidRust => {
-                        event!(Level::INFO, "Using LiquidRust templating system.");
+                        tea::event!(Level::INFO, "Using LiquidRust templating system.");
                         println!("Using LiquidRust templating system.");
                         liquid_rust_example()?;
                 }
                 TemplateSystem::Handlebars => {
-                        event!(Level::INFO, "Using Handlebars templating system.");
+                        tea::event!(Level::INFO, "Using Handlebars templating system.");
                         println!("Using Handlebars templating system.");
                         handlebars_example()?;
                 }

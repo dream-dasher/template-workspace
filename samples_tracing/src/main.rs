@@ -23,12 +23,13 @@
 //! clear; RUST_LOG=trace carrbn samples_tracing  a bb ccc dddd
 
 use core::fmt;
-use std::{io::Read, path::PathBuf, thread};
+use std::path::PathBuf;
 
-use tracing::{Level, debug, error, info, info_span, level_filters::LevelFilter, span, trace, warn};
+use tracing::{self as tea, Level, level_filters::LevelFilter};
 use tracing_subscriber::{EnvFilter, prelude::*};
 
 #[derive(Debug)]
+#[expect(dead_code)]
 struct Foo {
         a: bool,
         b: u32,
@@ -47,20 +48,20 @@ fn main() {
                 .with(tracing_subscriber::fmt::Layer::default())
                 .init();
 
-        let _enter = span!(Level::INFO, "main",).entered();
+        let _enter = tea::span!(Level::INFO, "main",).entered();
         let mut handles = vec![];
-        info!(args = ?std::env::args(), "about to start file loop");
+        tea::info!(args = ?std::env::args(), "about to start file loop");
         for file in std::env::args().skip(1) {
                 handles.push(std::thread::spawn(move || on_thread(file)));
         }
 
-        let _enter = span!(Level::INFO, "joining").entered();
+        let _enter = tea::span!(Level::INFO, "joining").entered();
         for handle in handles {
-                let span = span!(Level::INFO, "indiv_join");
+                let span = tea::span!(Level::INFO, "indiv_join");
                 let _guard = span.enter();
-                debug!("joining thread");
+                tea::debug!("joining thread");
                 handle.join().expect("thread join error");
-                debug!("thread joined");
+                tea::debug!("thread joined");
         }
 }
 
@@ -69,15 +70,15 @@ fn on_thread<PATH>(file: PATH)
 where
         PATH: Into<PathBuf> + std::fmt::Display + fmt::Debug,
 {
-        let _enter = info_span!("file", fname = %file).entered();
-        warn!(parent: None, fname = %file, "opening the file");
+        let _enter = tea::info_span!("file", fname = %file).entered();
+        tea::warn!(parent: None, fname = %file, "opening the file");
         // let mut file = std::fs::File::open(file).unwrap();
-        info!("reading file contents");
+        tea::info!("reading file contents");
         // let mut bytes = Vec::new();
         // file.read_exact(&mut bytes).unwrap();
-        info!(bytes = 0, "parsing");
+        tea::info!(bytes = 0, "parsing");
         // ..
         #[expect(clippy::disallowed_names)]
         let foo: Foo = Foo { a: false, b: 12 };
-        info!(parsed = ?foo, "done with file");
+        tea::info!(parsed = ?foo, "done with file");
 }

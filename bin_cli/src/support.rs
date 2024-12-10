@@ -3,5 +3,8 @@
 mod error;
 mod subscriber;
 
-pub use error::{Error, ErrorKind, Result};
+use error::CliErrorWrapper;
 pub use subscriber::{generate_tracing_subscriber, tracing_subscribe_boilerplate};
+
+pub type Result<T> = std::result::Result<T, Error>;
+pub type Error = CliErrorWrapper;

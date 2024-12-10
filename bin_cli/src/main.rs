@@ -1,15 +1,15 @@
-#![feature(error_generic_member_access)]
 //! An Example Binary (CLI app) using Example Library in Example Workspace
 //!
 
 mod support;
 
-use std::{io::Write, thread::sleep, time::Duration};
+use std::{io::Write, time::Duration};
 
 use clap::{Parser, Subcommand};
 use lib_blocking::{repeat_function, utility::say_hi};
-use support::{Result, generate_tracing_subscriber, tracing_subscribe_boilerplate};
 use tracing::{self as tea, instrument};
+
+use crate::support::*;
 
 /// CLI Args
 #[derive(Parser, Debug)]
@@ -61,7 +61,7 @@ fn dance(seconds: u8) {
         const BORING_BUF: [u8; 4] = [b'_'; 4];
         // const DANCER_BUF: [u8; 4] = [0xF0, 0x9F, 0x95, 0xBA]; // UTF-8 for 🕺
         let mut dancer_buf: [u8; 4] = BORING_BUF; // not sure how to null init
-        '🕺'.encode_utf8(&mut dancer_buf).as_bytes();
+        '🕺'.encode_utf8(&mut dancer_buf);
         let dancer_buf = dancer_buf;
 
         let mut idx: usize = 0;

@@ -2,13 +2,9 @@
 //!
 //! clear; RUST_LOG=samples_errors=trace carrbn samples_errors
 
-use std::{backtrace,
-          env::{self, VarError},
-          fs, io,
-          num::{self, ParseIntError}};
+use std::{backtrace, env, fs, io, num};
 
 use derive_more::{Display, Error, derive::From}; // !
-use itertools::{Itertools, iproduct};
 use tracing::{self as tea, Level, level_filters::LevelFilter};
 use tracing_error::ErrorLayer;
 use tracing_subscriber::{EnvFilter, prelude::*};

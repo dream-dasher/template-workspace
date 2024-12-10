@@ -4,17 +4,24 @@
 //! #![feature(error_generic_member_access)]
 //! use std::backtrace;
 
-use std::io;
+use derive_more::{Display, Error, From};
 
-use derive_more::{Display, Error as DMError, From};
-use tracing::subscriber::SetGlobalDefaultError;
-
-pub type Result<T> = std::result::Result<T, ErrorKind>;
-pub type Error = ErrWrapper;
+#[derive(Debug, Display, Error, From)]
+#[display(
+        "error: {:#}\n\n\nspantrace capture: {:?}\n\n\nspantrace: {:#}",
+        source,
+        spantrace.status(),
+        spantrace,
+)]
+pub struct CliErrorWrapper {
+        source:    CliErrorKind,
+        spantrace: tracing_error::SpanTrace,
+        // backtrace: backtrace::Backtrace,
+}
 
 // use derive_more::{Display, Error, derive::From};
 #[derive(Debug, Display, derive_more::Error, From)]
-pub enum ErrorKind {
+pub enum CliErrorKind {
         // #[display("parse error: {}", source)]
         // ParseError { source: num::ParseIntError },
         // #[display("env variable error: {}", source)]
@@ -29,7 +36,7 @@ pub enum ErrorKind {
                 source: Box<dyn std::error::Error + Send + Sync>,
         },
 }
-impl ErrorKind {
+impl CliErrorKind {
         pub fn make_other_error<E>(error: E) -> Self
         where
                 E: Into<Box<dyn std::error::Error + Send + Sync>>,
@@ -38,21 +45,9 @@ impl ErrorKind {
         }
 }
 
-#[derive(Debug, Display, DMError, From)]
-#[display(
-        "error: {:#}\n\n\nspantrace capture: {:?}\n\n\nspantrace: {:#}",
-        source,
-        spantrace.status(),
-        spantrace,
-)]
-pub struct ErrWrapper {
-        source:    ErrorKind,
-        spantrace: tracing_error::SpanTrace,
-        // backtrace: backtrace::Backtrace,
-}
-impl<T> From<T> for ErrWrapper
+impl<T> From<T> for CliErrorWrapper
 where
-        T: Into<ErrorKind>,
+        T: Into<CliErrorKind>,
 {
         fn from(error: T) -> Self {
                 Self {
@@ -63,15 +58,14 @@ where
         }
 }
 
-#[expect(dead_code)]
-trait ToOther {
-        fn to_other(self) -> ErrWrapper;
+pub trait ToOther {
+        fn to_other(self) -> CliErrorWrapper;
 }
 impl<E> ToOther for E
 where
         E: Into<Box<dyn std::error::Error + Send + Sync>>,
 {
-        fn to_other(self) -> ErrWrapper {
-                ErrorKind::OtherDynError { source: self.into() }.into()
+        fn to_other(self) -> CliErrorWrapper {
+                CliErrorKind::OtherDynError { source: self.into() }.into()
         }
 }
