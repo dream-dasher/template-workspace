@@ -16,7 +16,7 @@ repository.workspace = true
 
 [dependencies]
 ## --LOCAL--
-xp-drop = { path = "../xp-drop" }
+# xp-drop = { path = "../xp-drop" }
 
 ## --General--
 serde = { workspace = true, features = ["derive"] }
