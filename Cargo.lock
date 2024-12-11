@@ -3313,6 +3313,46 @@ dependencies = [
 ]
 
 [[package]]
+name = "xp-rayon"
+version = "0.1.0"
+dependencies = [
+ "backon",
+ "bon",
+ "chrono",
+ "clap",
+ "csv",
+ "derive_more",
+ "dialoguer",
+ "dotenvy",
+ "include_dir",
+ "indicatif",
+ "indoc",
+ "insta",
+ "itertools",
+ "minijinja",
+ "owo-colors",
+ "quickcheck",
+ "quickcheck_macros",
+ "rand",
+ "rayon",
+ "regex",
+ "regex-automata 0.4.9",
+ "secrecy",
+ "serde",
+ "serde_json",
+ "strum",
+ "test-log",
+ "tracing",
+ "tracing-appender",
+ "tracing-error",
+ "tracing-flame",
+ "tracing-subscriber",
+ "tracing-timing",
+ "tracing-tree",
+ "walkdir",
+]
+
+[[package]]
 name = "xp-serde"
 version = "0.1.0"
 dependencies = [

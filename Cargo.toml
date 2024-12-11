@@ -18,6 +18,7 @@ members = [
     "samples_conversion",
     "samples_errors",
     "samples_regex",
+    "xp-rayon",
 ]
 resolver = "3"
 
