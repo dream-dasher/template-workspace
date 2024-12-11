@@ -59,15 +59,16 @@ packadd name:
     rm -rf {{name}}
     cargo generate --path ./.support_data/cargo_generate_templates/template__cli_bin --name {{name}}
 
+
 # All tests, little feedback unless issues are detected.
-test-whisper:
-    cargo test --doc --quiet
-    cargo nextest run --status-level=leak
+test:
+    cargo test --doc
+    cargo nextest run --cargo-quiet --cargo-quiet
 
 # Runtests for a specific package.
 testp package="":
     cargo test --doc --quiet --package {{package}}
-    cargo nextest run --package {{package}}
+    cargo nextest run --cargo-quiet --cargo-quiet --package {{package}}
 
 # Run a specific test with output visible. (Use '' for test_name to see all tests and set log_level)
 test-view test_name="" log_level="error":
@@ -78,6 +79,11 @@ test-view test_name="" log_level="error":
 testnx-view test_name="" log_level="error":
     @echo "'Fun' Fact; the '--test' flag only allows integration test selection and will just fail on unit tests."
     RUST_LOG={{log_level}} cargo nextest run {{test_name}} --no-capture
+
+# All tests, little feedback unless issues are detected.
+test-whisper:
+    cargo test --doc --quiet
+    cargo nextest run --cargo-quiet --cargo-quiet --status-level=leak
 
 # Run performance analysis on a package.
 perf package *args:
