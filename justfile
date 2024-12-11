@@ -59,15 +59,16 @@ packadd name:
     rm -rf {{name}}
     cargo generate --path ./.support_data/cargo_generate_templates/template__cli_bin --name {{name}}
 
+
 # All tests, little feedback unless issues are detected.
-test-whisper:
-    cargo test --doc --quiet
-    cargo nextest run --status-level=leak
+test:
+    cargo test --doc
+    cargo nextest run --cargo-quiet --cargo-quiet
 
 # Runtests for a specific package.
 testp package="":
     cargo test --doc --quiet --package {{package}}
-    cargo nextest run --package {{package}}
+    cargo nextest run --cargo-quiet --cargo-quiet --package {{package}}
 
 # Run a specific test with output visible. (Use '' for test_name to see all tests and set log_level)
 test-view test_name="" log_level="error":
@@ -78,6 +79,22 @@ test-view test_name="" log_level="error":
 testnx-view test_name="" log_level="error":
     @echo "'Fun' Fact; the '--test' flag only allows integration test selection and will just fail on unit tests."
     RUST_LOG={{log_level}} cargo nextest run {{test_name}} --no-capture
+
+# All tests, little feedback unless issues are detected.
+test-whisper:
+    cargo test --doc --quiet
+    cargo nextest run --cargo-quiet --cargo-quiet --status-level=leak
+
+# Run performance analysis on a package.
+perf package *args:
+    cargo build --profile profiling --bin {{package}};
+    hyperfine --export-markdown=.output/profiling/{{package}}_hyperfine_profile.md './target/profiling/{{package}} {{args}}' --warmup=3 --shell=none;
+    samply record --output=.output/profiling/{{package}}_samply_profile.json --iteration-count=3 ./target/profiling/{{package}} {{args}};
+
+# Possible future perf compare command.
+perf-compare-info:
+    @echo "Use hyperfine directly:\n{{GRN}}hyperfine{{NC}} {{BRN}}'cmd args'{{NC}} {{BRN}}'cmd2 args'{{NC}} {{PRP}}...{{NC}} --warmup=3 --shell=none"
+
 
 # List dependencies. (This command has dependencies.)
 list-external-deps:

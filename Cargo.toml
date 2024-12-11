@@ -18,6 +18,7 @@ members = [
     "samples_conversion",
     "samples_errors",
     "samples_regex",
+    "xp-rayon",
 ]
 resolver = "3"
 
@@ -39,6 +40,10 @@ unsafe_code = "forbid"
 [workspace.lints.clippy]
 allow_attributes = "warn"
 
+# for use with perf-analysis tools like `samply`
+[profile.profiling]
+inherits = "release"
+debug = true
 
 [workspace.dependencies]
 ## --Async--
