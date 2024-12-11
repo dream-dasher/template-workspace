@@ -1,10 +1,7 @@
 //! Rayon
 //!
 
-use core::fmt;
-use std::path::PathBuf;
-
-use tracing::{self as tea, Level, level_filters::LevelFilter, warn_span};
+use tracing::{self as tea, level_filters::LevelFilter};
 use tracing_subscriber::{EnvFilter, prelude::*};
 
 fn main() {
