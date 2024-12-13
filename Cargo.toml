@@ -19,6 +19,7 @@ members = [
     "samples_errors",
     "samples_regex",
     "xp-rayon",
+    "xp-tabled",
 ]
 resolver = "3"
 
@@ -64,6 +65,8 @@ dialoguer = "0.11.0"
 indicatif = "0.17.9"
 owo-colors = "4.1.0"
 ratatui = "0.29.0"
+tabled = "0.17.0"
+json_to_table = "0.6"
 
 ## --Diagnostics--
 tracing = "0.1.41"
@@ -151,11 +154,11 @@ time = { version = "0.3.37", features = [
     "serde",
     "wasm-bindgen",
     "parsing",
-    "formating",
+    # "formating",
     "macros",
     "local-offset",
 ] }
-hifitime = { version = "4.0.1", features = ["reqwest", "tabled", "python"] }
+hifitime = { version = "4.0.1", features = ["reqwest", "tabled"] }
 
 # Dev-Dependencies
 ## --Property Sample Testing--
