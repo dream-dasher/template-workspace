@@ -186,6 +186,8 @@ fn main() -> Result<()> {
 
         println!("JSON:!\n{}\n", serde_json_value);
         println!("JSON to Table!\n{}\n", json_table);
+
+        tea::debug!(%json_table);
         Ok(())
 }
 
