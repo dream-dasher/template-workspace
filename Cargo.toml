@@ -129,8 +129,16 @@ tinyvec = { version = "1.8.0", features = [
     "serde",
 ] } # safe array/small vec, but requires Default for elements
 
-
 ## --eXplore--
+
+ndarray = { version = "0.16.1", features = [
+    "rayon",
+    "serde",
+    "approx",
+    "blas",
+    "matrixmultiply-threading",
+] }
+nalgebra = "0.33.2"
 backon = { version = "1", features = ["tokio-sleep"] }
 minijinja = { version = "2", default-features = false }
 strum = "0.26.3"
@@ -159,6 +167,19 @@ time = { version = "0.3.37", features = [
     "local-offset",
 ] }
 hifitime = { version = "4.0.1", features = ["reqwest", "tabled"] }
+url = { version = "2.5.4", features = ["serde"] }
+statrs = { version = "0.18.0", features = ["nalgebra"] }
+petgraph = { version = "0.6.5", features = [
+    "rayon",
+    "quickcheck",
+    "serde",
+    # "serde-1",
+    "serde_derive",
+] }
+rustworkx-core = "0.15.1"
+fixedbitset = { version = "0.5.7", fastures = ["serde"] }
+rstar = { version = "0.12.2", features = ["serde"] }
+
 
 # Dev-Dependencies
 ## --Property Sample Testing--

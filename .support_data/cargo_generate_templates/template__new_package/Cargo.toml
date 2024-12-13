@@ -64,6 +64,8 @@ regex-automata.workspace = true
 rayon.workspace = true
 tinyvec.workspace = true
 ## --eXplore--
+nalgebra.workspace = true
+ndarray.workspace = true
 backon.workspace = true
 minijinja.workspace = true
 strum.workspace = true
@@ -75,6 +77,12 @@ insta.workspace = true
 rstest.workspace = true
 time.workspace = true
 hifitime.workspace = true
+url.workspace = true
+statrs.workspace = true
+petgraph.workspace = true
+rustworkx-core.workspace = true
+fixedbitset.workspace = true
+rstar.workspace = true
 
 [dev-dependencies]
 # Dev-Dependencies
