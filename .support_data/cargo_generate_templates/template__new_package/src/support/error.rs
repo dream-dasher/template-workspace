@@ -5,7 +5,7 @@
 //!   - `Error` & `From` auto-derived, allowing `?` based conversion of errors
 //!   - 'Garbage' `OtherDynError` type for development and exploration purposes
 //!     - redundant `ToOther` trait & `ErrKind::make_other_error(_)` to help grab these errors in the dyn category
-//! - Struct Wrapper that adds a tracing SpanTrace and can accomodate a backtrace (later is auto-derivable)
+//! - Struct Wrapper that adds a tracing SpanTrace and can accommodate a backtrace (later is auto-derivable)
 //!   - *custom* `From` for the Wrapper, so that `?` conversion will generate a spantrace or otherwise populate additional values.
 //!   - *custom* `Debug` for the Wrapper, so that the SpanTrace is auto-printed (using the Display value).
 //!
