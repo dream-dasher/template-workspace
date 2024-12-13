@@ -69,8 +69,17 @@ ratatui = "0.29.0"
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = [
     "chrono",
+    "time",
+    "json",
     "env-filter",
     "tracing-log",
+    "tracing-serde",
+    "tracing",
+    # "serde-json",
+    "regex",
+    "matchers",
+    "once_cell",
+    "local-time",
 ] }
 tracing-appender = "0.2.3"
 tracing-error = "0.2.1"
@@ -84,11 +93,6 @@ dotenvy = "0.15.7"
 include_dir = "0.7.4"
 secrecy = "0.10.3"
 walkdir = "2.5.0"
-
-## --Explore--
-backon = { version = "1", features = ["tokio-sleep"] }
-minijinja = { version = "2", default-features = false }
-strum = "0.26.3"
 
 ## --General--
 bon = "3.2.0"
@@ -122,13 +126,44 @@ tinyvec = { version = "1.8.0", features = [
     "serde",
 ] } # safe array/small vec, but requires Default for elements
 
+
+## --eXplore--
+backon = { version = "1", features = ["tokio-sleep"] }
+minijinja = { version = "2", default-features = false }
+strum = "0.26.3"
+arbitrary = { version = "1.4.1", features = ["derive_arbitrary"] }
+divan = "0.1.17"
+criterion = "0.5.1"
+expect-test = "1.5.0"
+insta = { version = "1.41.1", ff = [
+    "clap",
+    "csv",
+    "json",
+    "redactions",
+    "serde",
+    "toml",
+    "walkdir",
+] }
+rstest = "0.23.0"
+time = { version = "0.3.37", features = [
+    "rand",
+    "quickcheck",
+    "serde",
+    "wasm-bindgen",
+    "parsing",
+    "formating",
+    "macros",
+    "local-offset",
+] }
+hifitime = { version = "4.0.1", features = ["reqwest", "tabled", "python"] }
+
 # Dev-Dependencies
 ## --Property Sample Testing--
 quickcheck = "1.0.3"
+
 quickcheck_macros = "1.0.0"
 
 ## --Test Trace-Logging--
 test-log = { version = "0.2.16", features = ["trace"] }
 
 ## --Snapshot Testing--## --Snapshot Testing--
-insta = { version = "1.41.1", features = ["filters", "redactions"] }

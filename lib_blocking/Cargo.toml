@@ -20,7 +20,7 @@ derive_more = { workspace = true }
 
 ## --Trace-Logging--
 tracing = { workspace = true }
-tracing-subscriber = { workspace = true }
+tracing-subscriber.workspace = true
 
 
 [dev-dependencies]

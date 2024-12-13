@@ -53,11 +53,11 @@ update-soft:
 update-hard: update-soft
     cargo update --verbose --breaking -Z unstable-options
 
-# Add a package to workspace // update-comment: the heck am I doing adding, removing, then using cargo-generate?
+# Add a package to workspace // adds and removes a bin to update workspace package register
 packadd name:
     cargo new --bin {{name}}
     rm -rf {{name}}
-    cargo generate --path ./.support_data/cargo_generate_templates/template__cli_bin --name {{name}}
+    cargo generate --path ./.support_data/cargo_generate_templates/template__new_package --name {{name}}
 
 
 # All tests, little feedback unless issues are detected.
