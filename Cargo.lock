@@ -1206,7 +1206,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "snafu",
- "tabled 0.17.0",
+ "tabled",
  "wasm-bindgen",
  "web-sys",
  "web-time",
@@ -1635,12 +1635,12 @@ dependencies = [
 
 [[package]]
 name = "json_to_table"
-version = "0.6.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "39c911645638ed6e1ce6aad8f043ecc2d2ef2d45f9fb19f89c6b55a685b883a1"
+checksum = "32a974bc5b8f9a651a655f8ab292e5f5d4487c55bf79a41027eb8818505c6428"
 dependencies = [
  "serde_json",
- "tabled 0.12.2",
+ "tabled",
 ]
 
 [[package]]
@@ -2046,17 +2046,6 @@ name = "owo-colors"
 version = "4.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fb37767f6569cd834a413442455e0f066d0d522de8630436e2a1761d9726ba56"
-
-[[package]]
-name = "papergrid"
-version = "0.9.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ae7891b22598926e4398790c8fe6447930c72a67d36d983a49d6ce682ce83290"
-dependencies = [
- "bytecount",
- "fnv",
- "unicode-width 0.1.14",
-]
 
 [[package]]
 name = "papergrid"
@@ -2610,9 +2599,9 @@ dependencies = [
 
 [[package]]
 name = "rustls-pki-types"
-version = "1.10.0"
+version = "1.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "16f1201b3c9a7ee8039bcadc17b7e605e2945b27eee7631788c1bd2b0643674b"
+checksum = "d2bf47e6ff922db3825eb750c4e2ff784c6ff8fb9e13046ef6a1d1c5401b0b37"
 
 [[package]]
 name = "rustls-webpki"
@@ -3102,21 +3091,11 @@ dependencies = [
 
 [[package]]
 name = "tabled"
-version = "0.12.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0ce69a5028cd9576063ec1f48edb2c75339fd835e6094ef3e05b3a079bf594a6"
-dependencies = [
- "papergrid 0.9.1",
- "unicode-width 0.1.14",
-]
-
-[[package]]
-name = "tabled"
 version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c6709222f3973137427ce50559cd564dc187a95b9cfe01613d2f4e93610e510a"
 dependencies = [
- "papergrid 0.13.0",
+ "papergrid",
  "tabled_derive",
 ]
 
@@ -4027,7 +4006,7 @@ dependencies = [
  "serde",
  "serde_json",
  "strum",
- "tabled 0.17.0",
+ "tabled",
  "test-log",
  "time",
  "tinyvec",
