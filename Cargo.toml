@@ -3,6 +3,7 @@
 # [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
 
 [workspace]
+resolver = "3"
 members = [
     "lib_blocking",
     "bin_cli",
@@ -23,7 +24,6 @@ members = [
     "xp-snapshot",
     "xp-ratatui",
 ]
-resolver = "3"
 
 [workspace.package]
 edition = "2024"
@@ -92,14 +92,7 @@ tracing-flame = "0.2.0"
 tracing-timing = "0.6.0"
 tracing-tree = { version = "0.4.0", features = ["time"] }
 
-## --Env & Files--
-csv = "1.3.1"
-dotenvy = "0.15.7"
-include_dir = "0.7.4"
-secrecy = "0.10.3"
-walkdir = "2.5.0"
-
-## --General--
+## --Ergonomics--
 bon = "3.2.0"
 derive_more = { version = "1.0.0", features = [
     "full",
@@ -110,6 +103,14 @@ derive_more = { version = "1.0.0", features = [
 ] }
 indoc = "2.0.5"
 itertools = "0.13.0"
+strum = { version = "0.26.3", features = ["derive", "phf"] }
+
+## --Env & Files--
+csv = "1.3.1"
+dotenvy = "0.15.7"
+include_dir = "0.7.4"
+secrecy = "0.10.3"
+walkdir = "2.5.0"
 
 ## --Math--
 chrono = { version = "0.4.38", features = ["serde"] }
@@ -131,22 +132,16 @@ tinyvec = { version = "1.8.0", features = [
     "serde",
 ] } # safe array/small vec, but requires Default for elements
 
-## --eXplore--
+# Dev-Dependencies
+## --Property Sample Testing--
+quickcheck = "1.0.3"
+quickcheck_macros = "1.0.0"
+## --Test Trace-Logging--
+test-log = { version = "0.2.16", features = ["trace"] }
 
-ndarray = { version = "0.16.1", features = [
-    "rayon",
-    "serde",
-    "approx",
-    "blas",
-    "matrixmultiply-threading",
-] }
-nalgebra = "0.33.2"
-backon = { version = "1", features = ["tokio-sleep"] }
-minijinja = { version = "2", default-features = false }
-strum = "0.26.3"
-arbitrary = { version = "1.4.1", features = ["derive_arbitrary"] }
-divan = "0.1.17"
-criterion = "0.5.1"
+## --eXplore--
+rstest = "0.23.0"
+### X snapshot
 expect-test = "1.5.0"
 insta = { version = "1.41.1", ff = [
     "clap",
@@ -157,19 +152,24 @@ insta = { version = "1.41.1", ff = [
     "toml",
     "walkdir",
 ] }
-rstest = "0.23.0"
-time = { version = "0.3.37", features = [
-    "rand",
-    "quickcheck",
-    "serde",
-    "wasm-bindgen",
-    "parsing",
-    # "formating",
-    "macros",
-    "local-offset",
-] }
-hifitime = { version = "4.0.1", features = ["reqwest", "tabled"] }
+### X perf/bench
+arbitrary = { version = "1.4.1", features = ["derive_arbitrary"] }
+criterion = "0.5.1"
+divan = "0.1.17"
+### X calls
+ease-off = { version = "0.1.6", features = ["tokio"] }
+backon = { version = "1", features = ["tokio-sleep"] }
 url = { version = "2.5.4", features = ["serde"] }
+### X matrices
+ndarray = { version = "0.16.1", features = [
+    "rayon",
+    "serde",
+    "approx",
+    "blas",
+    "matrixmultiply-threading",
+] }
+nalgebra = "0.33.2"
+### X other math
 statrs = { version = "0.18.0", features = ["nalgebra"] }
 petgraph = { version = "0.6.5", features = [
     "rayon",
@@ -181,15 +181,25 @@ petgraph = { version = "0.6.5", features = [
 rustworkx-core = "0.15.1"
 fixedbitset = { version = "0.5.7", fastures = ["serde"] }
 rstar = { version = "0.12.2", features = ["serde"] }
-
-
-# Dev-Dependencies
-## --Property Sample Testing--
-quickcheck = "1.0.3"
-
-quickcheck_macros = "1.0.0"
-
-## --Test Trace-Logging--
-test-log = { version = "0.2.16", features = ["trace"] }
-
-## --Snapshot Testing--## --Snapshot Testing--
+### X time
+time = { version = "0.3.37", features = [
+    "rand",
+    "quickcheck",
+    "serde",
+    "wasm-bindgen",
+    "parsing",
+    # "formating",
+    "macros",
+    "local-offset",
+] }
+hifitime = { version = "4.0.1", features = ["reqwest", "tabled"] }
+### X other
+minijinja = { version = "2", default-features = false }
+phf = { version = "0.11.2", features = [
+    "macros",
+    "serde",
+    "uncased",
+    "unicase",
+] }
+phf_codegen = "0.11.2"
+image = { version = "0.25.5", features = ["serde"] }
