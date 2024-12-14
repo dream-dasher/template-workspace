@@ -19,7 +19,7 @@ members = [
     "samples_errors",
     "samples_regex",
     "xp-rayon",
-    "xp-tabled",
+    "xp-tabled", "xp-snapshot",
 ]
 resolver = "3"
 
