@@ -16,6 +16,7 @@ mod tests {
         use expect_test::{Expect, expect, expect_file};
 
         #[derive(Debug)]
+        #[expect(dead_code)]
         struct Foo {
                 value: i32,
         }
