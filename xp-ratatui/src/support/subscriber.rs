@@ -12,6 +12,8 @@
 //! - Tracing is poorly documented and methods poorly named.  One can easily use, e.g., `::fmt()` instead of `::fmt` and be greeted with cryptic or even misdirecting errors.
 //!   - I have no solution for this.  *Just be careful!*  It is very easy to lose a lot of time chain one's tail, on seemingly trivial configuration.
 
+use std::env;
+
 use tracing::level_filters::LevelFilter;
 use tracing_appender::non_blocking::WorkerGuard;
 use tracing_error::ErrorLayer;
@@ -45,7 +47,19 @@ pub fn active_global_default_tracing_subscriber() -> Result<WorkerGuard> {
 
         let error_layer = ErrorLayer::default().with_filter(LevelFilter::TRACE);
 
-        let (non_blocking_writer, trace_writer_guard) = tracing_appender::non_blocking(std::io::stderr());
+        // let (non_blocking_writer, trace_writer_guard) = tracing_appender::non_blocking(std::io::stderr());
+        // let mut vec: Vec<u8> = Vec::new();
+        // let (non_blocking_writer, trace_writer_guard) = tracing_appender::non_blocking(vec);
+        tracing::trace!(
+                pwd=?env::current_dir()?,
+        );
+        // let log_file = std::fs::File::open("xp-ratatui/data/loggedy.log")?;
+        let log_file = std::fs::OpenOptions::new()
+                .create(false)
+                .write(true)
+                .truncate(false) // (wipe old file contents; "zero length")
+                .open("xp-ratatui/data/loggedy.log")?;
+        let (non_blocking_writer, trace_writer_guard) = tracing_appender::non_blocking(log_file);
         let fmt_layer = tracing_subscriber::fmt::Layer::default()
                 // .compact()
                 // .pretty()
