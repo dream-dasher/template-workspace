@@ -24,6 +24,7 @@ tokio.workspace = true
 clap.workspace = true
 clap-verbosity-flag.workspace = true
 console.workspace = true
+crossterm.workspace = true
 dialoguer.workspace = true
 indicatif.workspace = true
 owo-colors.workspace = true
@@ -44,11 +45,12 @@ dotenvy.workspace = true
 include_dir.workspace = true
 secrecy.workspace = true
 walkdir.workspace = true
-## --General--
+## --Ergonomics--
 bon.workspace = true
 derive_more.workspace = true
 indoc.workspace = true
 itertools.workspace = true
+pretty_assertions.workspace = true
 ## --Math--
 chrono.workspace = true
 rand.workspace = true

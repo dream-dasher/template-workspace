@@ -1,8 +1,12 @@
 //! # Library code for package: **xp-ratatui**
 
+mod counter_app;
+mod hello_world;
 mod support;
 
 // use derive_more::derive::{Constructor, Deref, DerefMut, From, Into};
+pub use counter_app::run_counter_app;
+pub use hello_world::run_hello_world;
 use indoc::indoc;
 use regex::Regex;
 pub use support::{Error, Result, active_global_default_tracing_subscriber};
