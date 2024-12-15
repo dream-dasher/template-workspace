@@ -24,11 +24,11 @@ tokio.workspace = true
 clap.workspace = true
 clap-verbosity-flag.workspace = true
 console.workspace = true
-crossterm.workspace = true
+crossterm = { version = "0.28.1", features = ["serde"] }
 dialoguer.workspace = true
 indicatif.workspace = true
 owo-colors.workspace = true
-ratatui.workspace = true
+ratatui = { version = "0.29.0", features = ["serde", "palette"] }
 tabled.workspace = true
 json_to_table.workspace = true
 ## --Diagnostics--
@@ -74,7 +74,6 @@ strum.workspace = true
 arbitrary.workspace = true
 divan.workspace = true
 criterion.workspace = true
-expect-test.workspace = true
 insta.workspace = true
 rstest.workspace = true
 time.workspace = true

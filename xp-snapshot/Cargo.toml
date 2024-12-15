@@ -27,7 +27,6 @@ console.workspace = true
 dialoguer.workspace = true
 indicatif.workspace = true
 owo-colors.workspace = true
-ratatui.workspace = true
 tabled.workspace = true
 json_to_table.workspace = true
 ## --Diagnostics--
@@ -72,7 +71,7 @@ strum.workspace = true
 arbitrary.workspace = true
 divan.workspace = true
 criterion.workspace = true
-expect-test.workspace = true
+expect-test = "1.5.0"
 insta.workspace = true
 rstest.workspace = true
 time.workspace = true
