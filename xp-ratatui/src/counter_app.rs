@@ -79,11 +79,11 @@ impl App {
         }
 
         fn increment_counter(&mut self) {
-                self.count += 1;
+                self.count = self.count.wrapping_add(1);
         }
 
         fn decrement_counter(&mut self) {
-                self.count -= 1;
+                self.count = self.count.wrapping_sub(1);
         }
 }
 
@@ -142,5 +142,24 @@ mod tests {
                 expected.set_style(Rect::new(43, 3, 4, 1), key_style);
 
                 assert_eq!(buf, expected);
+        }
+
+        #[test]
+        fn handle_key_event() -> io::Result<()> {
+                let mut app = App::default();
+                app.handle_key_event(KeyCode::Right.into());
+                assert_eq!(app.count, 1);
+
+                app.handle_key_event(KeyCode::Left.into());
+                assert_eq!(app.count, 0);
+
+                app.handle_key_event(KeyCode::Left.into());
+                assert_eq!(app.count, u32::MAX);
+
+                let mut app = App::default();
+                app.handle_key_event(KeyCode::Char('q').into());
+                assert!(app.exit);
+
+                Ok(())
         }
 }
