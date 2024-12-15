@@ -55,7 +55,7 @@ pub fn active_global_default_tracing_subscriber() -> Result<WorkerGuard> {
         );
         // let log_file = std::fs::File::open("xp-ratatui/data/loggedy.log")?;
         let log_file = std::fs::OpenOptions::new()
-                .create(false)
+                .create(true)
                 .write(true)
                 .truncate(false) // (wipe old file contents; "zero length")
                 .open("xp-ratatui/data/loggedy.log")?;
