@@ -63,6 +63,7 @@ clap = { version = "4.5.22", features = [
 ] }
 clap-verbosity-flag = "3.0.1"
 console = "0.15.8"
+crossterm = { version = "0.28.1", features = ["serde"] }
 dialoguer = "0.11.0"
 indicatif = "0.17.9"
 owo-colors = "4.1.0"
@@ -103,6 +104,7 @@ derive_more = { version = "1.0.0", features = [
 ] }
 indoc = "2.0.5"
 itertools = "0.13.0"
+pretty_assertions = "1.4.1"
 strum = { version = "0.26.3", features = ["derive", "phf"] }
 
 ## --Env & Files--
