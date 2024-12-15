@@ -7,8 +7,6 @@
 //!
 //! RUST_LOG=error cargo run --package xp-ratatui counter_app
 
-use std::io;
-
 use crossterm::event::{Event, KeyEvent};
 // use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
 use ratatui::{DefaultTerminal, Frame,
@@ -114,6 +112,8 @@ impl Widget for &App {
 
 #[cfg(test)]
 mod tests {
+        use std::io;
+
         use pretty_assertions::assert_eq;
         use ratatui::style::Style;
 
