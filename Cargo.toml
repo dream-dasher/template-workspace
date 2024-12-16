@@ -22,7 +22,7 @@ members = [
     "xp-rayon",
     "xp-tabled",
     "xp-snapshot",
-    "xp-ratatui",
+    "xp-ratatui", "cat_ergonomics",
 ]
 
 [workspace.package]
@@ -88,6 +88,7 @@ tracing-subscriber = { version = "0.3.19", features = [
 tracing-appender = "0.2.3"
 tracing-error = "0.2.1"
 tracing-flame = "0.2.0"
+tracing-indicatif = "0.3.8"
 tracing-timing = "0.6.0"
 tracing-tree = { version = "0.4.0", features = ["time"] }
 
@@ -102,7 +103,6 @@ derive_more = { version = "1.0.0", features = [
 ] }
 indoc = "2.0.5"
 itertools = "0.13.0"
-pretty_assertions = "1.4.1"
 strum = { version = "0.26.3", features = ["derive", "phf"] }
 
 ## --Env & Files--
@@ -133,6 +133,8 @@ tinyvec = { version = "1.8.0", features = [
 ] } # safe array/small vec, but requires Default for elements
 
 # Dev-Dependencies
+## --Dev-Ergonomics--
+pretty_assertions = "1.4.1"
 ## --Property Sample Testing--
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
