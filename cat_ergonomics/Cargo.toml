@@ -1,0 +1,75 @@
+[package]
+name = "cat_ergonomics"
+version = "0.1.0"
+edition.workspace = true
+authors.workspace = true
+description.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+keywords.workspace = true
+repository.workspace = true
+# publish.workspace = true
+# license.workspace = true
+# license-file.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+################################33
+## --Async--
+# futures.workspace = true
+# reqwest.workspace = true
+# tokio.workspace = true
+## --CLI--
+clap.workspace = true
+clap-verbosity-flag.workspace = true
+# console.workspace = true
+dialoguer.workspace = true
+# indicatif.workspace = true
+owo-colors.workspace = true
+# tabled.workspace = true
+# json_to_table.workspace = true
+## --Diagnostics--
+tracing.workspace = true
+tracing-subscriber.workspace = true
+tracing-appender.workspace = true
+tracing-error.workspace = true
+tracing-indicatif.workspace = true
+tracing-flame.workspace = true
+tracing-timing.workspace = true
+tracing-tree.workspace = true
+## --Env & Files--
+# csv.workspace = true
+# dotenvy.workspace = true
+# include_dir.workspace = true
+# secrecy.workspace = true
+# walkdir.workspace = true
+## --Ergonomics--
+bon.workspace = true
+derive_more.workspace = true
+indoc.workspace = true
+itertools.workspace = true
+strum.workspace = true
+## --Math--
+rand.workspace = true
+## --Parsing--
+regex.workspace = true
+# serde.workspace = true
+# serde_json.workspace = true
+## --Performance--
+# dashmap.workspace = true
+# regex-automata.workspace = true
+# rayon.workspace = true
+# tinyvec.workspace = true
+
+[dev-dependencies]
+# Dev-Dependencies
+## --Dev-Ergonomics--
+pretty_assertions.workspace = true
+## --Property Sample Testing--
+quickcheck.workspace = true
+quickcheck_macros.workspace = true
+## --Test Trace-Logging--
+test-log.workspace = true
+## --Snapshot Testing--## --Snapshot Testing--
