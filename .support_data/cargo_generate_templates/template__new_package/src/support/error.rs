@@ -32,6 +32,8 @@ pub enum ErrKind{{ project-name | upper_camel_case }} {
         OtherDynError {
                 source: Box<dyn std::error::Error + Send + Sync>,
         },
+        #[display(r#"Uncategorized string err: "{}""#, source_string)]
+        OtherStringError { source_string: String },
         // #[display("Error extracting lines from input: {}", source_input)]
         // NoInputLines { source_input: String },
         // #[from(ignore)]
