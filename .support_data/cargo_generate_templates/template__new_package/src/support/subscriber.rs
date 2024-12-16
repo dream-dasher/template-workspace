@@ -15,7 +15,8 @@
 use tracing::level_filters::LevelFilter;
 use tracing_appender::non_blocking::WorkerGuard;
 use tracing_error::ErrorLayer;
-use tracing_subscriber::{fmt::format::FmtSpan, prelude::*};
+// use tracing_indicatif::IndicatifLayer;
+use tracing_subscriber::{fmt::format::FmtSpan, layer::SubscriberExt, prelude::*};
 
 use crate::Result;
 
@@ -33,19 +34,24 @@ use crate::Result;
 /// }
 /// ```
 pub fn active_global_default_tracing_subscriber() -> Result<WorkerGuard> {
-        let envfilter_layer = tracing_subscriber::EnvFilter::builder()
-                .with_default_directive(LevelFilter::TRACE.into())
-                .from_env_lossy();
-
         // let tree_layer = tracing_tree::HierarchicalLayer::new(2)
         //         .with_timer(tracing_tree::time::Uptime::default())
         //         .with_span_modes(true)
         //         .with_indent_lines(true)
         //         .with_targets(true);
 
-        let error_layer = ErrorLayer::default().with_filter(LevelFilter::TRACE);
+        let envfilter_filter = tracing_subscriber::EnvFilter::builder()
+                .with_default_directive(LevelFilter::TRACE.into())
+                .from_env_lossy();
 
-        let (non_blocking_writer, trace_writer_guard) = tracing_appender::non_blocking(std::io::stderr());
+        let error_layer = ErrorLayer::default().with_filter(LevelFilter::TRACE);
+        // let indicatif_layer = IndicatifLayer::new();
+        // manually set writer to stderr.  (choose a line; different types)
+        let writer = {
+                std::io::stderr() // regular stderr
+                // indicatif_layer.get_stderr_writer() // this prevents status bars from overwriting the output.
+        };
+        let (non_blocking_writer, trace_writer_guard) = tracing_appender::non_blocking(writer);
         let fmt_layer = tracing_subscriber::fmt::Layer::default()
                 // .compact()
                 // .pretty()
@@ -55,12 +61,14 @@ pub fn active_global_default_tracing_subscriber() -> Result<WorkerGuard> {
                 .with_thread_names(true)
                 .with_file(true)
                 .with_line_number(true)
-                .with_span_events(FmtSpan::FULL)
-                .with_writer(non_blocking_writer);
+                .with_span_events(FmtSpan::NONE)
+                .with_writer(non_blocking_writer)
+                .with_filter(envfilter_filter);
 
         let subscriber = tracing_subscriber::Registry::default()
                 .with(error_layer)
-                .with(fmt_layer.with_filter(envfilter_layer));
+                // .with(indicatif_layer)
+                .with(fmt_layer);
         // .with(fmt_layer.and_then(tree_layer).with_filter(envfilter_layer));
 
         tracing::subscriber::set_global_default(subscriber)?;
