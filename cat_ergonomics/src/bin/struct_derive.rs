@@ -1,7 +1,8 @@
-//!
+//! Auto & Custom Structure Derives & Interactions
 
-use std::{fmt::Display, ops::Deref};
+use std::fmt::Display;
 
+use bon::bon;
 use derive_more::derive::{Add, From, Index, Into};
 use filter::LevelFilter;
 use layer::SubscriberExt;
@@ -36,11 +37,19 @@ impl Display for Maze {
                 Ok(())
         }
 }
+#[bon]
 impl Maze {
         #[instrument]
-        fn new(max_dims: Point2D) -> Self {
-                let maze_linear = vec![0; max_dims.x * max_dims.y];
-                Self { maze_linear, max_dims }
+        #[builder]
+        fn new(maze: Vec<usize>, max_dims: Point2D) -> Result<Self, String> {
+                if maze.len() != max_dims.x * max_dims.y {
+                        Err("Maze dimensions do not match the linear maze vector length.".to_string())
+                } else {
+                        Ok(Self {
+                                maze_linear: maze,
+                                max_dims,
+                        })
+                }
         }
 
         #[instrument(skip(self))]
@@ -70,7 +79,7 @@ impl Maze {
                 }
         }
 }
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
         tracing_subscriber::Registry::default()
                 .with(tracing_subscriber::fmt::Layer::default().with_filter(
                         EnvFilter::builder()
@@ -93,14 +102,11 @@ fn main() {
         let maze_dims = Point2D { x: 6, y: 6 };
         // let maze_points: Vec<usize> = (0..36).map(|i| i % 10).collect();
         let maze_points: Vec<usize> = (0..36).collect();
-        let maze = Maze {
-                maze_linear: maze_points,
-                max_dims:    maze_dims,
-        };
-
+        let maze = Maze::builder().max_dims(maze_dims).maze(maze_points).build()?;
         println!("maze: {}", maze);
 
         let p = Point2D { x: 3, y: 4 };
         let val = maze.get(p).unwrap();
         event![Level::INFO, %maze, %p, %val ,"maze indexing"];
+        Ok(())
 }
