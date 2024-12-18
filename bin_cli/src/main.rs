@@ -33,7 +33,9 @@ enum SubCommandEnum {
 }
 
 fn main() -> Result<()> {
-        tracing::subscriber::set_global_default(support::generate_tracing_fmt_subscriber("warn").finish())?;
+        tracing::subscriber::set_global_default(
+                support::generate_tracing_fmt_subscriber("warn").finish(),
+        )?;
 
         tea::info!("----Tracing Active----");
         let args = Args::parse();
@@ -89,7 +91,8 @@ fn dance(seconds: u8) {
                 println!("{:?}", &dance_array);
 
                 let current_time = std::time::Instant::now();
-                if current_time.duration_since(start_time).as_secs() > (seconds as u64 - countdown) {
+                if current_time.duration_since(start_time).as_secs() > (seconds as u64 - countdown)
+                {
                         countdown -= 1;
                 }
                 if current_time.duration_since(start_time).as_secs() > seconds as u64 {

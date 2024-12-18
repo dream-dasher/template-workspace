@@ -72,7 +72,10 @@ fn main() {
                 tea::info!("v________________________v");
                 let (assigned_const, assigned_static) = create_zero_with_destructor();
                 tea::info!(?assigned_const, "Assigned const from create_and_drop fn");
-                tea::info!(?assigned_static, "Assigned cloned static from create_and_drop fn");
+                tea::info!(
+                        ?assigned_static,
+                        "Assigned cloned static from create_and_drop fn"
+                );
                 tea::info!("^________________________^");
         }
 
@@ -88,7 +91,10 @@ fn main() {
                         constantine: STATIC_ZERO_WITH_DESTRUCTOR.clone(),
                         field:       8118,
                 };
-                tea::info!(?some_struct_with_const, "Assigned const from create_and_drop fn");
+                tea::info!(
+                        ?some_struct_with_const,
+                        "Assigned const from create_and_drop fn"
+                );
                 tea::info!(
                         ?some_struct_with_static,
                         "Assigned cloned static from create_and_drop fn"

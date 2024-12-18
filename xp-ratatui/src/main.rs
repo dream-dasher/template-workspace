@@ -19,7 +19,8 @@ use std::path::PathBuf;
 
 use clap::{Parser, Subcommand};
 use tracing::{self as tea, Level, instrument};
-use xp_ratatui::{Result, active_global_default_tracing_subscriber, run_counter_app, run_hello_world};
+use xp_ratatui::{Result, active_global_default_tracing_subscriber, run_counter_app,
+                 run_hello_world};
 
 /// Interface to choose a Ratatui tutorial program to run.
 #[derive(Parser, Debug)]

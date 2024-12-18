@@ -10,8 +10,10 @@ use tracing_subscriber::{EnvFilter, Registry,
 use tracing_tree::HierarchicalLayer;
 
 // workaround to hairy return type
-type SpecificLayered =
-        Layered<EnvFilter, Layered<HierarchicalLayer<fn() -> Stderr, tracing_tree::time::Uptime>, Registry>>;
+type SpecificLayered = Layered<
+        EnvFilter,
+        Layered<HierarchicalLayer<fn() -> Stderr, tracing_tree::time::Uptime>, Registry>,
+>;
 
 /// Generates a tracing_subcsriber.  (Convenience function.)
 #[expect(dead_code, reason = "Boiler plate available for use.")]
@@ -31,8 +33,9 @@ pub fn generate_tracing_tree_subscriber() -> SpecificLayered {
 pub fn generate_tracing_fmt_subscriber(
         env_min: impl Into<String>,
 ) -> SubscriberBuilder<Pretty, tracing_subscriber::fmt::format::Format<Pretty>, EnvFilter> {
-        let env_filter = EnvFilter::try_new(std::env::var("RUST_LOG").unwrap_or_else(|_| env_min.into()))
-                .expect("Valid filter input provided.");
+        let env_filter =
+                EnvFilter::try_new(std::env::var("RUST_LOG").unwrap_or_else(|_| env_min.into()))
+                        .expect("Valid filter input provided.");
 
         tracing_subscriber::fmt()
                 .pretty()

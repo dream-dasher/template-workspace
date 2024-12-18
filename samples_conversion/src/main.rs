@@ -142,7 +142,10 @@ pub fn mult_from_res_direct(i1: i32, u: u32) -> core::result::Result<i32, TryFro
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_into_res_convert(i1: i32, u: u32) -> core::result::Result<i32, Box<dyn core::error::Error>> {
+pub fn mult_into_res_convert(
+        i1: i32,
+        u: u32,
+) -> core::result::Result<i32, Box<dyn core::error::Error>> {
         let i2: i32 = u.try_into()?;
         Ok(i1 * i2)
 }
@@ -158,7 +161,10 @@ pub fn mult_into_res_convert(i1: i32, u: u32) -> core::result::Result<i32, Box<d
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_from_res_convert(i1: i32, u: u32) -> core::result::Result<i32, Box<dyn core::error::Error>> {
+pub fn mult_from_res_convert(
+        i1: i32,
+        u: u32,
+) -> core::result::Result<i32, Box<dyn core::error::Error>> {
         let i2 = i32::try_from(u)?;
         Ok(i1 * i2)
 }

@@ -112,11 +112,15 @@ fn main() -> Result<()> {
         tea::info!("Merging similar data cels together.");
         let data = [['A', 'B', 'B'], ['A', 'W', 'E'], ['Z', 'Z', 'Z']];
         let mut table_for_merge = Table::new(data);
-        table_for_merge.with(Merge::horizontal()).with(Merge::vertical());
+        table_for_merge
+                .with(Merge::horizontal())
+                .with(Merge::vertical());
         println!("{}\n", table_for_merge);
 
         tea::info!("Merging similar data cels together.");
-        let mut data_ = [['Q', 'A', 'Z'], ['A', 'A', 'A'], ['A', 'A', 'A'], ['A', 'Z', 'Z']];
+        let mut data_ = [['Q', 'A', 'Z'], ['A', 'A', 'A'], ['A', 'A', 'A'], [
+                'A', 'Z', 'Z',
+        ]];
         for bttm in data_.iter_mut().flat_map(|row| row.iter_mut()) {
                 if *bttm != 'A' {
                         *bttm = '.';
@@ -124,15 +128,21 @@ fn main() -> Result<()> {
         }
         let table_no_merge = Table::new(data_);
         println!("horizontal\n{}\n", table_no_merge);
-        let data_h = [['Q', 'A', 'Z'], ['A', 'A', 'A'], ['A', 'A', 'A'], ['A', 'Z', 'Z']];
+        let data_h = [['Q', 'A', 'Z'], ['A', 'A', 'A'], ['A', 'A', 'A'], [
+                'A', 'Z', 'Z',
+        ]];
         let mut table_hor_merge = Table::new(data_h);
         table_hor_merge.with(Merge::horizontal());
         println!("horizontal\n{}\n", table_hor_merge);
-        let data_v = [['Q', 'A', 'Z'], ['A', 'A', 'A'], ['A', 'A', 'A'], ['A', 'Z', 'Z']];
+        let data_v = [['Q', 'A', 'Z'], ['A', 'A', 'A'], ['A', 'A', 'A'], [
+                'A', 'Z', 'Z',
+        ]];
         let mut table_vert_merge = Table::new(data_v);
         table_vert_merge.with(Merge::vertical());
         println!("vertical\n{}\n", table_vert_merge);
-        let data_m = [['Q', 'A', 'Z'], ['A', 'A', 'A'], ['A', 'A', 'A'], ['A', 'Z', 'Z']];
+        let data_m = [['Q', 'A', 'Z'], ['A', 'A', 'A'], ['A', 'A', 'A'], [
+                'A', 'Z', 'Z',
+        ]];
         let mut table_attempt_mix_merge = Table::new(data_m);
         table_attempt_mix_merge
                 .with(Merge::vertical())

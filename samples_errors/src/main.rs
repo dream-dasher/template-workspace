@@ -29,7 +29,9 @@ impl MyErrorSource {
         where
                 E: Into<Box<dyn std::error::Error + Send + Sync>>,
         {
-                Self::OtherError { source: error.into() }
+                Self::OtherError {
+                        source: error.into(),
+                }
         }
 }
 #[derive(Debug, Display, Error, From)]
@@ -67,7 +69,10 @@ where
         E: Into<Box<dyn std::error::Error + Send + Sync>>,
 {
         fn to_other(self) -> MyErrorWrapper {
-                MyErrorSource::OtherError { source: self.into() }.into()
+                MyErrorSource::OtherError {
+                        source: self.into(),
+                }
+                .into()
         }
 }
 #[tracing::instrument]

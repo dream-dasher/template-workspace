@@ -47,7 +47,9 @@ impl ErrKindXpRatatui {
         where
                 E: Into<Box<dyn std::error::Error + Send + Sync>>,
         {
-                Self::OtherDynError { source: error.into() }
+                Self::OtherDynError {
+                        source: error.into(),
+                }
         }
 }
 
@@ -91,6 +93,9 @@ where
         E: Into<Box<dyn std::error::Error + Send + Sync>>,
 {
         fn to_other(self) -> ErrWrapperXpRatatui {
-                ErrKindXpRatatui::OtherDynError { source: self.into() }.into()
+                ErrKindXpRatatui::OtherDynError {
+                        source: self.into(),
+                }
+                .into()
         }
 }

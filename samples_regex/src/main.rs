@@ -62,7 +62,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 {
                         let _enter = tea::debug_span!("Parsing").entered();
                         for (i, line) in HAY_PATHS.lines().enumerate() {
-                                let (raw, [path, lineno, title]) = re.captures(line).unwrap().extract();
+                                let (raw, [path, lineno, title]) =
+                                        re.captures(line).unwrap().extract();
                                 tea::info!(path, lineno, title, raw, i);
                         }
                 }
@@ -88,11 +89,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 HAY_DATES
                                         .lines()
                                         .flat_map(|line| {
-                                                re.captures_iter(line).enumerate().map(|(i2, cap)| {
-                                                        let (raw, [year, month, day]) = cap.extract();
-                                                        tea::info!(?raw, ?year, ?month, ?day, i2);
-                                                        (year, month, day)
-                                                })
+                                                re.captures_iter(line).enumerate().map(
+                                                        |(i2, cap)| {
+                                                                let (raw, [year, month, day]) =
+                                                                        cap.extract();
+                                                                tea::info!(
+                                                                        ?raw,
+                                                                        ?year,
+                                                                        ?month,
+                                                                        ?day,
+                                                                        i2
+                                                                );
+                                                                (year, month, day)
+                                                        },
+                                                )
                                         })
                                         .collect()
                         };

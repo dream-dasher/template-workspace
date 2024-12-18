@@ -49,7 +49,9 @@ impl ErrKindCatErgonomics {
         where
                 E: Into<Box<dyn std::error::Error + Send + Sync>>,
         {
-                Self::OtherDynError { source: error.into() }
+                Self::OtherDynError {
+                        source: error.into(),
+                }
         }
 }
 
@@ -93,6 +95,9 @@ where
         E: Into<Box<dyn std::error::Error + Send + Sync>>,
 {
         fn to_other(self) -> ErrWrapperCatErgonomics {
-                ErrKindCatErgonomics::OtherDynError { source: self.into() }.into()
+                ErrKindCatErgonomics::OtherDynError {
+                        source: self.into(),
+                }
+                .into()
         }
 }
