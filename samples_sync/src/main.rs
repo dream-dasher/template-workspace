@@ -78,10 +78,7 @@ fn barrier_example(to_wait_for: usize, to_generate: usize) {
         let n = to_generate;
         let mut handles = Vec::with_capacity(n);
         let barrier = Arc::new(Barrier::new(to_wait_for));
-        println!(
-                "To wait for: {} -- To generate: {}\n",
-                to_wait_for, to_generate
-        );
+        println!("To wait for: {} -- To generate: {}\n", to_wait_for, to_generate);
         for i in 0..n {
                 let c = Arc::clone(&barrier);
                 // The same messages will be printed together.
@@ -96,8 +93,5 @@ fn barrier_example(to_wait_for: usize, to_generate: usize) {
         for handle in handles {
                 handle.join().unwrap();
         }
-        println!(
-                "\nTo wait for: {} -- To generate: {}",
-                to_wait_for, to_generate
-        );
+        println!("\nTo wait for: {} -- To generate: {}", to_wait_for, to_generate);
 }

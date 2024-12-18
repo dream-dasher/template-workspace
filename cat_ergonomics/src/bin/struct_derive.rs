@@ -5,6 +5,7 @@ use std::fmt::Display;
 use bon::bon;
 use derive_more::derive::{Add, From, Index, Into};
 use filter::LevelFilter;
+use itertools::Itertools as _;
 use layer::SubscriberExt;
 use tracing::{Level, event, instrument};
 use tracing_subscriber::{EnvFilter, Layer, *};
@@ -27,12 +28,11 @@ struct Maze {
 }
 impl Display for Maze {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                writeln!(f)?;
-                for i in 0..self.max_dims.y {
-                        for j in 0..self.max_dims.x {
-                                write!(f, "{} ", self.maze_linear[i * self.max_dims.x + j])?;
+                for (r, c) in (0..self.max_dims.y).cartesian_product(0..self.max_dims.y) {
+                        if c == 0 {
+                                writeln!(f)?
                         }
-                        writeln!(f)?;
+                        write!(f, "{} ", self.maze_linear[r * self.max_dims.x + c])?;
                 }
                 Ok(())
         }
@@ -43,10 +43,8 @@ impl Maze {
         #[builder]
         fn new(maze: Vec<usize>, max_dims: Point2D) -> Result<Self, String> {
                 if maze.len() != max_dims.x * max_dims.y {
-                        Err(
-                                "Maze dimensions do not match the linear maze vector length."
-                                        .to_string(),
-                        )
+                        Err("Maze dimensions do not match the linear maze vector length."
+                                .to_string())
                 } else {
                         Ok(Self {
                                 maze_linear: maze,

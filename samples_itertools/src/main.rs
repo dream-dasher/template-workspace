@@ -53,9 +53,8 @@ fn main() {
         // Chunk_By: whatever yields same-ity
         {
                 let _enter = tea::info_span!("Custom Chunking").entered();
-                let names = &[
-                        "Bob", "Brandy", "Bobby", "Brenda", "Cal", "Connie", "Doyle", "Brendan",
-                ];
+                let names =
+                        &["Bob", "Brandy", "Bobby", "Brenda", "Cal", "Connie", "Doyle", "Brendan"];
                 let custom_chunks = names.iter().chunk_by(|name| name.chars().next());
                 for (comparison_key, chunk) in custom_chunks.into_iter().take(5) {
                         let vec: Vec<_> = chunk.into_iter().collect();

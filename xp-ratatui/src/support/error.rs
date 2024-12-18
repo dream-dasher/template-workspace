@@ -79,9 +79,7 @@ where
 }
 // Using custom display as debug so we can get SpanTrace auto printed.
 impl std::fmt::Debug for ErrWrapperXpRatatui {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{}", self)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "{}", self) }
 }
 
 #[expect(dead_code)]
