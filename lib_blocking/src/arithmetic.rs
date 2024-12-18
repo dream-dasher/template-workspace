@@ -15,9 +15,7 @@ use crate::error::{Error, Result};
 /// assert_eq!(result, 2*u32::MAX as u64);
 /// ```
 #[tracing::instrument]
-pub fn add_ample_room(a: u32, b: u32) -> u64 {
-        a as u64 + b as u64
-}
+pub fn add_ample_room(a: u32, b: u32) -> u64 { a as u64 + b as u64 }
 
 /// First line is a short summary describing function.
 ///
@@ -32,9 +30,7 @@ pub fn add_ample_room(a: u32, b: u32) -> u64 {
 /// assert_eq!(result, 0);
 /// ```
 #[tracing::instrument]
-pub fn add_can_overflow(a: u32, b: u32) -> u32 {
-        a.wrapping_add(b)
-}
+pub fn add_can_overflow(a: u32, b: u32) -> u32 { a.wrapping_add(b) }
 
 /// First line is a short summary describing function.
 ///
@@ -49,9 +45,7 @@ pub fn add_can_overflow(a: u32, b: u32) -> u32 {
 /// assert!(result.is_err());
 /// ```
 #[tracing::instrument]
-pub fn add_can_err(a: u32, b: u32) -> Result<u32> {
-        a.checked_add(b).ok_or(Error::Simple)
-}
+pub fn add_can_err(a: u32, b: u32) -> Result<u32> { a.checked_add(b).ok_or(Error::Simple) }
 
 /// First line is a short summary describing function.
 ///
@@ -69,9 +63,7 @@ pub fn add_can_err(a: u32, b: u32) -> Result<u32> {
 /// assert_eq!(result, (u64::MAX - 2u64.pow(33) + 1 + 1));
 /// ```
 #[tracing::instrument]
-pub fn mult(a: u32, b: u32) -> u64 {
-        (a as u64) * (b as u64)
-}
+pub fn mult(a: u32, b: u32) -> u64 { (a as u64) * (b as u64) }
 
 /// Usually doc comments may include sections "Examples", "Panics" and "Failures".
 ///
@@ -141,7 +133,5 @@ mod tests {
         }
         /// Proptest example; compares explicit multiplication to custom function
         #[quickcheck]
-        fn prop_mult(a: u32, b: u32) -> bool {
-                (a as u64 * b as u64) == mult(a, b)
-        }
+        fn prop_mult(a: u32, b: u32) -> bool { (a as u64 * b as u64) == mult(a, b) }
 }

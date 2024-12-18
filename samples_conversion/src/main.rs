@@ -28,9 +28,7 @@ use std::{convert::{TryFrom, TryInto},
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn square(num: i32) -> i32 {
-        num * num
-}
+pub fn square(num: i32) -> i32 { num * num }
 
 /// ```assembly
 /// _mult_same:
@@ -38,9 +36,7 @@ pub fn square(num: i32) -> i32 {
 ///         ret
 /// ```
 // #[unsafe(no_mangle)]
-pub fn mult_same(i1: i32, i2: i32) -> i32 {
-        i1 * i2
-}
+pub fn mult_same(i1: i32, i2: i32) -> i32 { i1 * i2 }
 
 /// ```assembly
 /// _mult_as:
@@ -169,6 +165,4 @@ pub fn mult_from_res_convert(
         Ok(i1 * i2)
 }
 
-fn main() {
-        tracing_subscriber::fmt::init();
-}
+fn main() { tracing_subscriber::fmt::init(); }
