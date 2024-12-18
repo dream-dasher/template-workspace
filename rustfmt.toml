@@ -11,7 +11,7 @@ unstable_features = true
 
 
 ## general spacing
-max_width = 120
+max_width = 100
 tab_spaces = 8  # legible groups! :)
 
 ## import organization
