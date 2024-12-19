@@ -47,10 +47,7 @@ fn main() -> Result<()> {
                         Some(hi_s) => run_preset_example(hi_s, None)?,
                         None => {
                                 let def = 10;
-                                warn!(
-                                        r#"No "number of hi's" selected, using default value: {}"#,
-                                        def
-                                );
+                                warn!(r#"No "number of hi's" selected, using default value: {}"#, def);
                                 run_preset_example(def, None)?
                         }
                 },

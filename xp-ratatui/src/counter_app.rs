@@ -46,7 +46,9 @@ impl App {
         }
 
         #[instrument(skip_all)]
-        fn draw(&self, frame: &mut Frame) { frame.render_widget(self, frame.area()); }
+        fn draw(&self, frame: &mut Frame) {
+                frame.render_widget(self, frame.area());
+        }
 
         #[instrument(skip_all)]
         fn handle_events(&mut self) -> Result<()> {
@@ -70,11 +72,17 @@ impl App {
                 }
         }
 
-        fn exit(&mut self) { self.exit = true; }
+        fn exit(&mut self) {
+                self.exit = true;
+        }
 
-        fn increment_counter(&mut self) { self.count = self.count.wrapping_add(1); }
+        fn increment_counter(&mut self) {
+                self.count = self.count.wrapping_add(1);
+        }
 
-        fn decrement_counter(&mut self) { self.count = self.count.wrapping_sub(1); }
+        fn decrement_counter(&mut self) {
+                self.count = self.count.wrapping_sub(1);
+        }
 }
 
 impl Widget for &App {
@@ -94,14 +102,9 @@ impl Widget for &App {
                         .title_bottom(instructions.centered())
                         .border_set(border::THICK);
 
-                let counter_text = Text::from(vec![Line::from(vec![
-                        "Value: ".into(),
-                        self.count.to_string().yellow(),
-                ])]);
-                Paragraph::new(counter_text)
-                        .centered()
-                        .block(block)
-                        .render(area, buf);
+                let counter_text =
+                        Text::from(vec![Line::from(vec!["Value: ".into(), self.count.to_string().yellow()])]);
+                Paragraph::new(counter_text).centered().block(block).render(area, buf);
         }
 }
 

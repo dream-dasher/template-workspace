@@ -51,9 +51,7 @@ impl CliErrorKind {
         where
                 E: Into<Box<dyn std::error::Error + Send + Sync>>,
         {
-                Self::OtherDynError {
-                        source: error.into(),
-                }
+                Self::OtherDynError { source: error.into() }
         }
 }
 
@@ -80,9 +78,6 @@ where
         E: Into<Box<dyn std::error::Error + Send + Sync>>,
 {
         fn to_other(self) -> CliErrorWrapper {
-                CliErrorKind::OtherDynError {
-                        source: self.into(),
-                }
-                .into()
+                CliErrorKind::OtherDynError { source: self.into() }.into()
         }
 }

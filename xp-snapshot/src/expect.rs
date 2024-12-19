@@ -38,10 +38,14 @@ mod tests {
         }
 
         #[test]
-        fn test_addition() { check(90 + 2, expect![[]]); }
+        fn test_addition() {
+                check(90 + 2, expect![[]]);
+        }
 
         #[test]
-        fn test_multiplication() { check(46 * 2, expect![[]]); }
+        fn test_multiplication() {
+                check(46 * 2, expect![[]]);
+        }
 
         #[test]
         fn test_large_value() {

@@ -28,9 +28,7 @@ pub fn run_hello_world(mut terminal: DefaultTerminal) -> Result<()> {
         loop {
                 tea::trace!("draw frame");
                 terminal.draw(|frame| {
-                        let greeting = Paragraph::new("Hello Ratatui! (press 'q' to quit)")
-                                .black()
-                                .on_blue();
+                        let greeting = Paragraph::new("Hello Ratatui! (press 'q' to quit)").black().on_blue();
                         frame.render_widget(greeting, frame.area());
                 })?;
                 tea::trace!("look for input events");

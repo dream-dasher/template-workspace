@@ -43,8 +43,7 @@ impl Maze {
         #[builder]
         fn new(maze: Vec<usize>, max_dims: Point2D) -> Result<Self, String> {
                 if maze.len() != max_dims.x * max_dims.y {
-                        Err("Maze dimensions do not match the linear maze vector length."
-                                .to_string())
+                        Err("Maze dimensions do not match the linear maze vector length.".to_string())
                 } else {
                         Ok(Self {
                                 maze_linear: maze,
@@ -103,10 +102,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let maze_dims = Point2D { x: 6, y: 6 };
         // let maze_points: Vec<usize> = (0..36).map(|i| i % 10).collect();
         let maze_points: Vec<usize> = (0..36).collect();
-        let maze = Maze::builder()
-                .max_dims(maze_dims)
-                .maze(maze_points)
-                .build()?;
+        let maze = Maze::builder().max_dims(maze_dims).maze(maze_points).build()?;
         println!("maze: {}", maze);
 
         let p = Point2D { x: 3, y: 4 };

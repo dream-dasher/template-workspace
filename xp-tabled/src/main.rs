@@ -18,13 +18,7 @@ use xp_tabled::{Result, active_global_default_tracing_subscriber};
 
 /// Package: **xp-tabled**'s convenience CLI interface.
 #[derive(Parser, Debug, Tabled, derive_more::Display)]
-#[command(
-        version,
-        about,
-        long_about,
-        disable_help_subcommand = true,
-        subcommand_help_heading = "input source"
-)]
+#[command(version, about, long_about, disable_help_subcommand = true, subcommand_help_heading = "input source")]
 #[display("Args: {:?} {:?} {:?}", input, path, words)]
 pub struct Args {
         /// a thing
@@ -112,9 +106,7 @@ fn main() -> Result<()> {
         tea::info!("Merging similar data cels together.");
         let data = [['A', 'B', 'B'], ['A', 'W', 'E'], ['Z', 'Z', 'Z']];
         let mut table_for_merge = Table::new(data);
-        table_for_merge
-                .with(Merge::horizontal())
-                .with(Merge::vertical());
+        table_for_merge.with(Merge::horizontal()).with(Merge::vertical());
         println!("{}\n", table_for_merge);
 
         tea::info!("Merging similar data cels together.");
@@ -155,12 +147,7 @@ fn main() -> Result<()> {
         tea::info!("Vector of Tabled Structs; combined as structs with macro");
         let combined_macro = tabled::col![
                 tabled::row!["raw", "hor_merge", "vert_merge", "attempt_mix_merge"],
-                tabled::row![
-                        table_no_merge,
-                        table_hor_merge,
-                        table_vert_merge,
-                        table_attempt_mix_merge,
-                ]
+                tabled::row![table_no_merge, table_hor_merge, table_vert_merge, table_attempt_mix_merge,]
         ];
         println!("{}\n", combined_macro);
 

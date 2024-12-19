@@ -89,10 +89,7 @@ fn main() {
                         field:       8118,
                 };
                 tea::info!(?some_struct_with_const, "Assigned const from create_and_drop fn");
-                tea::info!(
-                        ?some_struct_with_static,
-                        "Assigned cloned static from create_and_drop fn"
-                );
+                tea::info!(?some_struct_with_static, "Assigned cloned static from create_and_drop fn");
                 tea::info!("^________________________^");
         }
         println!("------------------------");

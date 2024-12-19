@@ -41,13 +41,7 @@ fn main() -> Result<()> {
 
 /// Package: **xp-snapshot**'s convenience CLI interface.
 #[derive(Parser, Debug)]
-#[command(
-        version,
-        about,
-        long_about,
-        disable_help_subcommand = true,
-        subcommand_help_heading = "input source"
-)]
+#[command(version, about, long_about, disable_help_subcommand = true, subcommand_help_heading = "input source")]
 pub struct Args {
         /// Action to take.
         action: Action,
