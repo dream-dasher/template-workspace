@@ -164,6 +164,9 @@ insta = { version = "1.41.1", ff = [
     "toml",
     "walkdir",
 ] }
+### X zero_copy
+yoke = "0.7.5"
+yoke-derive = "0.7.5"
 ### X perf/bench
 arbitrary = { version = "1.4.1", features = ["derive_arbitrary"] }
 criterion = "0.5.1"
