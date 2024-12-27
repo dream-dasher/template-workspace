@@ -4,26 +4,7 @@
 
 [workspace]
 resolver = "3"
-members = [
-    "lib_blocking",
-    "bin_cli",
-    "bin_tbd",
-    "xp-drop",
-    "xp-serde",
-    "xp-template",
-    "samples_tracing",
-    "samples_sync",
-    "samples_ptr",
-    "samples_mutability",
-    "samples_itertools",
-    "samples_conversion",
-    "samples_errors",
-    "samples_regex",
-    "xp-rayon",
-    "xp-tabled",
-    "xp-snapshot",
-    "xp-ratatui", "cat_ergonomics",
-]
+members = ["crates/*"]
 
 [workspace.package]
 edition = "2024"
