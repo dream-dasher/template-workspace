@@ -40,12 +40,16 @@ tracing-tree.workspace = true
 derive_more.workspace = true
 ## --Files--
 indoc.workspace = true
+## --Math--
+rand.workspace = true
 ## --Parsing--
 regex.workspace = true
 
 
+
 [dev-dependencies]
 # Dev-Dependencies
+pretty_assertions.workspace = true
 ## --Property Sample Testing--
 quickcheck.workspace = true
 quickcheck_macros.workspace = true
