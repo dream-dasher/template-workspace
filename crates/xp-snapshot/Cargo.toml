@@ -17,18 +17,11 @@ workspace = true
 
 [dependencies]
 ################################33
-## --Async--
-futures.workspace = true
-tokio.workspace = true
 ## --CLI--
 clap.workspace = true
 clap-verbosity-flag.workspace = true
 console.workspace = true
-dialoguer.workspace = true
-indicatif.workspace = true
 owo-colors.workspace = true
-tabled.workspace = true
-json_to_table.workspace = true
 ## --Diagnostics--
 tracing.workspace = true
 tracing-subscriber.workspace = true
@@ -38,50 +31,20 @@ tracing-flame.workspace = true
 tracing-timing.workspace = true
 tracing-tree.workspace = true
 ## --Env & Files--
-csv.workspace = true
-dotenvy.workspace = true
 include_dir.workspace = true
-secrecy.workspace = true
-walkdir.workspace = true
 ## --General--
 bon.workspace = true
 derive_more.workspace = true
 indoc.workspace = true
 itertools.workspace = true
 ## --Math--
-chrono.workspace = true
 rand.workspace = true
-## --Networking--
-reqwest.workspace = true
 ## --Parsing--
 regex.workspace = true
-serde.workspace = true
-serde_json.workspace = true
-## --Performance--
-dashmap.workspace = true
-regex-automata.workspace = true
-rayon.workspace = true
-tinyvec.workspace = true
-## --eXplore--
-nalgebra.workspace = true
-ndarray.workspace = true
-backon.workspace = true
-minijinja.workspace = true
-strum.workspace = true
-arbitrary.workspace = true
+##
 divan.workspace = true
-criterion.workspace = true
 expect-test = "1.5.0"
 insta.workspace = true
-rstest.workspace = true
-time.workspace = true
-hifitime.workspace = true
-url.workspace = true
-statrs.workspace = true
-petgraph.workspace = true
-rustworkx-core.workspace = true
-fixedbitset.workspace = true
-rstar.workspace = true
 
 [dev-dependencies]
 # Dev-Dependencies

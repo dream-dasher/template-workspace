@@ -66,7 +66,7 @@ dialoguer = "0.11"
 tracing = "0.1"
 # tracing-appender = "0.2"
 # tracing-error = "0.2"
-tracing-subscriber = { version = "0.3", features = ["chrono", "env-filter"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 ```
 
 ### --Env & Files--
@@ -81,7 +81,6 @@ walkdir = "2"
 ### --General--
 ```toml
 bon = "2""
-chrono = "0.4"
 derive_more = { version = "1", features = [
     "full",
     "constructor",
@@ -99,7 +98,6 @@ serde_json = "1"
 ```toml
 reqwest = { version = "0.12", features = ["blocking", "json"] }
 sqlx = { version = "0.8", features = [
-    "chrono",
     "mysql","postgres","sqlite",
     "macros",
     "runtime-tokio",

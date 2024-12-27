@@ -31,33 +31,20 @@ debug = true
 [workspace.dependencies]
 ## --Async--
 futures = "0.3.31"
-tokio = { version = "1.42.0", features = ["full", "tracing"] }
+tokio = { version = "1.42.0", features = ["full"] }
 ### - Networking -
 reqwest = { version = "0.12.9", features = ["blocking", "json"] }
 
 
 ## --Diagnostics--
-tracing = "0.1.41"
-tracing-subscriber = { version = "0.3.19", features = [
-    "chrono",
-    "time",
-    "json",
-    "env-filter",
-    "tracing-log",
-    "tracing-serde",
-    "tracing",
-    # "serde-json",
-    "regex",
-    "matchers",
-    "once_cell",
-    "local-time",
-] }
+tracing = { version = "0.1.41", features = [] }
+tracing-subscriber = { version = "0.3.19", features = ["json", "env-filter"] }
 tracing-appender = "0.2.3"
 tracing-error = "0.2.1"
 tracing-flame = "0.2.0"
 tracing-indicatif = "0.3.8"
 tracing-timing = "0.6.0"
-tracing-tree = { version = "0.4.0", features = ["time"] }
+tracing-tree = { version = "0.4.0", features = [] }
 
 ## --Env & Files--
 csv = "1.3.1"
@@ -68,13 +55,7 @@ walkdir = "2.5.0"
 
 ## --Ergonomics--
 bon = "3.2.0"
-derive_more = { version = "1.0.0", features = [
-    "full",
-    "error",
-    "display",
-    "deref",
-    "from",
-] }
+derive_more = { version = "1.0.0", features = ["full"] }
 indoc = "2.0.5"
 itertools = "0.13.0"
 strum = { version = "0.26.3", features = ["derive", "phf"] }
@@ -83,6 +64,7 @@ strum = { version = "0.26.3", features = ["derive", "phf"] }
 ### - CLI -
 clap = { version = "4.5.22", features = [
     "env",
+    "cargo",
     "derive",
     "string",
     "unicode",
@@ -105,8 +87,10 @@ eframe = { version = "0.30", default-features = false, features = [
 ] }
 
 ## --Math--
-chrono = { version = "0.4.38", features = ["serde"] }
 rand = "0.8.5"
+
+## --Other--
+jiff = {version = "0.1.16", features = ["js", "logging", "serde"]} #  "tzdb-bundle-always"
 
 ## --Parsing--
 regex = { version = "1.11.1", features = ["logging"] }
@@ -133,8 +117,10 @@ test-log = { version = "0.2.16", features = ["trace"] }
 ###########################################################################
 ## --eXplore--
 ###########################################################################
+#
+## -- explore soon --
 rstest = "0.23.0"
-### X snapshot
+divan = "0.1.17"
 insta = { version = "1.41.1", ff = [
     "clap",
     "csv",
@@ -144,57 +130,51 @@ insta = { version = "1.41.1", ff = [
     "toml",
     "walkdir",
 ] }
-### X zero_copy
-yoke = "0.7.5"
-yoke-derive = "0.7.5"
-### X perf/bench
-arbitrary = { version = "1.4.1", features = ["derive_arbitrary"] }
-criterion = "0.5.1"
-divan = "0.1.17"
-### X calls
-ease-off = { version = "0.1.6", features = ["tokio"] }
-backon = { version = "1", features = ["tokio-sleep"] }
-url = { version = "2.5.4", features = ["serde"] }
-### X matrices
-ndarray = { version = "0.16.1", features = [
-    "rayon",
-    "serde",
-    "approx",
-    "blas",
-    "matrixmultiply-threading",
-] }
-nalgebra = "0.33.2"
-### X other math
-statrs = { version = "0.18.0", features = ["nalgebra"] }
-petgraph = { version = "0.6.5", features = [
-    "rayon",
-    "quickcheck",
-    "serde",
-    # "serde-1",
-    "serde_derive",
-] }
-rustworkx-core = "0.15.1"
-fixedbitset = { version = "0.5.7", fastures = ["serde"] }
-rstar = { version = "0.12.2", features = ["serde"] }
-### X time
-time = { version = "0.3.37", features = [
-    "rand",
-    "quickcheck",
-    "serde",
-    "wasm-bindgen",
-    "parsing",
-    # "formating",
-    "macros",
-    "local-offset",
-] }
-hifitime = { version = "4.0.1", features = ["reqwest", "tabled"] }
-### X other
-minijinja = { version = "2", default-features = false }
-phf = { version = "0.11.2", features = [
-    "macros",
-    "serde",
-    "uncased",
-    "unicase",
-] }
-phf_codegen = "0.11.2"
-image = { version = "0.25.5", features = ["serde"] }
+# #
+# ### X zero_copy
+# yoke = "0.7.5"
+# yoke-derive = "0.7.5"
+# #
+# ### X perf/bench
+# arbitrary = { version = "1.4.1", features = ["derive_arbitrary"] }
+# criterion = "0.5.1"
+# #
+# ### X calls
+# ease-off = { version = "0.1.6", features = ["tokio"] }
+# backon = { version = "1", features = ["tokio-sleep"] }
+# url = { version = "2.5.4", features = ["serde"] }
+# #
+# ### X math
+# ndarray = { version = "0.16.1", features = [
+#     "rayon",
+#     "serde",
+#     "approx",
+#     "blas",
+#     "matrixmultiply-threading",
+# ] }
+# nalgebra = "0.33.2"
+# statrs = { version = "0.18.0", features = ["nalgebra"] }
+# petgraph = { version = "0.6.5", features = [
+#     "rayon",
+#     "quickcheck",
+#     "serde",
+#     # "serde-1",
+#     "serde_derive",
+# ] }
+# rustworkx-core = "0.15.1"
+# fixedbitset = { version = "0.5.7", fastures = ["serde"] }
+# rstar = { version = "0.12.2", features = ["serde"] }
+# #
+# ### X time
+# hifitime = { version = "4.0.1", features = ["reqwest", "tabled"] }
+# #
+# ### X other
+# minijinja = { version = "2", default-features = false }
+# phf = { version = "0.11.2", features = [
+#     "macros",
+#     "serde",
+#     "uncased",
+#     "unicase",
+# ] }
+# phf_codegen = "0.11.2"
+# image = { version = "0.25.5", features = ["serde"] }
