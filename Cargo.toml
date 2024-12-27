@@ -1,10 +1,9 @@
-
 # Settings for Rust Workspace
 # [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
 
 [workspace]
 resolver = "3"
-members = ["crates/*"]
+members = ["crates/*", "xtask"]
 
 [workspace.package]
 edition = "2024"
