@@ -34,7 +34,7 @@ indoc.workspace = true
 itertools.workspace = true
 ## --Math--
 rand.workspace = true
-rand_chacha = "0.3.0"
+rand_chacha = "0.3.1"
 ## --Parsing--
 regex.workspace = true
 ##
