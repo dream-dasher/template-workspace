@@ -30,4 +30,4 @@ tracing-subscriber.workspace = true
 tracing-timing.workspace = true
 tracing-flame.workspace = true
 tracing-error.workspace = true
-tracing-tree.workspace = true
+tracing-tree = { version = "0.4.0", features = [] }
