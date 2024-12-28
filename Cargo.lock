@@ -3674,8 +3674,6 @@ version = "0.1.0"
 dependencies = [
  "bon",
  "clap",
- "clap-verbosity-flag",
- "console",
  "derive_more",
  "divan",
  "expect-test",
@@ -3687,15 +3685,13 @@ dependencies = [
  "quickcheck",
  "quickcheck_macros",
  "rand",
+ "rand_chacha",
  "regex",
  "test-log",
  "tracing",
  "tracing-appender",
  "tracing-error",
- "tracing-flame",
  "tracing-subscriber",
- "tracing-timing",
- "tracing-tree",
 ]
 
 [[package]]

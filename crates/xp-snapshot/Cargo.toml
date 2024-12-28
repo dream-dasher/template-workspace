@@ -19,17 +19,12 @@ workspace = true
 ################################33
 ## --CLI--
 clap.workspace = true
-clap-verbosity-flag.workspace = true
-console.workspace = true
 owo-colors.workspace = true
 ## --Diagnostics--
 tracing.workspace = true
 tracing-subscriber.workspace = true
 tracing-appender.workspace = true
 tracing-error.workspace = true
-tracing-flame.workspace = true
-tracing-timing.workspace = true
-tracing-tree = { version = "0.4.0", features = [] }
 ## --Env & Files--
 include_dir.workspace = true
 ## --General--
@@ -39,6 +34,7 @@ indoc.workspace = true
 itertools.workspace = true
 ## --Math--
 rand.workspace = true
+rand_chacha = "0.3.0"
 ## --Parsing--
 regex.workspace = true
 ##
