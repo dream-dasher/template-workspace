@@ -18,6 +18,8 @@ CYN := '\033[0;36m' # Cyan
 BLU := '\033[0;34m' # Blue
 GRN := '\033[0;32m' # Green
 PRP := '\033[0;35m' # Purple
+RED := '\033[0;31m' # Red
+YLW := '\033[0;33m' # Yellow
 BRN := '\033[0;33m' # Brown
 
 # Default, lists commands.
@@ -25,7 +27,7 @@ _default:
         @just --list --unsorted
 
 # Initialize repository.
-[confirm]
+[confirm("This will:\n(1) perform standard cargo commands\n    (e.g. clean, build)\n(2) generate some files if not present\n    (e.g. git pre-commit hook, .env)\n(3) install external files\n    specifically: `trunk` via cargo and a wasm32 target via rustup.\n\nCommands can be inspected in the currently invoked `justfile`.\n\n-- Confirm initialization?")]
 init: && list-external-deps _gen-env _gen-git-hooks
     cargo clean
     cargo build
@@ -33,7 +35,8 @@ init: && list-external-deps _gen-env _gen-git-hooks
 
 # Linting, formatting, typo checking, etc.
 check:
-    cargo clippy
+    cargo check --workspace --all-targets --all-features
+    cargo clippy --workspace --all-targets --all-features
     cargo fmt
     typos
     committed
@@ -49,7 +52,7 @@ update-soft:
     cargo update --verbose
 
 # Update Rust-crates, first minor, then breaking changes.
-[confirm]
+[confirm("This will attempt to update dependencies past minor versions.  Confirm?")]
 update-hard: update-soft
     cargo update --verbose --breaking -Z unstable-options
 
