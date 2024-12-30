@@ -13,6 +13,5 @@ keywords.workspace = true
 workspace = true
 
 [dependencies]
-clap.workspace = true
-owo-colors.workspace = true
-
+clap = { workspace = true, features = ["derive"] }
+owo-colors = { workspace = true }
