@@ -19,7 +19,6 @@ keywords = ["template", "workspace", "explorative"]
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
-
 [workspace.lints.clippy]
 allow_attributes = "warn"
 
@@ -116,21 +115,13 @@ rayon = "1.10.0"
 tinyvec = { version = "1.8.0", features = ["serde"] }
 
 # Dev-Dependencies
-## --Dev-Ergonomics--
+## t--Ergonomics_Dev--t
 pretty_assertions = "1.4.1"
-## --Property Sample Testing--
+test-log = { version = "0.2.16", features = ["trace"] }
+## t--Property Sample Testing--t
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
-## --Test Trace-Logging--
-test-log = { version = "0.2.16", features = ["trace"] }
-
-###########################################################################
-## --eXplore--
-###########################################################################
-#
-## -- explore soon --
-rstest = "0.23.0"
-divan = "0.1.17"
+## t--Snapshot Testing--t
 insta = { version = "1.41.1", ff = [
     "clap",
     "csv",
@@ -140,6 +131,14 @@ insta = { version = "1.41.1", ff = [
     "toml",
     "walkdir",
 ] }
+
+###########################################################################
+## --eXplore--
+###########################################################################
+#
+## -- explore soon --
+rstest = "0.23.0"
+divan = "0.1.17"
 # #
 # ### X zero_copy
 # yoke = "0.7.5"
