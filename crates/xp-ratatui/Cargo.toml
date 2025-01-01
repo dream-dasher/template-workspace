@@ -20,7 +20,6 @@ workspace = true
 ## --CLI--
 clap.workspace = true
 clap-verbosity-flag.workspace = true
-console.workspace = true
 crossterm = { version = "0.28.1", features = ["serde"] }
 dialoguer.workspace = true
 indicatif.workspace = true

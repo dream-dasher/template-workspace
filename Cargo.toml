@@ -2,10 +2,11 @@
 # [Cargo Manifest Configuration Reference](https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section)
 
 [workspace]
-resolver = "3"
 members = ["crates/*", "xtask"]
+resolver = "3"
 
 [workspace.package]
+version = "0.1.0"
 edition = "2024"
 authors = ["Ethan Skowronski-Lutz"]
 description = "template workspace; explorative"
@@ -22,8 +23,10 @@ unsafe_code = "forbid"
 [workspace.lints.clippy]
 allow_attributes = "warn"
 
-# for use with perf-analysis tools like `samply`
-[profile.profiling]
+[profile.release]
+codegen-units = 1
+lto = true        # true:= "fat"
+[profile.profiling] # for perf-analysis, e.g. `samply`
 inherits = "release"
 debug = true
 
@@ -36,10 +39,10 @@ reqwest = { version = "0.12.9", features = ["blocking", "json"] }
 
 ## --Diagnostics--
 tracing = { version = "0.1.41", features = [] }
+#                  "release_max_level_warn"^"release_max_level_off"
 tracing-appender = "0.2.3"
 tracing-error = "0.2.1"
 tracing-flame = "0.2.0"
-tracing-indicatif = "0.3.8"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter", "json"] }
 tracing-timing = "0.6.0"
 
@@ -49,7 +52,13 @@ csv = "1.3.1"
 dotenvy = "0.15.7"
 include_dir = "0.7.4"
 secrecy = "0.10.3"
+toml = "0.8.19"
 walkdir = "2.5.0"
+### Config
+config = "0.15.4"
+directories = "5.0.1"
+### System & Processes
+rexpect = { version = "0.6.0", features = ["which"] }
 
 ## --Ergonomics--
 bon = "3.2.0"
@@ -62,15 +71,14 @@ strum = { version = "0.26.3", features = ["derive", "phf"] }
 ## --Interface--
 ### - CLI -
 clap = { version = "4.5.22", features = [
-    "env",
-    "cargo",
-    "derive",
-    "string",
-    "unicode",
-    "wrap_help",
+  "env",
+  "cargo",
+  "derive",
+  "string",
+  "unicode",
+  "wrap_help",
 ] }
 clap-verbosity-flag = "3.0.1"
-console = "0.15.8"
 dialoguer = "0.11.0"
 indicatif = "0.17.9"
 owo-colors = "4.1.0"
@@ -95,16 +103,18 @@ json_to_table = "0.9"
 # egui_table = "0.2.0"
 # egui_inbox = "0.7.0"
 
-## --Math--
+# ## --Math & Science--
+# ### - Data -
+# hifitime = { version = "4.0.1", features = ["reqwest", "tabled"] }
+# jiff = { version = "0.1.16", features = ["js", "logging", "serde"] }
+# polars = "0.45.1"
+# ### - Math -
+# faer = { version = "0.20.1" }
 rand = "0.8.5"
-
-## --Other--
-jiff = { version = "0.1.16", features = ["js", "logging", "serde"] }
-#                                           "tzdb-bundle-always" ^
 
 ## --Parsing--
 regex = { version = "1.11.1", features = ["logging"] }
-monostate = "0.1.13" # serde: constraining, zero-sized type
+monostate = "0.1.13"  # serde: constraining, zero-sized type
 serde = { version = "1.0.215", features = ["derive"] }
 serde_json = "1.0.133"
 
@@ -115,21 +125,23 @@ rayon = "1.10.0"
 tinyvec = { version = "1.8.0", features = ["serde"] }
 
 # Dev-Dependencies
-## t--Ergonomics_Dev--t
+##__Benchmarking__
+divan = "0.1.17"
+## __Test_Ergonomics__
 pretty_assertions = "1.4.1"
 test-log = { version = "0.2.16", features = ["trace"] }
-## t--Property Sample Testing--t
+## __Property Sample Testing__
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
-## t--Snapshot Testing--t
+## __Snapshot Testing__
 insta = { version = "1.41.1", ff = [
-    "clap",
-    "csv",
-    "json",
-    "redactions",
-    "serde",
-    "toml",
-    "walkdir",
+  "clap",
+  "csv",
+  "json",
+  "redactions",
+  "serde",
+  "toml",
+  "walkdir",
 ] }
 
 ###########################################################################
@@ -137,8 +149,6 @@ insta = { version = "1.41.1", ff = [
 ###########################################################################
 #
 ## -- explore soon --
-rstest = "0.23.0"
-divan = "0.1.17"
 # #
 # ### X zero_copy
 # yoke = "0.7.5"
@@ -175,7 +185,6 @@ divan = "0.1.17"
 # rstar = { version = "0.12.2", features = ["serde"] }
 # #
 # ### X time
-# hifitime = { version = "4.0.1", features = ["reqwest", "tabled"] }
 # #
 # ### X other
 # minijinja = { version = "2", default-features = false }

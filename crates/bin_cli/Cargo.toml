@@ -27,7 +27,6 @@ lib_blocking = { path = "../lib_blocking" }
 ## --CLI--
 clap.workspace = true
 clap-verbosity-flag.workspace = true
-console.workspace = true
 dialoguer.workspace = true
 indicatif.workspace = true
 owo-colors.workspace = true
