@@ -151,7 +151,7 @@ dependencies = [
  "indicatif",
  "indoc",
  "insta",
- "itertools",
+ "itertools 0.14.0",
  "lib_blocking",
  "owo-colors",
  "quickcheck",
@@ -1333,6 +1333,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2b192c782037fadd9cfa75548310488aabdbf3d2da73885b31bd0abd03351285"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1424,7 +1433,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2752e978ffc53670f3f2e8b3ef09f348d6f7b5474a3be3f8a5befe5382e4effb"
 dependencies = [
  "anymap2",
- "itertools",
+ "itertools 0.13.0",
  "kstring",
  "liquid-derive",
  "num-traits",
@@ -1452,7 +1461,7 @@ version = "0.26.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "59b1a298d3d2287ee5b1e43840d885b8fdfc37d3f4e90d82aacfd04d021618da"
 dependencies = [
- "itertools",
+ "itertools 0.13.0",
  "liquid-core",
  "once_cell",
  "percent-encoding",
@@ -2035,7 +2044,7 @@ dependencies = [
  "crossterm",
  "indoc",
  "instability",
- "itertools",
+ "itertools 0.13.0",
  "lru",
  "palette",
  "paste",
@@ -2137,9 +2146,9 @@ checksum = "2b15c43186be67a4fd63bee50d0303afffcef381492ebe2c5d87f324e1b8815c"
 
 [[package]]
 name = "reqwest"
-version = "0.12.11"
+version = "0.12.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7fe060fe50f524be480214aba758c71f99f90ee8c83c5a36b5e9e1d568eb4eb3"
+checksum = "43e734407157c3c2034e0258f5e4473ddb361b1e85f95a66690d67264d7cd1da"
 dependencies = [
  "base64 0.22.1",
  "bytes",
@@ -2293,7 +2302,7 @@ name = "samples_errors"
 version = "0.1.0"
 dependencies = [
  "derive_more",
- "itertools",
+ "itertools 0.14.0",
  "thiserror 2.0.9",
  "tracing",
  "tracing-appender",
@@ -2309,7 +2318,7 @@ name = "samples_itertools"
 version = "0.1.0"
 dependencies = [
  "derive_more",
- "itertools",
+ "itertools 0.14.0",
  "tracing",
  "tracing-error",
  "tracing-subscriber",
@@ -3107,7 +3116,7 @@ version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b3644627a5af5fa321c95b9b235a72fd24cd29c648c2c379431e6628655627bf"
 dependencies = [
- "itertools",
+ "itertools 0.13.0",
  "unicode-segmentation",
  "unicode-width 0.1.14",
 ]
@@ -3505,7 +3514,7 @@ dependencies = [
  "indicatif",
  "indoc",
  "insta",
- "itertools",
+ "itertools 0.14.0",
  "owo-colors",
  "quickcheck",
  "quickcheck_macros",
@@ -3546,7 +3555,7 @@ dependencies = [
  "include_dir",
  "indoc",
  "insta",
- "itertools",
+ "itertools 0.14.0",
  "owo-colors",
  "quickcheck",
  "quickcheck_macros",
@@ -3574,7 +3583,7 @@ dependencies = [
  "include_dir",
  "indicatif",
  "indoc",
- "itertools",
+ "itertools 0.14.0",
  "json_to_table",
  "owo-colors",
  "quickcheck",
