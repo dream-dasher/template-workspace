@@ -30,21 +30,13 @@ struct Matroschka {
 impl Matroschka {
         #[instrument]
         fn new(color: Color) -> Self {
-                Self {
-                        color,
-                        size: 0,
-                        smaller_me: None,
-                }
+                Self { color, size: 0, smaller_me: None }
         }
 
         #[instrument]
         fn add_shell(self, color: Color) -> Self {
                 let size = self.size + 1;
-                Self {
-                        color,
-                        size,
-                        smaller_me: Some(Box::new(self)),
-                }
+                Self { color, size, smaller_me: Some(Box::new(self)) }
         }
 }
 

@@ -1,7 +1,6 @@
 # Justfile (Convenience Command Runner)
 
 # rust vars
-J_CARGO_CRATE_NAME:='template-workspace'
 J_CARGO_NO_WARN := '-Awarnings'
 J_RUST_LOG:= 'debug'
 J_RUST_BACKTRACE:= '1'
@@ -30,7 +29,7 @@ _default:
         @just --list --unsorted
 
 # Initialize repository.
-[confirm(    
+[confirm(
 'This will:
 (1) perform standard cargo commands
     (e.g. clean, build)
@@ -41,6 +40,7 @@ Commands can be inspected in the currently invoked `justfile`.
 
 -- Confirm initialization?'
 )]
+[group('init')]
 init: && list-external-deps _gen-env _gen-git-hooks
     cargo clean
     cargo build
@@ -138,7 +138,6 @@ _gen-env:
         echo '`{{BRN}}.env{{NC}}` exists, {{PRP}}skipping creation{{NC}}...' && exit 0; \
         else \
         cp -n .support/_template.env .env; \
-        sd '\{\{replace_me:.*\}\}' '{{J_CARGO_CRATE_NAME}}' .env; \
         echo "{{BLU}}.env{{NC}} created from template with {{GRN}}example{{NC}} values."; \
         fi
 

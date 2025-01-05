@@ -79,12 +79,7 @@ fn main() -> Result<()> {
                                 .max_by_key(|&(_, count)| count)
                                 .map(|(c, _)| c)
                                 .unwrap_or_default();
-                        list.push(WordInfo {
-                                word,
-                                frequency: *count,
-                                length: word.len(),
-                                most_common_char,
-                        });
+                        list.push(WordInfo { word, frequency: *count, length: word.len(), most_common_char });
                 }
                 list
         };

@@ -20,9 +20,7 @@ pub enum MyErrorSource {
         IoError { source: io::Error },
         #[display("Uncategorized error: {}", source)]
         #[from(ignore)]
-        OtherError {
-                source: Box<dyn std::error::Error + Send + Sync>,
-        },
+        OtherError { source: Box<dyn std::error::Error + Send + Sync> },
 }
 impl MyErrorSource {
         pub fn make_other_error<E>(error: E) -> Self

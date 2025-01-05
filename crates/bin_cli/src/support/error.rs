@@ -35,9 +35,7 @@ pub enum CliErrorKind {
         TracingSubscriber { source: SetGlobalDefaultError },
         #[from(ignore)]
         #[display("Unlabelled error (dyn error object): {}", source)]
-        OtherDynError {
-                source: Box<dyn std::error::Error + Send + Sync>,
-        },
+        OtherDynError { source: Box<dyn std::error::Error + Send + Sync> },
 }
 impl CliErrorKind {
         /// Redundant with `ToOther(trait)::make_other_dyn_error`

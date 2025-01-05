@@ -60,10 +60,7 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         println!();
         println!("----------------------------------------");
         tea::info!("Using a tag.");
-        let my_request = Request {
-                method: "say_hello".to_string(),
-                params: json!({"name": "John Doe"}),
-        };
+        let my_request = Request { method: "say_hello".to_string(), params: json!({"name": "John Doe"}) };
         println!("{}", serde_json::to_string_pretty(&my_request)?);
 
         println!();

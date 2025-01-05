@@ -29,9 +29,7 @@ pub enum ErrKindXpRatatui {
         TracingSubscriber { source: SetGlobalDefaultError },
         #[from(ignore)]
         #[display("Unlabelled error (dyn error object): {}", source)]
-        OtherDynError {
-                source: Box<dyn std::error::Error + Send + Sync>,
-        },
+        OtherDynError { source: Box<dyn std::error::Error + Send + Sync> },
         // #[display("Error extracting lines from input: {}", source_input)]
         // NoInputLines { source_input: String },
         // #[from(ignore)]
