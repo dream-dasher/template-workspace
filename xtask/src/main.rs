@@ -17,8 +17,9 @@
 //!       and (2) a clap interface with command descriptions is present
 //!       then basic command discoverability should be on par with just
 
-use clap::Parser;
+use clap::{Parser, ValueEnum};
 use owo_colors::{self as _, OwoColorize};
+use xtask::types_manual::*;
 
 /// xtasks, repo convenience tasks
 #[derive(Parser, Debug)]
@@ -28,6 +29,9 @@ enum Args {
         Hello,
         /// add two numbers
         Add { a: i32, b: i32 },
+        /// List prime components of a rust std type
+        // #[arg[(value_enum = "TypesManual")]]
+        Primes { t: TypesManual },
 }
 
 fn main() {
@@ -42,6 +46,13 @@ fn main() {
                         println!("The (dec) sum of {a:>16}  and {b:>16} is {sum:>16}");
                         println!("The (oct) sum of {a:>16o}  and {b:>16o} is {sum:>16o}");
                         println!("The (bin) sum of {a:>16b}  and {b:>16b} is {sum:>16b}");
+                }
+                Args::Primes { t } => {
+                        println!("{:?}", t.get_details_as_strings());
+                        // let primes = primes::primes(n);
+                        // println!("Type: {}");
+                        // println!("Range: {}");
+                        // println!("Prime components: {}");
                 }
         }
 }
