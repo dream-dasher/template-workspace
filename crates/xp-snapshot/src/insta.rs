@@ -1,4 +1,4 @@
-#![expect(unused)]
+#![allow(unused)]
 //! insta snapshot
 //! https://github.com/mitsuhiko/insta
 //!
