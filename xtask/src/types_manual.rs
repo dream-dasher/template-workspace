@@ -108,7 +108,7 @@ where
 {
         /// Convert the `TypeDetails` to a `TypeDetails` with `String` fields.
         /// This allows all `TypeDetails<T>` to ~~> `TypeDetails<String>`
-        pub fn as_strings(self) -> TypeDetails<String> {
+        pub fn as_strings(&self) -> TypeDetails<String> {
                 TypeDetails { name: self.name, min: self.min.to_string(), max: self.max.to_string() }
         }
 }

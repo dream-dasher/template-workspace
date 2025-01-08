@@ -16,10 +16,12 @@
 //! Note: as long as  (1)`xtask/` is displayed prominently in root
 //!       and (2) a clap interface with command descriptions is present
 //!       then basic command discoverability should be on par with just
+mod types_manual;
 
 use clap::Parser;
 use owo_colors::{self as _, OwoColorize};
-use xtask::types_manual::*;
+
+use crate::types_manual::*;
 
 /// xtasks, repo convenience tasks
 #[derive(Parser, Debug)]
