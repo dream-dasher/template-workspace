@@ -42,30 +42,6 @@ pub enum TypesManual {
         F32,
         F64,
 }
-/// Allows us to grab a type formal Rust Type from a `TypesManual` variant.
-///
-/// ## Use
-/// ```rust
-/// type T = manualtype_to_type!(TypesManual::U8);
-/// parse::<T>("8");
-/// ```
-macro_rules! manualtype_to_type {
-        (TypesManual::U8) => { u8 };
-        (TypesManual::U16) => { u16 };
-        (TypesManual::U32) => { u32 };
-        (TypesManual::U64) => { u64 };
-        (TypesManual::U128) => { u128 };
-        (TypesManual::USize) => { usize };
-        (TypesManual::I8) => { i8 };
-        (TypesManual::I16) => { i16 };
-        (TypesManual::I32) => { i32 };
-        (TypesManual::I64) => { i64 };
-        (TypesManual::I128) => { i128 };
-        (TypesManual::ISize) => { isize };
-        (TypesManual::F32) => { f32 };
-        (TypesManual::F64) => { f64 };
-}
-
 impl TypesManual {
         /// Get info about type indicatd by type handle (`TypesManual` variant)
         pub fn get_details_as_strings(&self) -> TypeDetails<String> {
@@ -86,26 +62,6 @@ impl TypesManual {
                         TypesManual::F64 => get_type_details::<f64>().as_strings(),
                 }
         }
-
-        // pub fn get_details_as_strings_dupe(&self) -> TypeDetails<String> {
-        //         type T = manualtype_to_type!(self);
-        //         match self {
-        //                 TypesManual::U8 => get_type_details::<u8>().as_strings(),
-        //                 TypesManual::U16 => get_type_details::<u16>().as_strings(),
-        //                 TypesManual::U32 => get_type_details::<u32>().as_strings(),
-        //                 TypesManual::U64 => get_type_details::<u64>().as_strings(),
-        //                 TypesManual::U128 => get_type_details::<u128>().as_strings(),
-        //                 TypesManual::USize => get_type_details::<usize>().as_strings(),
-        //                 TypesManual::I8 => get_type_details::<i8>().as_strings(),
-        //                 TypesManual::I16 => get_type_details::<i16>().as_strings(),
-        //                 TypesManual::I32 => get_type_details::<i32>().as_strings(),
-        //                 TypesManual::I64 => get_type_details::<i64>().as_strings(),
-        //                 TypesManual::I128 => get_type_details::<i128>().as_strings(),
-        //                 TypesManual::ISize => get_type_details::<isize>().as_strings(),
-        //                 TypesManual::F32 => get_type_details::<f32>().as_strings(),
-        //                 TypesManual::F64 => get_type_details::<f64>().as_strings(),
-        //         }
-        // }
 }
 
 /// Trait for extracting useful info about various (std, numeric) rust types.

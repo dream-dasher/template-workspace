@@ -17,7 +17,7 @@
 //!       and (2) a clap interface with command descriptions is present
 //!       then basic command discoverability should be on par with just
 
-use clap::{Parser, ValueEnum};
+use clap::Parser;
 use owo_colors::{self as _, OwoColorize};
 use xtask::types_manual::*;
 
@@ -48,11 +48,82 @@ fn main() {
                         println!("The (bin) sum of {a:>16b}  and {b:>16b} is {sum:>16b}");
                 }
                 Args::Primes { t } => {
-                        println!("{:?}", t.get_details_as_strings());
+                        let t_deets = t.get_details_as_strings();
+                        println!("{:?}", t_deets);
+                        type TForPrimes = usize;
+                        let upper_bound = match t_deets.max.parse::<TForPrimes>() {
+                                Ok(n) => {
+                                        if n <= 10_000_000 {
+                                                n
+                                        } else {
+                                                eprintln!(
+                                                        "{}'s max value ({}) will take a long time for us to calculate with the current method.",
+                                                        t_deets.name, t_deets.max,
+                                                );
+                                                eprintln!(
+                                                        "We're going to skip prime calculation. And yes, alas, this rules out any i or u smaller than _16."
+                                                );
+                                                return;
+                                        }
+                                }
+                                Err(e) => {
+                                        eprintln!(
+                                                "Error parsing {}'s max value ({}) as {}: {}",
+                                                t_deets.name,
+                                                t_deets.max,
+                                                std::any::type_name::<TForPrimes>(),
+                                                e
+                                        );
+                                        eprintln!(
+                                                "Note: type resilient implementation has not yet been ... um, implemented."
+                                        );
+                                        return;
+                                }
+                        };
+                        let lower_bound = None;
+                        let found_primes = prime_sieve(lower_bound, upper_bound);
+                        println!("Number of primes found <= {}: {}", upper_bound, found_primes.len());
+                        println!(
+                                "which makes the range ({}..={}) {:.1}% prime.",
+                                0, // lower_bound.unwrap_or(0),
+                                upper_bound,
+                                100. * (found_primes.len() as f32) / (upper_bound as f32 + 2.)
+                        );
+
                         // let primes = primes::primes(n);
                         // println!("Type: {}");
                         // println!("Range: {}");
                         // println!("Prime components: {}");
                 }
         }
+}
+
+/// I'll be surprised if this works efficiently as a mechanical, literal, procedure.
+fn prime_sieve(min: Option<usize>, max: usize) -> Vec<usize> {
+        // buncha default yes's
+        let mut primes = vec![true; max + 1];
+        primes[0] = false;
+        primes[1] = false;
+        // no need to go past sqrt(n).floor()
+        for i in 2..=max.isqrt() {
+                // skip if index was marked as multiple of preceding num
+                if primes[i] {
+                        // first value that's not been sieved would require p >= us, which would be us
+                        let mut index = i.pow(2);
+                        // false for al p * n indices
+                        while index <= max {
+                                primes[index] = false;
+                                index += i;
+                        }
+                }
+        }
+        let min = min.unwrap_or(0);
+        // collect unsieved bits
+        let mut result = vec![];
+        for (i, b) in primes.iter().enumerate().skip(min) {
+                if *b {
+                        result.push(i);
+                }
+        }
+        result
 }
