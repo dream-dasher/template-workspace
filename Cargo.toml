@@ -34,7 +34,7 @@ debug = true
 ## --Async--
 futures = "0.3.31"
 tokio = { version = "1.42.0", features = ["full"] }
-### - Networking -
+### - Remote -
 reqwest = { version = "0.12.9", features = ["blocking", "json"] }
 
 ## --Diagnostics--
